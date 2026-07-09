@@ -1,0 +1,1751 @@
+{
+  "schema": "planora-first-release-tracking-status-db.v1",
+  "savedAt": "2026-07-09T00:00:00.000Z",
+  "source": "Planora_First_Release_Tracking_v1_0.html",
+  "storageNote": "Load this JSON DB back into the HTML tracker to restore status, owner, sprint and notes.",
+  "records": {
+    "US-001-T01": {
+      "status": "In Progress",
+      "owner": "Anthony Pham",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:48.108Z"
+    },
+    "US-001-T02": {
+      "status": "In Progress",
+      "owner": "Anthony Pham",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:49.022Z"
+    },
+    "US-001-T03": {
+      "status": "In Progress",
+      "owner": "Anthony Pham",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:49.755Z"
+    },
+    "US-001-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-001-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:27:11.253Z"
+    },
+    "US-001-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-001-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-004-T01": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:27:01.619Z"
+    },
+    "US-004-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:52.705Z"
+    },
+    "US-004-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:53.238Z"
+    },
+    "US-004-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:53.853Z"
+    },
+    "US-004-T05": {
+      "status": "In Progress",
+      "owner": "Anthony Pham",
+      "targetSprint": "1",
+      "notes": "",
+      "updatedAt": "2026-07-05T11:26:50.604Z"
+    },
+    "US-004-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-004-T07": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-004-T08": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-004-T09": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-004-T10": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-002-T01": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-002-T02": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-002-T03": {
+      "status": "In Progress",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Material implementation and static evidence exist; task file records the remaining live integration, CI, performance, or rehearsal gate.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-002-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-002-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-002-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-070-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-070-T02": {
+      "status": "Done",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Reviewed complete: bounded schema/data-model Definition of Done is satisfied; downstream runtime work remains separately tracked.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-070-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-070-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-070-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-070-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-071-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-071-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-071-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-071-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-071-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-071-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-003-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-003-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-003-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-003-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-003-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-003-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-010-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-010-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-010-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-010-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-010-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-010-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-011-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-012-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-012-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-012-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-012-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-012-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-012-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-020-T01": {
+      "status": "Done",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Reviewed complete: bounded schema/data-model Definition of Done is satisfied; downstream runtime work remains separately tracked.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-020-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-020-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-020-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-020-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-020-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-020-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-021-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-021-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-021-T03": {
+      "status": "Done",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Reviewed complete: bounded schema/data-model Definition of Done is satisfied; downstream runtime work remains separately tracked.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-021-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-021-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-021-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-022-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-013-T01": {
+      "status": "Done",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Reviewed complete: bounded schema/data-model Definition of Done is satisfied; downstream runtime work remains separately tracked.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-013-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-013-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-013-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-013-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-013-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T08": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T09": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-029-T10": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-030-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-031-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-032-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-033-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-033-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-033-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-033-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-033-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-033-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-040-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-041-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-051-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-042-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-043-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-043-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-043-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-043-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-043-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-043-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-044-T01": {
+      "status": "Done",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Reviewed complete: bounded schema/data-model Definition of Done is satisfied; downstream runtime work remains separately tracked.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-044-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-044-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-044-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-044-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-044-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-050-T01": {
+      "status": "Done",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "Reviewed complete: bounded schema/data-model Definition of Done is satisfied; downstream runtime work remains separately tracked.",
+      "updatedAt": "2026-07-09T00:00:00.000Z"
+    },
+    "US-050-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-050-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-050-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-050-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-050-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-072-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-072-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-072-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-072-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-072-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-072-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-052-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-052-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-052-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-052-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-052-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-052-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-053-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-053-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-053-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-053-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-053-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-053-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-060-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-060-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-060-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-060-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-060-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-060-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-061-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-061-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-061-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-061-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-061-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-061-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-062-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-062-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-062-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-062-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-062-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-062-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-063-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-063-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-063-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-063-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-063-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T07": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T08": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T09": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T10": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-014-T11": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-080-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-080-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-080-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-080-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-080-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-081-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-081-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-081-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-081-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-081-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-081-T06": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-082-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-082-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-082-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-082-T04": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-082-T05": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-090-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-090-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-090-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-091-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-091-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-091-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-092-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-092-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-092-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-093-T01": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-093-T02": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    },
+    "US-093-T03": {
+      "status": "Not Started",
+      "owner": "",
+      "targetSprint": "",
+      "notes": "",
+      "updatedAt": ""
+    }
+  }
+}

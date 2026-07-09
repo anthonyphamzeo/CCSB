@@ -1,0 +1,7 @@
+# .NET 8 + MSAL system-browser authentication requires a loopback HTTP redirect URI.
+# Do not use Integrated Security=true. It invokes current Windows-identity login and can fail
+# on profiles where the SID cannot be mapped to an account name.
+# Do NOT use app://... for this provisioner. Do NOT use the appid from a Dynamics model-driven app URL.
+# For a tenant-specific app registration, configure the exact same http://localhost redirect URI in Microsoft Entra.
+
+AuthType=OAuth;Username=YOUR-MICROSOFT-365-UPN;Url=https://YOURORG.crm.dynamics.com;AppId=YOUR-ENTRA-APPLICATION-CLIENT-ID;RedirectUri=http://localhost;TokenCacheStorePath=%LOCALAPPDATA%\CCSB\msal_cache.data;LoginPrompt=Always;RequireNewInstance=true

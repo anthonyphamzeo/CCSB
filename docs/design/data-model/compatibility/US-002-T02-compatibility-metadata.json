@@ -1,0 +1,211 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-002-T02",
+  "name": "CCSB compatibility metadata persistence contract",
+  "generatedForDate": "2026-07-08",
+  "sourceCompatibilityContract": "docs/design/api-contracts/compatibility/US-002-T01-compatibility-contract.json",
+  "metadataDocument": "docs/design/data-model/compatibility/US-002-T02-compatibility-metadata.md",
+  "sourcePackage": {
+    "foundationSource": "tools/provisioning/CCSB.FoundationSchema",
+    "schema": "tools/provisioning/CCSB.FoundationSchema/schema/ccsb.foundation.schema.json",
+    "program": "tools/provisioning/CCSB.FoundationSchema/Program.cs",
+    "project": "tools/provisioning/CCSB.FoundationSchema/CCSB.FoundationSchema.Provisioner.csproj",
+    "schemaVersion": "1.0.0",
+    "dataverseSolutionUniqueName": "ccsb_foundationschema",
+    "targetSolutionVersion": "1.0.0.1",
+    "sourceBuildVersion": "1.0.0.6",
+    "compatibilityReportPath": "out/foundation-schema-compatibility.json"
+  },
+  "versionDimensions": {
+    "productSemanticVersion": "1.0.0",
+    "foundationSolutionVersion": "1.0.0.1",
+    "configurationSchemaVersion": "1.0.0",
+    "runtimeProjectionSchemaVersion": "1.0.0",
+    "minimumSupportedProductVersion": "1.0.0",
+    "minimumSupportedConfigurationSchemaVersion": "1.0.0",
+    "minimumSupportedRuntimeProjectionSchemaVersion": "1.0.0"
+  },
+  "metadataBindings": [
+    {
+      "entity": "ccsb_boardversion",
+      "purpose": "Persist product/schema compatibility and migration state for each configuration version.",
+      "fields": [
+        {
+          "logicalName": "ccsb_productversion",
+          "schemaName": "ccsb_ProductVersion",
+          "type": "String",
+          "maxLength": 50,
+          "requiredAtMetadataLevel": false,
+          "requiredWhenActive": true
+        },
+        {
+          "logicalName": "ccsb_configurationschemaversion",
+          "schemaName": "ccsb_ConfigurationSchemaVersion",
+          "type": "String",
+          "maxLength": 50,
+          "requiredAtMetadataLevel": false,
+          "requiredWhenActive": true
+        },
+        {
+          "logicalName": "ccsb_migrationstate",
+          "schemaName": "ccsb_MigrationState",
+          "type": "Choice",
+          "requiredAtMetadataLevel": false,
+          "requiredWhenActive": true,
+          "allowedLabels": [
+            "None",
+            "Pending",
+            "Running",
+            "Completed",
+            "Failed",
+            "Blocked"
+          ]
+        },
+        {
+          "logicalName": "ccsb_compatibilitystatus",
+          "schemaName": "ccsb_CompatibilityStatus",
+          "type": "Choice",
+          "requiredAtMetadataLevel": false,
+          "requiredWhenActive": true,
+          "allowedLabels": [
+            "Not Evaluated",
+            "Compatible",
+            "Compatible With Warnings",
+            "Incompatible",
+            "Migration Required",
+            "Blocked"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "ccsb_runtimeprojection",
+      "purpose": "Stamp current projections with the product and source configuration schema versions used to generate them.",
+      "fields": [
+        {
+          "logicalName": "ccsb_productversion",
+          "schemaName": "ccsb_ProductVersion",
+          "type": "String",
+          "maxLength": 50,
+          "requiredAtMetadataLevel": false,
+          "requiredWhenCurrent": true
+        },
+        {
+          "logicalName": "ccsb_configurationschemaversion",
+          "schemaName": "ccsb_ConfigurationSchemaVersion",
+          "type": "String",
+          "maxLength": 50,
+          "requiredAtMetadataLevel": false,
+          "requiredWhenCurrent": true
+        },
+        {
+          "logicalName": "ccsb_projectionschemaversion",
+          "schemaName": "ccsb_ProjectionSchemaVersion",
+          "type": "String",
+          "maxLength": 100,
+          "requiredAtMetadataLevel": true,
+          "requiredWhenCurrent": true
+        }
+      ]
+    }
+  ],
+  "activeBoardVersionInvariant": {
+    "appliesWhen": "ccsb_boardversion.ccsb_lifecyclestate = Active",
+    "requiredNonNullFields": [
+      "ccsb_productversion",
+      "ccsb_configurationschemaversion",
+      "ccsb_migrationstate",
+      "ccsb_compatibilitystatus",
+      "ccsb_configurationhash",
+      "ccsb_validationstatus"
+    ],
+    "allowedMigrationStateLabelsForActivation": [
+      "None",
+      "Completed"
+    ],
+    "allowedCompatibilityStatusLabelsForActivation": [
+      "Compatible",
+      "Compatible With Warnings"
+    ],
+    "blockingDiagnosticCode": "CCSB-COMPAT-METADATA-MISSING"
+  },
+  "currentProjectionInvariant": {
+    "appliesWhen": "ccsb_runtimeprojection.ccsb_iscurrent = true",
+    "requiredNonNullFields": [
+      "ccsb_productversion",
+      "ccsb_configurationschemaversion",
+      "ccsb_projectionschemaversion",
+      "ccsb_contenthash",
+      "ccsb_sourcechangetoken"
+    ],
+    "mustMatchBoardVersionFields": {
+      "ccsb_productversion": "ccsb_productversion",
+      "ccsb_configurationschemaversion": "ccsb_configurationschemaversion"
+    },
+    "blockingDiagnosticCode": "CCSB-COMPAT-PROJECTION-METADATA-MISMATCH"
+  },
+  "backfillPlan": [
+    {
+      "id": "T02-BF-001",
+      "targetEntity": "ccsb_boardversion",
+      "fields": [
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion"
+      ],
+      "source": "US-002-T01 versionDimensions",
+      "idempotent": true,
+      "activationBlocking": true
+    },
+    {
+      "id": "T02-BF-002",
+      "targetEntity": "ccsb_boardversion",
+      "fields": [
+        "ccsb_migrationstate",
+        "ccsb_compatibilitystatus"
+      ],
+      "source": "validation or migration outcome",
+      "idempotent": true,
+      "activationBlocking": true
+    },
+    {
+      "id": "T02-BF-003",
+      "targetEntity": "ccsb_runtimeprojection",
+      "fields": [
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion",
+        "ccsb_projectionschemaversion"
+      ],
+      "source": "projection generator and source board version",
+      "idempotent": true,
+      "activationBlocking": true
+    }
+  ],
+  "diagnosticCodes": [
+    {
+      "code": "CCSB-COMPAT-METADATA-MISSING",
+      "severity": "blocking",
+      "category": "CompatibilityMetadata",
+      "message": "The active board version is missing product, schema, migration, or compatibility metadata.",
+      "recommendedAction": "Run the compatibility metadata backfill and revalidate the board version before activation."
+    },
+    {
+      "code": "CCSB-COMPAT-PROJECTION-METADATA-MISMATCH",
+      "severity": "blocking",
+      "category": "RuntimeProjection",
+      "message": "The current runtime projection metadata does not match the source board version compatibility metadata.",
+      "recommendedAction": "Regenerate the projection from the validated board version."
+    }
+  ],
+  "acceptanceGates": [
+    "board-version-product-version-field-present",
+    "board-version-configuration-schema-version-field-present",
+    "board-version-migration-state-field-present",
+    "board-version-compatibility-status-field-present",
+    "runtime-projection-product-version-field-present",
+    "runtime-projection-configuration-schema-version-field-present",
+    "active-board-version-invariant-declared",
+    "current-projection-invariant-declared",
+    "metadata-backfill-plan-declared",
+    "static-validator-pass"
+  ]
+}

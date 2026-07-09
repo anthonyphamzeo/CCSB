@@ -1,0 +1,977 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-004-T09",
+  "name": "CCSB deterministic data factory reference seed",
+  "fixedClockUtc": "2026-01-15T00:00:00Z",
+  "sourceSchemas": {
+    "foundation": "tools/provisioning/CCSB.FoundationSchema/schema/ccsb.foundation.schema.json",
+    "audit": "tools/provisioning/CCSB.AuditEntities/schema/csb.auditentities.schema.json",
+    "core": "tools/provisioning/CCSB.Core/table-manifest.json"
+  },
+  "requiredEntityCoverage": [
+    "ccsb_boardregistry",
+    "ccsb_boardversion",
+    "ccsb_entitydefinition",
+    "ccsb_fieldmapping",
+    "ccsb_relationshipmapping",
+    "ccsb_statusmodel",
+    "ccsb_resourcerole",
+    "ccsb_permissionprofile",
+    "ccsb_runtimeprojection",
+    "ccsb_board",
+    "ccsb_scheduleversion",
+    "ccsb_scheduleitem",
+    "ccsb_resource",
+    "ccsb_resourcecapability",
+    "ccsb_schedulechange",
+    "ccsb_publishsnapshot",
+    "ccsb_publishlock",
+    "ccsb_publishsnapshotitem",
+    "ccsb_operationaudit",
+    "ccsb_outboxevent"
+  ],
+  "requiredNegativeFixtureCategories": [
+    "duplicate-key",
+    "missing-required-lookup",
+    "invalid-lifecycle-transition",
+    "stale-projection",
+    "orphaned-native-record",
+    "unsupported-cascade",
+    "invalid-migration-default"
+  ],
+  "records": [
+    {
+      "id": "loc-main",
+      "entity": "ccsb_location",
+      "seedKey": {
+        "ccsb_locationcode": "US004-T09-LOC-MAIN"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Main Location",
+        "ccsb_locationcode": "US004-T09-LOC-MAIN",
+        "ccsb_locationtype": 831020000,
+        "ccsb_timezoneid": "Australia/Brisbane",
+        "ccsb_isschedulingenabled": true,
+        "ccsb_effectivefrom": "2026-01-01"
+      },
+      "references": []
+    },
+    {
+      "id": "board-reg-main",
+      "entity": "ccsb_boardregistry",
+      "seedKey": {
+        "ccsb_boardcode": "US004-T09-BOARD"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Reference Board Registry",
+        "ccsb_boardcode": "US004-T09-BOARD",
+        "ccsb_description": "Deterministic non-production board for US-004-T09 integrity tests.",
+        "ccsb_boardtype": 831020000,
+        "ccsb_lifecyclestate": 831020001,
+        "ccsb_defaulttimezoneid": "Australia/Brisbane",
+        "ccsb_defaultplanninghorizondays": 31,
+        "ccsb_maxhierarchydepth": 3,
+        "ccsb_allowadhocchanges": false,
+        "ccsb_allowunassignedwork": true,
+        "ccsb_externalkey": "US004-T09-BOARD"
+      },
+      "references": [
+        {
+          "field": "ccsb_defaultlocationid",
+          "entity": "ccsb_location",
+          "id": "loc-main"
+        },
+        {
+          "field": "ccsb_activeboardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "board-version-draft",
+      "entity": "ccsb_boardversion",
+      "seedKey": {
+        "board": "board-reg-main",
+        "ccsb_versionnumber": 1
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Draft Board Version",
+        "ccsb_versionnumber": 1,
+        "ccsb_versionlabel": "US004-T09-DRAFT",
+        "ccsb_lifecyclestate": 831020000,
+        "ccsb_validationstatus": 831020000,
+        "ccsb_isimmutable": false,
+        "ccsb_configurationhash": "sha256-us004-t09-draft",
+        "ccsb_changecomment": "Mutable draft used for negative lifecycle checks.",
+        "ccsb_externalkey": "US004-T09-BOARD-V1"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_boardregistry",
+          "id": "board-reg-main"
+        }
+      ]
+    },
+    {
+      "id": "board-version-active",
+      "entity": "ccsb_boardversion",
+      "seedKey": {
+        "board": "board-reg-main",
+        "ccsb_versionnumber": 2
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Active Board Version",
+        "ccsb_versionnumber": 2,
+        "ccsb_versionlabel": "US004-T09-ACTIVE",
+        "ccsb_lifecyclestate": 831020003,
+        "ccsb_validationstatus": 831020001,
+        "ccsb_effectivefrom": "2026-01-01T00:00:00Z",
+        "ccsb_activatedon": "2026-01-15T00:00:00Z",
+        "ccsb_configurationhash": "sha256-us004-t09-active",
+        "ccsb_isimmutable": true,
+        "ccsb_changecomment": "Immutable active reference configuration.",
+        "ccsb_validationrunon": "2026-01-15T00:00:00Z",
+        "ccsb_externalkey": "US004-T09-BOARD-V2"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_boardregistry",
+          "id": "board-reg-main"
+        },
+        {
+          "field": "ccsb_supersedesboardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-draft"
+        }
+      ]
+    },
+    {
+      "id": "entity-native-scheduleitem",
+      "entity": "ccsb_entitydefinition",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "ccsb_entitylogicalname": "ccsb_scheduleitem"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Native Schedule Item Entity",
+        "ccsb_entitylogicalname": "ccsb_scheduleitem",
+        "ccsb_entitysetname": "ccsb_scheduleitems",
+        "ccsb_entityrole": 831020003,
+        "ccsb_sourcetype": 831020000,
+        "ccsb_primaryidfield": "ccsb_scheduleitemid",
+        "ccsb_primarynamefield": "ccsb_name",
+        "ccsb_allowread": true,
+        "ccsb_allowcreate": true,
+        "ccsb_allowupdate": true,
+        "ccsb_allowdelete": false,
+        "ccsb_allowdirectformopen": true,
+        "ccsb_validationstatus": 831020001,
+        "ccsb_isenabled": true
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "entity-mapped-booking",
+      "entity": "ccsb_entitydefinition",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "ccsb_entitylogicalname": "msdyn_workorder"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Mapped Booking Entity",
+        "ccsb_entitylogicalname": "msdyn_workorder",
+        "ccsb_entitysetname": "msdyn_workorders",
+        "ccsb_entityrole": 831020000,
+        "ccsb_sourcetype": 831020001,
+        "ccsb_primaryidfield": "msdyn_workorderid",
+        "ccsb_primarynamefield": "msdyn_name",
+        "ccsb_allowread": true,
+        "ccsb_allowcreate": false,
+        "ccsb_allowupdate": true,
+        "ccsb_allowdelete": false,
+        "ccsb_allowdirectformopen": true,
+        "ccsb_validationstatus": 831020001,
+        "ccsb_isenabled": true
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "field-native-start",
+      "entity": "ccsb_fieldmapping",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "semantic": "plannedStart"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Native Planned Start Mapping",
+        "ccsb_semanticname": "plannedStart",
+        "ccsb_sourcefieldlogicalname": "ccsb_startutc",
+        "ccsb_targetdatatype": 831020005,
+        "ccsb_transformationtype": 831020000,
+        "ccsb_isrequired": true,
+        "ccsb_isnullable": false,
+        "ccsb_readenabled": true,
+        "ccsb_writebehavior": 831020002,
+        "ccsb_isenabled": true,
+        "ccsb_sortorder": 10
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_entitydefinitionid",
+          "entity": "ccsb_entitydefinition",
+          "id": "entity-native-scheduleitem"
+        }
+      ]
+    },
+    {
+      "id": "relationship-booking-item",
+      "entity": "ccsb_relationshipmapping",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "role": "booking-to-schedule-item"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Booking to Schedule Item Relationship",
+        "ccsb_relationshiprole": "booking-to-schedule-item",
+        "ccsb_relationshiplogicalname": "ccsb_booking_scheduleitem",
+        "ccsb_relationshiptype": 831020000,
+        "ccsb_sourcelookupfield": "ccsb_bookingid",
+        "ccsb_relatedprimaryidfield": "msdyn_workorderid",
+        "ccsb_isrequired": true,
+        "ccsb_writebehavior": 831020002,
+        "ccsb_deletebehavior": 831020000,
+        "ccsb_isenabled": true,
+        "ccsb_sortorder": 20
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_sourceentitydefinitionid",
+          "entity": "ccsb_entitydefinition",
+          "id": "entity-native-scheduleitem"
+        },
+        {
+          "field": "ccsb_relatedentitydefinitionid",
+          "entity": "ccsb_entitydefinition",
+          "id": "entity-mapped-booking"
+        }
+      ]
+    },
+    {
+      "id": "statusmodel-item",
+      "entity": "ccsb_statusmodel",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "ccsb_statusmodelcode": "US004-T09-ITEM"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Schedule Item Status Model",
+        "ccsb_statusmodelcode": "US004-T09-ITEM",
+        "ccsb_appliestorole": 831020003,
+        "ccsb_systemofrecord": 831020001,
+        "ccsb_initialstatuscode": "DRAFT",
+        "ccsb_terminalstatuscodesjson": "[\"PUBLISHED\",\"CANCELLED\"]",
+        "ccsb_statuspalettejson": "{\"DRAFT\":\"#69797e\",\"PUBLISHED\":\"#107c10\"}",
+        "ccsb_allowexternalstatusupdate": false,
+        "ccsb_allowmanualoverride": false,
+        "ccsb_validationmode": 831020000,
+        "ccsb_isenabled": true,
+        "ccsb_sortorder": 30
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_sourceentitydefinitionid",
+          "entity": "ccsb_entitydefinition",
+          "id": "entity-native-scheduleitem"
+        }
+      ]
+    },
+    {
+      "id": "role-worker",
+      "entity": "ccsb_resourcerole",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "ccsb_rolecode": "WORKER"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Worker Role",
+        "ccsb_rolecode": "WORKER",
+        "ccsb_rolecategory": 831020000,
+        "ccsb_defaultquantity": 1,
+        "ccsb_minimumquantity": 1,
+        "ccsb_allowmultipleresources": false,
+        "ccsb_allowsubstitution": true,
+        "ccsb_allowconcurrentassignment": false,
+        "ccsb_isenabled": true,
+        "ccsb_sortorder": 40
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "profile-publish-manager",
+      "entity": "ccsb_permissionprofile",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "ccsb_profilecode": "PUBLISH_MANAGER"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Manager Profile",
+        "ccsb_profilecode": "PUBLISH_MANAGER",
+        "ccsb_profiletype": 831020003,
+        "ccsb_scopemode": 831020001,
+        "ccsb_canviewschedule": true,
+        "ccsb_cancreateschedule": false,
+        "ccsb_caneditschedule": false,
+        "ccsb_canassignresources": false,
+        "ccsb_canoverrideconflicts": false,
+        "ccsb_canpublish": true,
+        "ccsb_canrollback": true,
+        "ccsb_canmanageconfiguration": false,
+        "ccsb_canviewaudit": true,
+        "ccsb_canmanageintegrations": false,
+        "ccsb_isenabled": true
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "assignment-publish-manager",
+      "entity": "ccsb_permissionassignment",
+      "seedKey": {
+        "profile": "profile-publish-manager",
+        "principal": "US004-T09-PUBLISH-MANAGER"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Manager Assignment",
+        "ccsb_principaltype": 831020001,
+        "ccsb_principalid": "US004-T09-PUBLISH-MANAGER",
+        "ccsb_principaldisplayname": "US004-T09 Publish Manager Team",
+        "ccsb_accesseffect": 831020000,
+        "ccsb_scopetype": 831020001,
+        "ccsb_scopedisplayname": "US004-T09 Reference Board",
+        "ccsb_isenabled": true,
+        "ccsb_effectivefrom": "2026-01-01T00:00:00Z"
+      },
+      "references": [
+        {
+          "field": "ccsb_permissionprofileid",
+          "entity": "ccsb_permissionprofile",
+          "id": "profile-publish-manager"
+        },
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_boardregistry",
+          "id": "board-reg-main"
+        }
+      ]
+    },
+    {
+      "id": "projection-active-board",
+      "entity": "ccsb_runtimeprojection",
+      "seedKey": {
+        "boardVersion": "board-version-active",
+        "type": "runtime-payload",
+        "scope": "US004-T09-BOARD"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Active Runtime Projection",
+        "ccsb_projectiontype": 831020003,
+        "ccsb_scopetype": 831020000,
+        "ccsb_scopekey": "US004-T09-BOARD",
+        "ccsb_payloadjson": "{\"boardCode\":\"US004-T09-BOARD\",\"records\":3}",
+        "ccsb_iscompressed": false,
+        "ccsb_contenthash": "sha256-us004-t09-runtime-projection",
+        "ccsb_projectionschemaversion": "1.0.0",
+        "ccsb_generatedon": "2026-01-15T00:00:00Z",
+        "ccsb_projectionstatus": 831020000,
+        "ccsb_iscurrent": true,
+        "ccsb_recordcount": 3,
+        "ccsb_payloadsizebytes": 48,
+        "ccsb_sourcechangetoken": "US004-T09-TOKEN-001"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "operation-publish",
+      "entity": "ccsb_operation",
+      "seedKey": {
+        "ccsb_correlationid": "US004-T09-CORR-PUBLISH"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Operation",
+        "ccsb_operationtype": 831020002,
+        "ccsb_operationstatus": 831020002,
+        "ccsb_correlationid": "US004-T09-CORR-PUBLISH",
+        "ccsb_idempotencykey": "US004-T09-IDEMP-PUBLISH",
+        "ccsb_targetscopetype": 831020001,
+        "ccsb_targetscopereferenceid": "board-version-active",
+        "ccsb_requestedon": "2026-01-15T00:00:00Z",
+        "ccsb_startedon": "2026-01-15T00:01:00Z",
+        "ccsb_completedon": "2026-01-15T00:02:00Z",
+        "ccsb_attemptcount": 1,
+        "ccsb_iscancellable": false,
+        "ccsb_totalitemcount": 1,
+        "ccsb_succeededitemcount": 1,
+        "ccsb_faileditemcount": 0,
+        "ccsb_progresspercentage": 100,
+        "ccsb_retentionuntil": "2033-01-15T00:00:00Z"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_boardregistry",
+          "id": "board-reg-main"
+        },
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        }
+      ]
+    },
+    {
+      "id": "operation-item-schedule",
+      "entity": "ccsb_operationitem",
+      "seedKey": {
+        "operation": "operation-publish",
+        "ccsb_itemkey": "US004-T09-ITEM-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Operation Item",
+        "ccsb_sequencenumber": 1,
+        "ccsb_itemkey": "US004-T09-ITEM-001",
+        "ccsb_itemtype": 831020001,
+        "ccsb_actiontype": 831020004,
+        "ccsb_itemstatus": 831020002,
+        "ccsb_retrycount": 0,
+        "ccsb_isretryable": false,
+        "ccsb_sourceentitylogicalname": "ccsb_scheduleitem",
+        "ccsb_sourcerecordid": "schedule-item-native-001",
+        "ccsb_targetentitylogicalname": "ccsb_publishsnapshotitem"
+      },
+      "references": [
+        {
+          "field": "ccsb_operationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        }
+      ]
+    },
+    {
+      "id": "core-board",
+      "entity": "ccsb_board",
+      "seedKey": {
+        "ccsb_name": "US004-T09 Core Schedule Board"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Core Schedule Board"
+      },
+      "references": []
+    },
+    {
+      "id": "schedule-version-published",
+      "entity": "ccsb_scheduleversion",
+      "seedKey": {
+        "ccsb_name": "US004-T09 Published Schedule Version"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Published Schedule Version"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_publishoperationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        }
+      ]
+    },
+    {
+      "id": "resource-worker-001",
+      "entity": "ccsb_resource",
+      "seedKey": {
+        "ccsb_name": "US004-T09 Worker 001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Worker 001",
+        "ccsb_externalresourcekey": "US004-T09-WORKER-001",
+        "ccsb_effectivefrom": "2026-01-01"
+      },
+      "references": [
+        {
+          "field": "ccsb_primarylocationid",
+          "entity": "ccsb_location",
+          "id": "loc-main"
+        },
+        {
+          "field": "ccsb_defaultresourceroleid",
+          "entity": "ccsb_resourcerole",
+          "id": "role-worker"
+        }
+      ]
+    },
+    {
+      "id": "schedule-item-native-001",
+      "entity": "ccsb_scheduleitem",
+      "seedKey": {
+        "ccsb_externalscheduleitemkey": "US004-T09-SI-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Native Schedule Item 001",
+        "ccsb_externalscheduleitemkey": "US004-T09-SI-001"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_locationid",
+          "entity": "ccsb_location",
+          "id": "loc-main"
+        }
+      ]
+    },
+    {
+      "id": "capability-worker-001",
+      "entity": "ccsb_resourcecapability",
+      "seedKey": {
+        "ccsb_capabilitykey": "US004-T09-WORKER-001-SKILL"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Worker 001 Skill",
+        "ccsb_capabilitykey": "US004-T09-WORKER-001-SKILL",
+        "ccsb_capabilitytype": 831030000,
+        "ccsb_capabilitycode": "SCHEDULING",
+        "ccsb_capabilitysource": 831030000,
+        "ccsb_proficiencylevel": 831030003,
+        "ccsb_verificationstatus": 831030001,
+        "ccsb_verifiedon": "2026-01-10T00:00:00Z",
+        "ccsb_iseligible": true,
+        "ccsb_capabilitystatus": 831030000,
+        "ccsb_effectivefrom": "2026-01-01T00:00:00Z",
+        "ccsb_sourcehash": "sha256-us004-t09-worker-skill"
+      },
+      "references": [
+        {
+          "field": "ccsb_resourceid",
+          "entity": "ccsb_resource",
+          "id": "resource-worker-001"
+        },
+        {
+          "field": "ccsb_resourceroleid",
+          "entity": "ccsb_resourcerole",
+          "id": "role-worker"
+        }
+      ]
+    },
+    {
+      "id": "schedule-change-001",
+      "entity": "ccsb_schedulechange",
+      "seedKey": {
+        "ccsb_changekey": "US004-T09-CHANGE-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Schedule Change 001",
+        "ccsb_changekey": "US004-T09-CHANGE-001",
+        "ccsb_changetype": 831030001,
+        "ccsb_changestatus": 831030003,
+        "ccsb_sourceorigin": 831030001,
+        "ccsb_sourceentitylogicalname": "ccsb_scheduleitem",
+        "ccsb_sourcerecordid": "schedule-item-native-001",
+        "ccsb_targetentitylogicalname": "ccsb_scheduleitem",
+        "ccsb_targetrecordid": "schedule-item-native-001",
+        "ccsb_proposedpayloadjson": "{\"plannedStart\":\"2026-01-15T09:00:00Z\"}",
+        "ccsb_committedpayloadjson": "{\"plannedStart\":\"2026-01-15T09:00:00Z\"}",
+        "ccsb_rollbackimagejson": "{\"plannedStart\":\"2026-01-15T08:00:00Z\"}",
+        "ccsb_requestedon": "2026-01-15T00:00:00Z",
+        "ccsb_committedon": "2026-01-15T00:02:00Z",
+        "ccsb_publishedon": "2026-01-15T00:03:00Z",
+        "ccsb_requiresapproval": false,
+        "ccsb_isrollbackcandidate": true,
+        "ccsb_retentionuntil": "2033-01-15T00:00:00Z",
+        "ccsb_changehash": "sha256-us004-t09-change-001",
+        "ccsb_correlationid": "US004-T09-CORR-PUBLISH"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_board",
+          "id": "core-board"
+        },
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_scheduleversionid",
+          "entity": "ccsb_scheduleversion",
+          "id": "schedule-version-published"
+        },
+        {
+          "field": "ccsb_scheduleitemid",
+          "entity": "ccsb_scheduleitem",
+          "id": "schedule-item-native-001"
+        },
+        {
+          "field": "ccsb_operationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        }
+      ]
+    },
+    {
+      "id": "publish-snapshot-001",
+      "entity": "ccsb_publishsnapshot",
+      "seedKey": {
+        "ccsb_name": "US004-T09 Publish Snapshot 001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Snapshot 001"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_operationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        }
+      ]
+    },
+    {
+      "id": "publish-lock-001",
+      "entity": "ccsb_publishlock",
+      "seedKey": {
+        "ccsb_lockkey": "US004-T09-LOCK-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Lock 001",
+        "ccsb_lockkey": "US004-T09-LOCK-001",
+        "ccsb_locktype": 831030000,
+        "ccsb_locklevel": 831030001,
+        "ccsb_lockstatus": 831030000,
+        "ccsb_scopetype": 831030001,
+        "ccsb_lockedon": "2026-01-15T00:00:00Z",
+        "ccsb_expireson": "2026-01-15T01:00:00Z",
+        "ccsb_isactive": true,
+        "ccsb_scopefromutc": "2026-01-15T00:00:00Z",
+        "ccsb_scopetoutc": "2026-01-16T00:00:00Z",
+        "ccsb_timezoneid": "Australia/Brisbane",
+        "ccsb_scopecriteriajson": "{\"range\":\"day\"}",
+        "ccsb_protectedactionsjson": "[\"publish\",\"rollback\"]",
+        "ccsb_retentionuntil": "2033-01-15T00:00:00Z",
+        "ccsb_correlationid": "US004-T09-CORR-PUBLISH"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_board",
+          "id": "core-board"
+        },
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_scheduleversionid",
+          "entity": "ccsb_scheduleversion",
+          "id": "schedule-version-published"
+        },
+        {
+          "field": "ccsb_publishsnapshotid",
+          "entity": "ccsb_publishsnapshot",
+          "id": "publish-snapshot-001"
+        },
+        {
+          "field": "ccsb_operationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        },
+        {
+          "field": "ccsb_scheduleitemid",
+          "entity": "ccsb_scheduleitem",
+          "id": "schedule-item-native-001"
+        }
+      ]
+    },
+    {
+      "id": "publish-snapshot-item-001",
+      "entity": "ccsb_publishsnapshotitem",
+      "seedKey": {
+        "ccsb_snapshotitemkey": "US004-T09-SNAPITEM-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Snapshot Item 001",
+        "ccsb_snapshotitemkey": "US004-T09-SNAPITEM-001",
+        "ccsb_sequence": 1,
+        "ccsb_snapshotitemtype": 831030000,
+        "ccsb_capturestatus": 831030000,
+        "ccsb_sourceentitylogicalname": "ccsb_scheduleitem",
+        "ccsb_sourcerecordid": "schedule-item-native-001",
+        "ccsb_payloadjson": "{\"scheduleItem\":\"US004-T09-SI-001\"}",
+        "ccsb_payloadhash": "sha256-us004-t09-snapitem-001",
+        "ccsb_rollbackimagejson": "{\"scheduleItem\":\"US004-T09-SI-001\"}",
+        "ccsb_isdeletedatcapture": false,
+        "ccsb_isimmutable": true,
+        "ccsb_retentionuntil": "2033-01-15T00:00:00Z"
+      },
+      "references": [
+        {
+          "field": "ccsb_publishsnapshotid",
+          "entity": "ccsb_publishsnapshot",
+          "id": "publish-snapshot-001"
+        },
+        {
+          "field": "ccsb_schedulechangeid",
+          "entity": "ccsb_schedulechange",
+          "id": "schedule-change-001"
+        },
+        {
+          "field": "ccsb_scheduleitemid",
+          "entity": "ccsb_scheduleitem",
+          "id": "schedule-item-native-001"
+        }
+      ]
+    },
+    {
+      "id": "operation-audit-001",
+      "entity": "ccsb_operationaudit",
+      "seedKey": {
+        "ccsb_auditeventkey": "US004-T09-AUDIT-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Audit Event 001",
+        "ccsb_auditeventkey": "US004-T09-AUDIT-001",
+        "ccsb_sequence": 1,
+        "ccsb_actorprincipaltype": 831030003,
+        "ccsb_actorprincipalid": "system",
+        "ccsb_auditeventtype": 831030003,
+        "ccsb_actiontype": 831030005,
+        "ccsb_outcome": 831030001,
+        "ccsb_severity": 831030000,
+        "ccsb_correlationid": "US004-T09-CORR-PUBLISH",
+        "ccsb_idempotencykey": "US004-T09-IDEMP-PUBLISH",
+        "ccsb_targetscopetype": 831030001,
+        "ccsb_targetreferenceid": "board-version-active",
+        "ccsb_occurredon": "2026-01-15T00:03:00Z",
+        "ccsb_recordhash": "sha256-us004-t09-audit-001",
+        "ccsb_previousrecordhash": "sha256-us004-t09-audit-genesis",
+        "ccsb_policyversion": "1.0.0",
+        "ccsb_retentionuntil": "2033-01-15T00:00:00Z"
+      },
+      "references": [
+        {
+          "field": "ccsb_operationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        },
+        {
+          "field": "ccsb_schedulechangeid",
+          "entity": "ccsb_schedulechange",
+          "id": "schedule-change-001"
+        },
+        {
+          "field": "ccsb_publishsnapshotid",
+          "entity": "ccsb_publishsnapshot",
+          "id": "publish-snapshot-001"
+        },
+        {
+          "field": "ccsb_publishlockid",
+          "entity": "ccsb_publishlock",
+          "id": "publish-lock-001"
+        }
+      ]
+    },
+    {
+      "id": "outbox-publish-001",
+      "entity": "ccsb_outboxevent",
+      "seedKey": {
+        "ccsb_eventkey": "US004-T09-OUTBOX-001"
+      },
+      "attributes": {
+        "ccsb_name": "US004-T09 Publish Outbox Event 001",
+        "ccsb_eventkey": "US004-T09-OUTBOX-001",
+        "ccsb_eventtype": 831030000,
+        "ccsb_eventversion": "1.0.0",
+        "ccsb_eventstatus": 831030000,
+        "ccsb_destinationtype": 831030006,
+        "ccsb_destinationkey": "internal-runtime",
+        "ccsb_payloadjson": "{\"event\":\"published\",\"board\":\"US004-T09-BOARD\"}",
+        "ccsb_payloadhash": "sha256-us004-t09-outbox-001",
+        "ccsb_payloadcontenttype": "application/json",
+        "ccsb_payloadsizebytes": 47,
+        "ccsb_occurredon": "2026-01-15T00:03:00Z",
+        "ccsb_availableon": "2026-01-15T00:03:00Z",
+        "ccsb_isreplayable": true,
+        "ccsb_partitionkey": "US004-T09-BOARD",
+        "ccsb_topic": "ccsb.publish",
+        "ccsb_attemptcount": 0,
+        "ccsb_maxattempts": 3,
+        "ccsb_retentionuntil": "2033-01-15T00:00:00Z",
+        "ccsb_correlationid": "US004-T09-CORR-PUBLISH",
+        "ccsb_idempotencykey": "US004-T09-IDEMP-PUBLISH"
+      },
+      "references": [
+        {
+          "field": "ccsb_boardid",
+          "entity": "ccsb_board",
+          "id": "core-board"
+        },
+        {
+          "field": "ccsb_boardversionid",
+          "entity": "ccsb_boardversion",
+          "id": "board-version-active"
+        },
+        {
+          "field": "ccsb_scheduleversionid",
+          "entity": "ccsb_scheduleversion",
+          "id": "schedule-version-published"
+        },
+        {
+          "field": "ccsb_operationid",
+          "entity": "ccsb_operation",
+          "id": "operation-publish"
+        },
+        {
+          "field": "ccsb_schedulechangeid",
+          "entity": "ccsb_schedulechange",
+          "id": "schedule-change-001"
+        },
+        {
+          "field": "ccsb_publishsnapshotid",
+          "entity": "ccsb_publishsnapshot",
+          "id": "publish-snapshot-001"
+        },
+        {
+          "field": "ccsb_publishlockid",
+          "entity": "ccsb_publishlock",
+          "id": "publish-lock-001"
+        }
+      ]
+    }
+  ],
+  "negativeFixtures": [
+    {
+      "id": "neg-duplicate-board-code",
+      "category": "duplicate-key",
+      "entity": "ccsb_boardregistry",
+      "description": "Attempt to create a second board registry with the same board code.",
+      "mutatesRecord": "board-reg-main",
+      "expectedDiagnostic": "CCSB-T09-DUPLICATE-KEY"
+    },
+    {
+      "id": "neg-snapshot-item-missing-snapshot",
+      "category": "missing-required-lookup",
+      "entity": "ccsb_publishsnapshotitem",
+      "description": "Attempt to save a snapshot item without the required publish snapshot lookup.",
+      "removesReferenceField": "ccsb_publishsnapshotid",
+      "expectedDiagnostic": "CCSB-T09-MISSING-REQUIRED-LOOKUP"
+    },
+    {
+      "id": "neg-active-version-edited",
+      "category": "invalid-lifecycle-transition",
+      "entity": "ccsb_boardversion",
+      "description": "Attempt to mutate an immutable active board version.",
+      "mutatesRecord": "board-version-active",
+      "expectedDiagnostic": "CCSB-T09-ACTIVE-VERSION-IMMUTABLE"
+    },
+    {
+      "id": "neg-stale-runtime-projection",
+      "category": "stale-projection",
+      "entity": "ccsb_runtimeprojection",
+      "description": "Attempt to activate a stale projection for the active board version.",
+      "mutatesRecord": "projection-active-board",
+      "sets": {
+        "ccsb_projectionstatus": 831020001,
+        "ccsb_iscurrent": true
+      },
+      "expectedDiagnostic": "CCSB-T09-STALE-PROJECTION"
+    },
+    {
+      "id": "neg-orphan-schedule-item",
+      "category": "orphaned-native-record",
+      "entity": "ccsb_scheduleitem",
+      "description": "Attempt to seed a native schedule item without board-version scope.",
+      "removesReferenceField": "ccsb_boardversionid",
+      "expectedDiagnostic": "CCSB-T09-ORPHANED-NATIVE-RECORD"
+    },
+    {
+      "id": "neg-cascade-delete-board",
+      "category": "unsupported-cascade",
+      "entity": "ccsb_boardregistry",
+      "description": "Attempt to delete a board registry while dependent versions, projections, operations, and audit records exist.",
+      "mutatesRecord": "board-reg-main",
+      "expectedDiagnostic": "CCSB-T09-UNSUPPORTED-CASCADE"
+    },
+    {
+      "id": "neg-invalid-migration-default",
+      "category": "invalid-migration-default",
+      "entity": "ccsb_boardversion",
+      "description": "Attempt to import a migrated board version with active lifecycle but no validation pass or immutable flag.",
+      "sets": {
+        "ccsb_lifecyclestate": 831020003,
+        "ccsb_validationstatus": 831020000,
+        "ccsb_isimmutable": false
+      },
+      "expectedDiagnostic": "CCSB-T09-INVALID-MIGRATION-DEFAULT"
+    }
+  ]
+}
+

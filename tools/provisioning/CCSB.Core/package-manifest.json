@@ -1,0 +1,11 @@
+{
+  "name": "CCSB Core Unmanaged Solution Generator",
+  "version": "1.0.2",
+  "created": "2026-06-24",
+  "solutionUniqueName": "CCSB_Core",
+  "publisherPrefix": "ccsb",
+  "tableCount": 26,
+  "primaryNameColumn": "ccsb_name",
+  "outputSolution": "artifacts/CCSB_Core_1_0_0_0_unmanaged.zip",
+  "note": "The generated package is a schema provisioner. Running it against a Dataverse development environment creates and exports the actual unmanaged solution ZIP."
+}

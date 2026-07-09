@@ -1,0 +1,315 @@
+--- /tmp/foundation/Program.cs	2026-07-02 10:53:57.000000000 +0000
++++ /tmp/foundation_v3/Program.cs	2026-07-02 11:05:09.536759623 +0000
+@@ -1,3 +1,4 @@
++using System.Data.Common;
+ using System.Text.Json;
+ using Microsoft.PowerPlatform.Dataverse.Client;
+ using Microsoft.Xrm.Sdk;
+@@ -36,9 +37,7 @@
+                 return 0;
+             }
+ 
+-            var connectionString = options.ConnectionString
+-                ?? Environment.GetEnvironmentVariable("DATAVERSE_CONNECTION_STRING")
+-                ?? throw new InvalidOperationException("Supply --connection or set DATAVERSE_CONNECTION_STRING.");
++            var connectionString = ResolveConnectionString(options);
+ 
+             using var service = new ServiceClient(connectionString);
+             if (!service.IsReady)
+@@ -59,6 +58,87 @@
+         }
+     }
+ 
++    private static string ResolveConnectionString(CommandLineOptions options)
++    {
++        if (!string.IsNullOrWhiteSpace(options.ConnectionString))
++        {
++            return options.ConnectionString;
++        }
++
++        if (!string.IsNullOrWhiteSpace(options.EnvironmentUrl))
++        {
++            return BuildInteractiveConnectionString(options);
++        }
++
++        var configuredConnection = Environment.GetEnvironmentVariable("DATAVERSE_CONNECTION_STRING");
++        if (!string.IsNullOrWhiteSpace(configuredConnection))
++        {
++            return configuredConnection;
++        }
++
++        throw new InvalidOperationException(
++            "Supply --connection, set DATAVERSE_CONNECTION_STRING, or use --environment-url for interactive OAuth sign-in.");
++    }
++
++    private static string BuildInteractiveConnectionString(CommandLineOptions options)
++    {
++        if (!Uri.TryCreate(options.EnvironmentUrl, UriKind.Absolute, out var environmentUri) ||
++            !string.Equals(environmentUri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
++        {
++            throw new ArgumentException("--environment-url must be an absolute HTTPS Dataverse environment URL.");
++        }
++
++        var redirectUri = string.IsNullOrWhiteSpace(options.RedirectUri)
++            ? CommandLineOptions.DefaultInteractiveRedirectUri
++            : options.RedirectUri;
++
++        if (!Uri.TryCreate(redirectUri, UriKind.Absolute, out var redirect) ||
++            !string.Equals(redirect.Host, "localhost", StringComparison.OrdinalIgnoreCase))
++        {
++            throw new ArgumentException(
++                "Interactive OAuth on .NET requires a loopback redirect URI. Use http://localhost.");
++        }
++
++        var appId = string.IsNullOrWhiteSpace(options.AppId)
++            ? CommandLineOptions.DefaultInteractiveAppId
++            : options.AppId;
++
++        if (!Guid.TryParse(appId, out _))
++        {
++            throw new ArgumentException("--app-id must be a valid Microsoft Entra application (client) ID GUID.");
++        }
++
++        var builder = new DbConnectionStringBuilder
++        {
++            ["AuthType"] = "OAuth",
++            ["Url"] = environmentUri.GetLeftPart(UriPartial.Authority),
++            ["AppId"] = appId,
++            ["RedirectUri"] = redirectUri,
++            ["LoginPrompt"] = "Always",
++            ["RequireNewInstance"] = "true",
++        };
++
++        if (!string.IsNullOrWhiteSpace(options.Username))
++        {
++            // Login hint only. Do not pass or store a user password in this tool.
++            builder["Username"] = options.Username;
++        }
++
++        if (!string.IsNullOrWhiteSpace(options.TokenCacheStorePath))
++        {
++            builder["TokenCacheStorePath"] = options.TokenCacheStorePath;
++        }
++
++        Console.WriteLine("Interactive OAuth selected. A browser sign-in window will open.");
++        Console.WriteLine($"Dataverse environment: {environmentUri.GetLeftPart(UriPartial.Authority)}");
++        if (!string.IsNullOrWhiteSpace(options.Username))
++        {
++            Console.WriteLine($"Sign-in hint: {options.Username}");
++        }
++
++        return builder.ConnectionString;
++    }
++
+     private static readonly JsonSerializerOptions JsonOptions = new()
+     {
+         PropertyNameCaseInsensitive = true,
+@@ -633,7 +713,15 @@
+ 
+ internal sealed class CommandLineOptions
+ {
++    public const string DefaultInteractiveAppId = "51f81489-12ee-4a9e-aaae-a2591f45987d";
++    public const string DefaultInteractiveRedirectUri = "http://localhost";
++
+     public string? ConnectionString { get; init; }
++    public string? EnvironmentUrl { get; init; }
++    public string? Username { get; init; }
++    public string? AppId { get; init; }
++    public string? RedirectUri { get; init; }
++    public string? TokenCacheStorePath { get; init; }
+     public string? SchemaPath { get; init; }
+     public string? ExportPath { get; init; }
+     public bool SkipExport { get; init; }
+@@ -642,6 +730,11 @@
+     public static CommandLineOptions Parse(string[] args)
+     {
+         string? connection = null;
++        string? environmentUrl = null;
++        string? username = null;
++        string? appId = null;
++        string? redirectUri = null;
++        string? tokenCacheStorePath = null;
+         string? schema = null;
+         string? export = null;
+         var skipExport = false;
+@@ -654,6 +747,21 @@
+                 case "--connection":
+                     connection = RequireValue(args, ref index, "--connection");
+                     break;
++                case "--environment-url":
++                    environmentUrl = RequireValue(args, ref index, "--environment-url");
++                    break;
++                case "--username":
++                    username = RequireValue(args, ref index, "--username");
++                    break;
++                case "--app-id":
++                    appId = RequireValue(args, ref index, "--app-id");
++                    break;
++                case "--redirect-uri":
++                    redirectUri = RequireValue(args, ref index, "--redirect-uri");
++                    break;
++                case "--token-cache-store-path":
++                    tokenCacheStorePath = RequireValue(args, ref index, "--token-cache-store-path");
++                    break;
+                 case "--schema":
+                     schema = RequireValue(args, ref index, "--schema");
+                     break;
+@@ -675,9 +783,19 @@
+             }
+         }
+ 
++        if (!string.IsNullOrWhiteSpace(connection) && !string.IsNullOrWhiteSpace(environmentUrl))
++        {
++            throw new ArgumentException("Use either --connection or --environment-url, not both.");
++        }
++
+         return new CommandLineOptions
+         {
+             ConnectionString = connection,
++            EnvironmentUrl = environmentUrl,
++            Username = username,
++            AppId = appId,
++            RedirectUri = redirectUri,
++            TokenCacheStorePath = tokenCacheStorePath,
+             SchemaPath = schema,
+             ExportPath = export,
+             SkipExport = skipExport,
+@@ -697,23 +815,35 @@
+ 
+     private static void PrintHelpAndExit()
+     {
+-        Console.WriteLine("""
++        Console.WriteLine($"""
+ CCSB Foundation Schema Provisioner
+ 
+ Usage:
+   dotnet run --project CCSB.FoundationSchema.Provisioner.csproj -- [options]
+ 
+-Options:
+-  --connection <Dataverse connection string>  Optional when DATAVERSE_CONNECTION_STRING is set.
+-  --schema <path>                             Override schema JSON path.
+-  --export <path>                             Unmanaged solution ZIP output path.
+-  --skip-export                               Create/update metadata but do not export a ZIP.
+-  --what-if                                   Validate the schema only; no Dataverse changes.
+-  --help                                      Show this help.
+-
+-Examples:
+-  dotnet run -- --what-if
+-  dotnet run -- --connection "AuthType=ClientSecret;Url=https://org.crm.dynamics.com;ClientId=...;ClientSecret=..." --export .\out\CCSB_FoundationSchema_1_0_0_0_unmanaged.zip
++Connection options (choose one):
++  --connection <Dataverse connection string>  Use an existing supported Dataverse connection string.
++  DATAVERSE_CONNECTION_STRING                 Environment-variable alternative to --connection.
++  --environment-url <https://org.crm.dynamics.com>
++      [--username <user@tenant.onmicrosoft.com>]
++      [--app-id <Entra application client ID>]
++      [--redirect-uri http://localhost]
++      [--token-cache-store-path <path>]
++                                            Interactive OAuth sign-in. A browser window opens.
++
++Other options:
++  --schema <path>                           Override schema JSON path.
++  --export <path>                           Unmanaged solution ZIP output path.
++  --skip-export                             Create/update metadata but do not export a ZIP.
++  --what-if                                 Validate the schema only; no Dataverse changes.
++  --help                                    Show this help.
++
++Interactive example:
++  dotnet run -- --environment-url https://org.crm.dynamics.com --username user@tenant.onmicrosoft.com
++
++Notes:
++  Interactive .NET OAuth requires a loopback redirect URI. The default is http://localhost.
++  The default sample client ID is for development/prototyping. Use your tenant-owned app registration for production.
+ """);
+         Environment.Exit(0);
+     }
+--- /tmp/foundation/run-provisioner.ps1	2026-07-02 10:57:27.000000000 +0000
++++ /tmp/foundation_v3/run-provisioner.ps1	2026-07-02 11:04:51.242125887 +0000
+@@ -1,11 +1,25 @@
+ # Intentionally not an advanced script. In advanced PowerShell scripts, -WhatIf can be
+ # consumed as a common parameter instead of being passed to the .NET provisioner.
+-# Keeping this a normal parameterized script ensures -WhatIf is forwarded reliably.
+ param(
+     [Parameter(Mandatory = $false)]
+     [string]$ConnectionString,
+ 
+     [Parameter(Mandatory = $false)]
++    [string]$EnvironmentUrl,
++
++    [Parameter(Mandatory = $false)]
++    [string]$Username,
++
++    [Parameter(Mandatory = $false)]
++    [string]$AppId = '51f81489-12ee-4a9e-aaae-a2591f45987d',
++
++    [Parameter(Mandatory = $false)]
++    [string]$RedirectUri = 'http://localhost',
++
++    [Parameter(Mandatory = $false)]
++    [string]$TokenCacheStorePath = (Join-Path $PSScriptRoot '.dataverse-token-cache'),
++
++    [Parameter(Mandatory = $false)]
+     [string]$ExportPath = (Join-Path $PSScriptRoot 'out\CCSB_FoundationSchema_1_0_0_0_unmanaged.zip'),
+ 
+     [Alias('ValidateOnly')]
+@@ -16,12 +30,14 @@
+ 
+ $ErrorActionPreference = 'Stop'
+ 
+-if (-not $ConnectionString) {
++if ($ConnectionString -and $EnvironmentUrl) {
++    throw 'Use either -ConnectionString or -EnvironmentUrl, not both.'
++}
++
++if (-not $ConnectionString -and -not $EnvironmentUrl) {
+     $ConnectionString = $env:DATAVERSE_CONNECTION_STRING
+ }
+ 
+-# Build the native executable arguments explicitly. This is reliable in both
+-# Windows PowerShell 5.1 and PowerShell 7+ and avoids ambiguous splatting.
+ $dotnetArguments = @(
+     'run',
+     '--project', (Join-Path $PSScriptRoot 'CCSB.FoundationSchema.Provisioner.csproj'),
+@@ -40,19 +56,39 @@
+ if ($ConnectionString) {
+     $dotnetArguments += @('--connection', $ConnectionString)
+ }
++elseif ($EnvironmentUrl) {
++    $dotnetArguments += @('--environment-url', $EnvironmentUrl)
++
++    if ($Username) {
++        $dotnetArguments += @('--username', $Username)
++    }
++
++    if ($AppId) {
++        $dotnetArguments += @('--app-id', $AppId)
++    }
++
++    if ($RedirectUri) {
++        $dotnetArguments += @('--redirect-uri', $RedirectUri)
++    }
++
++    if ($TokenCacheStorePath) {
++        $dotnetArguments += @('--token-cache-store-path', $TokenCacheStorePath)
++    }
++}
+ 
+ Push-Location $PSScriptRoot
+ try {
+     if ($WhatIf.IsPresent) {
+         Write-Host 'Validation mode: the provisioner will not connect to Dataverse or make metadata changes.'
+     }
+-    elseif (-not $ConnectionString) {
++    elseif (-not $ConnectionString -and -not $EnvironmentUrl) {
+         throw @'
+ A Dataverse connection is required to provision the schema.
+ 
+-Use one of these approaches:
+-  1. Pass -ConnectionString '<Dataverse connection string>' to this script.
+-  2. Set the DATAVERSE_CONNECTION_STRING environment variable for the current session.
++Use either:
++  .\run-provisioner.ps1 -ConnectionString '<Dataverse connection string>'
++or
++  .\run-provisioner.ps1 -EnvironmentUrl 'https://org.crm.dynamics.com' -Username 'user@tenant.onmicrosoft.com'
+ 
+ For validation only, use:
+   .\run-provisioner.ps1 -WhatIf

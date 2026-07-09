@@ -2,17 +2,16 @@
 
 This folder is the documentation-side evidence register for accepted work. The task-side state register is `tasks/completed/`.
 
-Initial legacy evidence identified during repository establishment:
+Reviewed completed tasks:
 
-| Task | Evidence currently available in the parent workspace |
+| Task | Accepted evidence |
 |---|---|
-| US-002-T01 | Compatibility contract, JSON contract, static validator, and validation report |
-| US-002-T02 | Compatibility metadata, JSON metadata, static validator, and validation report |
-| US-002-T03 | Pre-activation compatibility validator, fixtures, validation output, and static report |
-| US-004-T07 | Query and indexing solution |
-| US-004-T08 | Schema validation and compatibility record |
-| US-004-T09 | Data-factory integrity suite, seed manifest, validator, and report |
-| US-004-T10 | Schema migration/upgrade policy, rehearsal manifest, validator, and report |
+| US-013-T01 | Versioned runtime-projection schema |
+| US-020-T01 | Ordered group-definition schema |
+| US-021-T03 | Persisted path-identity/cache shape |
+| US-044-T01 | Board-versioned status models/transitions |
+| US-050-T01 | Completion/allocation measure data shape |
+| US-070-T02 | Scoped permission-profile/assignment schema |
 
-Before a release, copy or regenerate approved evidence into `docs/implementation/testing/evidence/<work-item>/` so the Git repository is self-contained.
+The static artefacts for US-002-T01–T03 and US-004-T07–T10 are retained as in-progress evidence because their live integration, CI, performance, or upgrade-rehearsal gates remain open.
 

@@ -1,0 +1,16 @@
+CCSB Foundation Schema Provisioner
+Source build: 1.0.0.6
+Dataverse solution version: 1.0.0.1
+
+Release notes
+-------------
+- Repairs the unsupported assumption that the V1 core Schedule Board display name has logical name ccsb_scheduleboard.
+- Renames the foundation Board registry logical name to ccsb_boardregistry so Core Schedule Board can safely resolve to ccsb_board.
+- Validates and resolves all external Core V1 table dependencies before adding metadata.
+- Resolves Schedule Board by exact logical name first, then by unique custom-table display name 'Schedule Board'.
+- Adds optional -CoreEntityOverride / --core-entity-override support for environments with duplicate display labels or a tenant-specific logical name.
+- Keeps the provisioner safe to re-run after the earlier partial schema deployment.
+- Adds a live metadata compatibility gate before publish/export, covering solution version, table ownership, required fields, field types, field constraints, choice values, lookup targets, relationship cardinality, and Restrict delete behavior.
+- Adds --validate-live-only / -ValidateLiveOnly for connected validation without metadata changes.
+- Adds --compatibility-report / -CompatibilityReportPath for machine-readable validation diagnostics.
+- Adds --export-managed / -ExportManaged for managed solution package export after DEV validation, supporting US-004-T10 managed upgrade rehearsal.

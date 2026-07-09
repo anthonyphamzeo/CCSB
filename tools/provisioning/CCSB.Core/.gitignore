@@ -1,0 +1,5 @@
+bin/
+obj/
+artifacts/*.zip
+artifacts/*.json
+!artifacts/.gitkeep

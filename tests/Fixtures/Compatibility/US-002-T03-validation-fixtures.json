@@ -1,0 +1,228 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-002-T03",
+  "cases": [
+    {
+      "id": "T03-FX-001",
+      "name": "Compatible V1 board",
+      "snapshot": {
+        "validationRunId": "00000000-0000-0000-0000-000000000001",
+        "boardVersion": {
+          "id": "10000000-0000-0000-0000-000000000001",
+          "rowVersion": "42",
+          "lifecycleState": "Ready",
+          "productVersion": "1.0.0",
+          "configurationSchemaVersion": "1.0.0",
+          "migrationState": "Completed",
+          "configurationHash": "sha256:board-v1",
+          "sourceChangeToken": "42"
+        },
+        "configurationChecks": [
+          {
+            "id": "normalized-config-complete",
+            "status": "pass",
+            "configurationHash": "sha256:board-v1"
+          },
+          {
+            "id": "configuration-hash-current",
+            "status": "pass",
+            "configurationHash": "sha256:board-v1"
+          },
+          {
+            "id": "board-validation-current",
+            "status": "pass",
+            "configurationHash": "sha256:board-v1"
+          }
+        ],
+        "entityDefinitions": [
+          {
+            "id": "entity-booking",
+            "enabled": true,
+            "sourceType": "Customer Owned",
+            "validationStatus": "Valid",
+            "metadataCurrent": true
+          }
+        ],
+        "fieldMappings": [
+          {
+            "id": "map-booking-start",
+            "enabled": true,
+            "required": true,
+            "resolved": true,
+            "typeCompatible": true,
+            "affectedField": "scheduledstart"
+          }
+        ],
+        "relationshipMappings": [
+          {
+            "id": "rel-booking-resource",
+            "enabled": true,
+            "required": true,
+            "resolved": true,
+            "metadataCompatible": true
+          }
+        ],
+        "featureFlags": {
+          "ccsb.foundation.schema.1.0.0.1": true,
+          "ccsb.runtime.projection.1.0.0": true
+        },
+        "migrationDataChecks": [
+          {
+            "id": "compatibility-metadata-backfill",
+            "status": "pass"
+          },
+          {
+            "id": "projection-version-backfill",
+            "status": "pass"
+          },
+          {
+            "id": "protected-record-integrity",
+            "status": "pass"
+          }
+        ],
+        "liveSchemaReport": {
+          "present": true,
+          "current": true,
+          "solutionVersion": "1.0.0.1",
+          "blockerCount": 0
+        },
+        "runtimeProjection": {
+          "id": "projection-v1",
+          "isCurrent": true,
+          "status": "Valid",
+          "productVersion": "1.0.0",
+          "configurationSchemaVersion": "1.0.0",
+          "projectionSchemaVersion": "1.0.0",
+          "configurationHash": "sha256:board-v1",
+          "sourceChangeToken": "42"
+        }
+      },
+      "expected": {
+        "allowed": true,
+        "outcome": "Pass",
+        "compatibilityStatus": "Compatible",
+        "diagnosticCodes": []
+      }
+    },
+    {
+      "id": "T03-FX-002",
+      "name": "Incompatible board returns complete remediation set",
+      "snapshot": {
+        "validationRunId": "00000000-0000-0000-0000-000000000002",
+        "boardVersion": {
+          "id": "10000000-0000-0000-0000-000000000002",
+          "rowVersion": "99",
+          "lifecycleState": "Draft",
+          "configurationSchemaVersion": "2.0.0",
+          "migrationState": "Failed",
+          "configurationHash": "sha256:board-v2",
+          "sourceChangeToken": "99"
+        },
+        "configurationChecks": [
+          {
+            "id": "normalized-config-complete",
+            "status": "block",
+            "configurationHash": "sha256:board-v2",
+            "affectedRecordId": "config-invalid"
+          },
+          {
+            "id": "configuration-hash-current",
+            "status": "pass",
+            "configurationHash": "sha256:old"
+          }
+        ],
+        "entityDefinitions": [
+          {
+            "id": "entity-external",
+            "enabled": true,
+            "sourceType": "External Virtual",
+            "validationStatus": "Invalid",
+            "metadataCurrent": false
+          }
+        ],
+        "fieldMappings": [
+          {
+            "id": "map-required-missing",
+            "enabled": true,
+            "required": true,
+            "resolved": false,
+            "typeCompatible": true,
+            "affectedField": "scheduledstart"
+          },
+          {
+            "id": "map-type-mismatch",
+            "enabled": true,
+            "required": true,
+            "resolved": true,
+            "typeCompatible": false,
+            "affectedField": "duration"
+          }
+        ],
+        "relationshipMappings": [
+          {
+            "id": "rel-invalid",
+            "enabled": true,
+            "required": true,
+            "resolved": false,
+            "metadataCompatible": false
+          }
+        ],
+        "featureFlags": {
+          "ccsb.foundation.schema.1.0.0.1": false
+        },
+        "migrationDataChecks": [
+          {
+            "id": "compatibility-metadata-backfill",
+            "status": "fail",
+            "affectedRecordId": "board-v2"
+          },
+          {
+            "id": "projection-version-backfill",
+            "status": "pass"
+          }
+        ],
+        "liveSchemaReport": {
+          "present": true,
+          "current": false,
+          "solutionVersion": "1.0.0.0",
+          "blockerCount": 2
+        },
+        "runtimeProjection": {
+          "id": "projection-old",
+          "isCurrent": true,
+          "status": "Failed",
+          "productVersion": "1.0.0",
+          "configurationSchemaVersion": "1.0.0",
+          "projectionSchemaVersion": "0.9.0",
+          "configurationHash": "sha256:old",
+          "sourceChangeToken": "98"
+        }
+      },
+      "expected": {
+        "allowed": false,
+        "outcome": "Block",
+        "compatibilityStatus": "Incompatible",
+        "diagnosticCodes": [
+          "CCSB-COMPAT-CONFIGURATION-INVALID",
+          "CCSB-COMPAT-VALIDATION-STALE",
+          "CCSB-COMPAT-EVIDENCE-MISSING",
+          "CCSB-COMPAT-METADATA-MISSING",
+          "CCSB-COMPAT-PRODUCT-UNSUPPORTED",
+          "CCSB-COMPAT-DOWNGRADE-BLOCKED",
+          "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+          "CCSB-COMPAT-MIGRATION-REQUIRED",
+          "CCSB-COMPAT-MIGRATED-DATA-INVALID",
+          "CCSB-COMPAT-SOURCE-TYPE-UNSUPPORTED",
+          "CCSB-COMPAT-MAPPING-METADATA-STALE",
+          "CCSB-COMPAT-MAPPING-REQUIRED-MISSING",
+          "CCSB-COMPAT-MAPPING-TYPE-MISMATCH",
+          "CCSB-COMPAT-RELATIONSHIP-INCOMPATIBLE",
+          "CCSB-COMPAT-FEATURE-FLAG-DISABLED",
+          "CCSB-COMPAT-LIVE-SCHEMA-BLOCKED",
+          "CCSB-COMPAT-PROJECTION-STALE",
+          "CCSB-COMPAT-PROJECTION-METADATA-MISMATCH"
+        ]
+      }
+    }
+  ]
+}

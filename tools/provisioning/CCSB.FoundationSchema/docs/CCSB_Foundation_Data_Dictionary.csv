@@ -1,0 +1,295 @@
+Table Logical Name,Table Display Name,Field Logical Name,Field Schema Name,Field Display Name,Type,Required,Lookup Target / Choices,Description,Scope
+ccsb_location,Location,ccsb_name,ccsb_Name,Location Name,Primary Name,Yes,,Human-readable name of the location.,New table
+ccsb_location,Location,ccsb_locationcode,ccsb_LocationCode,Location Code,String,Yes,,Stable human-readable or source-system code for the location.,New table
+ccsb_location,Location,ccsb_locationtype,ccsb_LocationType,Location Type,Choice,Yes,831020000=Facility | 831020001=Service Area | 831020002=Region | 831020003=Cluster | 831020004=Virtual Location | 831020005=Other,Classifies how the location is used operationally.,New table
+ccsb_location,Location,ccsb_externalkey,ccsb_ExternalKey,External Key,String,No,,Stable key used to reconcile this location to an external source.,New table
+ccsb_location,Location,ccsb_timezoneid,ccsb_TimeZoneId,Time Zone ID,String,No,,IANA or Windows time-zone identifier used for local schedule display and validation.,New table
+ccsb_location,Location,ccsb_addressline1,ccsb_AddressLine1,Address Line 1,String,No,,Primary street address line.,New table
+ccsb_location,Location,ccsb_addressline2,ccsb_AddressLine2,Address Line 2,String,No,,Secondary address line.,New table
+ccsb_location,Location,ccsb_suburb,ccsb_Suburb,Suburb / City,String,No,,"Suburb, city, or locality.",New table
+ccsb_location,Location,ccsb_stateprovince,ccsb_StateProvince,State / Province,String,No,,"State, province, or territory.",New table
+ccsb_location,Location,ccsb_postcode,ccsb_PostCode,Postcode,String,No,,Postal or ZIP code.,New table
+ccsb_location,Location,ccsb_countrycode,ccsb_CountryCode,Country Code,String,No,,ISO country code.,New table
+ccsb_location,Location,ccsb_latitude,ccsb_Latitude,Latitude,Decimal,No,,"Latitude for travel, proximity, or mapping calculations.",New table
+ccsb_location,Location,ccsb_longitude,ccsb_Longitude,Longitude,Decimal,No,,"Longitude for travel, proximity, or mapping calculations.",New table
+ccsb_location,Location,ccsb_defaultcapacity,ccsb_DefaultCapacity,Default Capacity,Decimal,No,,Default capacity available at this location when a service does not define an override.,New table
+ccsb_location,Location,ccsb_effectivefrom,ccsb_EffectiveFrom,Effective From,DateOnly,No,,Date from which the location may be used.,New table
+ccsb_location,Location,ccsb_effectiveto,ccsb_EffectiveTo,Effective To,DateOnly,No,,Date after which the location may not be used.,New table
+ccsb_location,Location,ccsb_sortorder,ccsb_SortOrder,Sort Order,Integer,No,,Display order within board navigation and grouping.,New table
+ccsb_location,Location,ccsb_isschedulingenabled,ccsb_IsSchedulingEnabled,Scheduling Enabled,Boolean,Yes,,Indicates whether new scheduling activity may be allocated to this location.,New table
+ccsb_location,Location,ccsb_notes,ccsb_Notes,Notes,Memo,No,,Operational notes about the location.,New table
+ccsb_boardregistry,Board Registry,ccsb_name,ccsb_Name,Board Registry Name,Primary Name,Yes,,Human-readable board registry name.,New table
+ccsb_boardregistry,Board Registry,ccsb_boardcode,ccsb_BoardCode,Board Code,String,Yes,,"Stable unique code used in integrations, URLs, and configuration references.",New table
+ccsb_boardregistry,Board Registry,ccsb_description,ccsb_Description,Description,Memo,No,,Business purpose and operating scope of the board.,New table
+ccsb_boardregistry,Board Registry,ccsb_boardtype,ccsb_BoardType,Board Type,Choice,Yes,831020000=Operational Scheduling | 831020001=Dispatch | 831020002=Capacity Planning | 831020003=Roster Planning | 831020004=Read Only,Primary operational use of the board.,New table
+ccsb_boardregistry,Board Registry,ccsb_lifecyclestate,ccsb_LifecycleState,Lifecycle State,Choice,Yes,831020000=Draft | 831020001=Active | 831020002=Suspended | 831020003=Retired,Business lifecycle of the board identity.,New table
+ccsb_boardregistry,Board Registry,ccsb_defaulttimezoneid,ccsb_DefaultTimeZoneId,Default Time Zone ID,String,No,,Default IANA or Windows time-zone identifier for board rendering.,New table
+ccsb_boardregistry,Board Registry,ccsb_defaultplanninghorizondays,ccsb_DefaultPlanningHorizonDays,Default Planning Horizon (Days),Integer,No,,Default number of days loaded when the board opens.,New table
+ccsb_boardregistry,Board Registry,ccsb_maxhierarchydepth,ccsb_MaxHierarchyDepth,Maximum Hierarchy Depth,Integer,No,,Maximum configured group hierarchy depth for this board.,New table
+ccsb_boardregistry,Board Registry,ccsb_allowadhocchanges,ccsb_AllowAdHocChanges,Allow Ad Hoc Changes,Boolean,Yes,,Allows authorised planners to create or amend schedule records outside configured templates.,New table
+ccsb_boardregistry,Board Registry,ccsb_allowunassignedwork,ccsb_AllowUnassignedWork,Allow Unassigned Work,Boolean,Yes,,Allows valid schedule items to remain intentionally unassigned.,New table
+ccsb_boardregistry,Board Registry,ccsb_externalkey,ccsb_ExternalKey,External Key,String,No,,Stable external identifier for the board.,New table
+ccsb_boardregistry,Board Registry,ccsb_effectivefrom,ccsb_EffectiveFrom,Effective From,DateOnly,No,,Date from which the board may be used.,New table
+ccsb_boardregistry,Board Registry,ccsb_effectiveto,ccsb_EffectiveTo,Effective To,DateOnly,No,,Date after which the board may not be used.,New table
+ccsb_boardversion,Board Version,ccsb_name,ccsb_Name,Board Version Name,Primary Name,Yes,,Human-readable version name.,New table
+ccsb_boardversion,Board Version,ccsb_versionnumber,ccsb_VersionNumber,Version Number,Integer,Yes,,Monotonically increasing version number within the Board.,New table
+ccsb_boardversion,Board Version,ccsb_versionlabel,ccsb_VersionLabel,Version Label,String,No,,"Readable release label, for example 2026.1 or Winter Release.",New table
+ccsb_boardversion,Board Version,ccsb_productversion,ccsb_ProductVersion,Product Version,String,No,,CCSB product semantic version that last validated or activated this board version.,New table
+ccsb_boardversion,Board Version,ccsb_configurationschemaversion,ccsb_ConfigurationSchemaVersion,Configuration Schema Version,String,No,,Configuration schema version used by this normalized board version.,New table
+ccsb_boardversion,Board Version,ccsb_migrationstate,ccsb_MigrationState,Migration State,Choice,No,831020000=None | 831020001=Pending | 831020002=Running | 831020003=Completed | 831020004=Failed | 831020005=Blocked,Compatibility migration state for this board version.,New table
+ccsb_boardversion,Board Version,ccsb_compatibilitystatus,ccsb_CompatibilityStatus,Compatibility Status,Choice,No,831020000=Not Evaluated | 831020001=Compatible | 831020002=Compatible With Warnings | 831020003=Incompatible | 831020004=Migration Required | 831020005=Blocked,Latest product and schema compatibility status used by validation and activation gates.,New table
+ccsb_boardversion,Board Version,ccsb_lifecyclestate,ccsb_LifecycleState,Lifecycle State,Choice,Yes,831020000=Draft | 831020001=Validating | 831020002=Ready | 831020003=Active | 831020004=Superseded | 831020005=Retired,Lifecycle of the immutable board configuration version.,New table
+ccsb_boardversion,Board Version,ccsb_validationstatus,ccsb_ValidationStatus,Validation Status,Choice,Yes,831020000=Not Run | 831020001=Passed | 831020002=Passed With Warnings | 831020003=Failed,Latest validation outcome for the version.,New table
+ccsb_boardversion,Board Version,ccsb_effectivefrom,ccsb_EffectiveFrom,Effective From,DateAndTime,No,,Timestamp from which the version is permitted to be active.,New table
+ccsb_boardversion,Board Version,ccsb_effectiveto,ccsb_EffectiveTo,Effective To,DateAndTime,No,,Timestamp after which the version must not be active.,New table
+ccsb_boardversion,Board Version,ccsb_activatedon,ccsb_ActivatedOn,Activated On,DateAndTime,No,,Timestamp at which the version became active.,New table
+ccsb_boardversion,Board Version,ccsb_configurationhash,ccsb_ConfigurationHash,Configuration Hash,String,No,,Deterministic hash of normalized configuration content used to identify drift.,New table
+ccsb_boardversion,Board Version,ccsb_isimmutable,ccsb_IsImmutable,Is Immutable,Boolean,Yes,,Marks the version as immutable after activation or publication.,New table
+ccsb_boardversion,Board Version,ccsb_changecomment,ccsb_ChangeComment,Change Comment,Memo,No,,Reason and summary for this version.,New table
+ccsb_boardversion,Board Version,ccsb_validationrunon,ccsb_ValidationRunOn,Validation Run On,DateAndTime,No,,Timestamp of the most recent validation run.,New table
+ccsb_boardversion,Board Version,ccsb_externalkey,ccsb_ExternalKey,External Key,String,No,,Stable external identifier for the board version.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_name,ccsb_Name,Entity Definition Name,Primary Name,Yes,,Readable definition name.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_entitylogicalname,ccsb_EntityLogicalName,Entity Logical Name,String,Yes,,Dataverse logical name of the mapped source table.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_entitysetname,ccsb_EntitySetName,Entity Set Name,String,No,,Dataverse Web API entity-set name.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_entityrole,ccsb_EntityRole,Entity Role,Choice,Yes,831020000=Booking | 831020001=Activity | 831020002=Assignment | 831020003=Resource | 831020004=Service | 831020005=Customer | 831020006=Availability | 831020007=Shift | 831020008=Leave | 831020009=Location | 831020010=Other,Semantic scheduling role fulfilled by the source table.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_sourcetype,ccsb_SourceType,Source Type,Choice,Yes,831020000=Native CCSB | 831020001=Customer Owned | 831020002=External Virtual,Whether the table is native CCSB or customer-owned.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_primaryidfield,ccsb_PrimaryIdField,Primary ID Field,String,Yes,,Logical name of the source primary ID field.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_primarynamefield,ccsb_PrimaryNameField,Primary Name Field,String,No,,Logical name of the primary display name field.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_defaultsort,ccsb_DefaultSort,Default Sort,String,No,,Safe default sort expression for runtime retrieval.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_filterodata,ccsb_FilterOData,OData Filter,Memo,No,,Approved OData filter applied when this entity is queried by the board.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_filterfetchxml,ccsb_FilterFetchXml,FetchXML Filter,Memo,No,,Approved FetchXML filter applied where OData is not sufficient.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_allowread,ccsb_AllowRead,Allow Read,Boolean,Yes,,Permits the runtime to read records from the mapped source.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_allowcreate,ccsb_AllowCreate,Allow Create,Boolean,Yes,,Permits the runtime to create records in the mapped source.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_allowupdate,ccsb_AllowUpdate,Allow Update,Boolean,Yes,,Permits the runtime to update approved mapped fields.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_allowdelete,ccsb_AllowDelete,Allow Delete,Boolean,Yes,,Permits the runtime to delete records in the mapped source.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_allowdirectformopen,ccsb_AllowDirectFormOpen,Allow Direct Form Open,Boolean,Yes,,Allows the runtime to open the mapped Dataverse form for a record.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_metadataetag,ccsb_MetadataETag,Metadata ETag,String,No,,Metadata fingerprint used to detect source schema drift.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_lastvalidatedon,ccsb_LastValidatedOn,Last Validated On,DateAndTime,No,,Timestamp at which source metadata was last validated.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_validationstatus,ccsb_ValidationStatus,Validation Status,Choice,Yes,831020000=Unknown | 831020001=Valid | 831020002=Warning | 831020003=Invalid,Current metadata validation outcome.,New table
+ccsb_entitydefinition,Entity Definition,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether this entity definition is active for its Board Version.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_name,ccsb_Name,Field Mapping Name,Primary Name,Yes,,Readable mapping name.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_semanticname,ccsb_SemanticName,Semantic Name,String,Yes,,"Stable CCSB semantic, for example activity.start or assignment.resource.",New table
+ccsb_fieldmapping,Field Mapping,ccsb_sourcefieldlogicalname,ccsb_SourceFieldLogicalName,Source Field Logical Name,String,Yes,,Logical name of the mapped source field.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_sourcefieldtype,ccsb_SourceFieldType,Source Field Type,String,No,,Dataverse metadata type of the mapped source field.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_targetdatatype,ccsb_TargetDataType,Target Data Type,Choice,Yes,831020000=String | 831020001=Integer | 831020002=Decimal | 831020003=Boolean | 831020004=Date Only | 831020005=Date and Time | 831020006=Lookup | 831020007=Choice | 831020008=JSON,Expected semantic data type after transformation.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_transformationtype,ccsb_TransformationType,Transformation Type,Choice,Yes,831020000=Direct | 831020001=Lookup ID | 831020002=Option Mapping | 831020003=Date Time Conversion | 831020004=Expression | 831020005=Constant | 831020006=Concatenate | 831020007=JSON Path,Transformation applied before a value is consumed or written.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_transformationdefinition,ccsb_TransformationDefinition,Transformation Definition,Memo,No,,Controlled expression or JSON definition of the transformation.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_optionmapjson,ccsb_OptionMapJson,Option Map JSON,Memo,No,,Explicit mapping of source choice values to CCSB semantic values.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_fallbackvalue,ccsb_FallbackValue,Fallback Value,String,No,,Value used when the source value is blank or unavailable.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_lookuptargetlogicalname,ccsb_LookupTargetLogicalName,Lookup Target Logical Name,String,No,,Expected target table when the source field is a lookup.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_lookupprimarynamefield,ccsb_LookupPrimaryNameField,Lookup Primary Name Field,String,No,,Display field used when resolving a lookup.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_isrequired,ccsb_IsRequired,Required,Boolean,Yes,,Requires the mapping to resolve successfully before activation.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_isnullable,ccsb_IsNullable,Nullable,Boolean,Yes,,Allows the semantic value to be null.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_readenabled,ccsb_ReadEnabled,Read Enabled,Boolean,Yes,,Allows this mapping to be used in runtime reads.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_writebehavior,ccsb_WriteBehavior,Write Behavior,Choice,Yes,831020000=Never | 831020001=Create Only | 831020002=Update Allowed,Permitted runtime write behavior for this mapping.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_validationexpression,ccsb_ValidationExpression,Validation Expression,String,No,,Optional validation expression or regular expression.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_sortorder,ccsb_SortOrder,Sort Order,Integer,No,,Evaluation order where fields depend on other mappings.,New table
+ccsb_fieldmapping,Field Mapping,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether the field mapping is active.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_name,ccsb_Name,Relationship Mapping Name,Primary Name,Yes,,Readable relationship mapping name.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_relationshiprole,ccsb_RelationshipRole,Relationship Role,String,Yes,,Stable semantic such as booking.activity or activity.assignment.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_relationshiplogicalname,ccsb_RelationshipLogicalName,Relationship Logical Name,String,Yes,,Dataverse relationship schema/logical name.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_relationshiptype,ccsb_RelationshipType,Relationship Type,Choice,Yes,831020000=Many-to-One | 831020001=One-to-Many | 831020002=Many-to-Many,Cardinality of the source relationship.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_sourcelookupfield,ccsb_SourceLookupField,Source Lookup Field,String,No,,Source lookup field used to resolve the relationship.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_sourcenavigationproperty,ccsb_SourceNavigationProperty,Source Navigation Property,String,No,,Web API navigation property from the source record.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_targetnavigationproperty,ccsb_TargetNavigationProperty,Target Navigation Property,String,No,,Web API navigation or collection property from the target record.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_relatedprimaryidfield,ccsb_RelatedPrimaryIdField,Related Primary ID Field,String,No,,Primary identifier field of the related source table.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_isrequired,ccsb_IsRequired,Required,Boolean,Yes,,Requires the relationship to resolve before activation.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_writebehavior,ccsb_WriteBehavior,Write Behavior,Choice,Yes,831020000=Never | 831020001=Create Only | 831020002=Update Allowed,Permitted runtime write behavior for this relationship.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_deletebehavior,ccsb_DeleteBehavior,Delete Behavior,Choice,Yes,831020000=Restrict | 831020001=Retain Historical Reference,Intended business delete policy. Physical lookup relationships are created as Restrict.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_filterdefinition,ccsb_FilterDefinition,Filter Definition,Memo,No,,Optional condition limiting related records used by the runtime.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_sortorder,ccsb_SortOrder,Sort Order,Integer,No,,Evaluation order.,New table
+ccsb_relationshipmapping,Relationship Mapping,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether the relationship mapping is active.,New table
+ccsb_statusmodel,Status Model,ccsb_name,ccsb_Name,Status Model Name,Primary Name,Yes,,Readable status model name.,New table
+ccsb_statusmodel,Status Model,ccsb_statusmodelcode,ccsb_StatusModelCode,Status Model Code,String,Yes,,Stable code for the status model.,New table
+ccsb_statusmodel,Status Model,ccsb_appliestorole,ccsb_AppliesToRole,Applies To Role,Choice,Yes,831020000=Booking | 831020001=Activity | 831020002=Assignment | 831020003=Schedule Item | 831020004=Service,Scheduling semantic governed by this status model.,New table
+ccsb_statusmodel,Status Model,ccsb_systemofrecord,ccsb_SystemOfRecord,System of Record,Choice,Yes,831020000=Customer Source | 831020001=Native CCSB | 831020002=External Integration,System permitted to own the lifecycle status.,New table
+ccsb_statusmodel,Status Model,ccsb_initialstatuscode,ccsb_InitialStatusCode,Initial Status Code,String,No,,Initial status key used when a record is created.,New table
+ccsb_statusmodel,Status Model,ccsb_terminalstatuscodesjson,ccsb_TerminalStatusCodesJson,Terminal Status Codes JSON,Memo,No,,JSON array of terminal status keys.,New table
+ccsb_statusmodel,Status Model,ccsb_statuspalettejson,ccsb_StatusPaletteJson,Status Palette JSON,Memo,No,,JSON color and display configuration for statuses.,New table
+ccsb_statusmodel,Status Model,ccsb_allowexternalstatusupdate,ccsb_AllowExternalStatusUpdate,Allow External Status Update,Boolean,Yes,,Allows mapped external records to update status through approved mappings.,New table
+ccsb_statusmodel,Status Model,ccsb_allowmanualoverride,ccsb_AllowManualOverride,Allow Manual Override,Boolean,Yes,,Allows authorised users to override transition validation.,New table
+ccsb_statusmodel,Status Model,ccsb_validationmode,ccsb_ValidationMode,Validation Mode,Choice,Yes,831020000=Block | 831020001=Warn | 831020002=Allow,How invalid transitions are handled.,New table
+ccsb_statusmodel,Status Model,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether the status model is active.,New table
+ccsb_statusmodel,Status Model,ccsb_sortorder,ccsb_SortOrder,Sort Order,Integer,No,,Display and evaluation order.,New table
+ccsb_resourcerole,Resource Role,ccsb_name,ccsb_Name,Resource Role Name,Primary Name,Yes,,Readable resource role name.,New table
+ccsb_resourcerole,Resource Role,ccsb_rolecode,ccsb_RoleCode,Role Code,String,Yes,,Stable resource role code.,New table
+ccsb_resourcerole,Resource Role,ccsb_description,ccsb_Description,Description,Memo,No,,Business definition and usage notes.,New table
+ccsb_resourcerole,Resource Role,ccsb_rolecategory,ccsb_RoleCategory,Role Category,Choice,Yes,831020000=Person | 831020001=Vehicle | 831020002=Equipment | 831020003=Facility | 831020004=Seat / Capacity | 831020005=Other,High-level category of resource role.,New table
+ccsb_resourcerole,Resource Role,ccsb_defaultquantity,ccsb_DefaultQuantity,Default Quantity,Integer,Yes,,Default number of equivalent resources required.,New table
+ccsb_resourcerole,Resource Role,ccsb_minimumquantity,ccsb_MinimumQuantity,Minimum Quantity,Integer,Yes,,Minimum number of resources required to satisfy the role.,New table
+ccsb_resourcerole,Resource Role,ccsb_maximumquantity,ccsb_MaximumQuantity,Maximum Quantity,Integer,No,,Maximum number of resources permitted for the role.,New table
+ccsb_resourcerole,Resource Role,ccsb_defaultcapacityrequired,ccsb_DefaultCapacityRequired,Default Capacity Required,Decimal,No,,Default required capacity contribution for this role.,New table
+ccsb_resourcerole,Resource Role,ccsb_capacityunit,ccsb_CapacityUnit,Capacity Unit,String,No,,"Unit for capacity values, for example seats, hours, or kilograms.",New table
+ccsb_resourcerole,Resource Role,ccsb_compatibleresourcefilterjson,ccsb_CompatibleResourceFilterJson,Compatible Resource Filter JSON,Memo,No,,Approved configuration filter identifying compatible resources.,New table
+ccsb_resourcerole,Resource Role,ccsb_requiredskillcriteriajson,ccsb_RequiredSkillCriteriaJson,Required Skill Criteria JSON,Memo,No,,"Configured skill, qualification, or certification requirements.",New table
+ccsb_resourcerole,Resource Role,ccsb_allowmultipleresources,ccsb_AllowMultipleResources,Allow Multiple Resources,Boolean,Yes,,Allows multiple equivalent resources to satisfy the role.,New table
+ccsb_resourcerole,Resource Role,ccsb_allowsubstitution,ccsb_AllowSubstitution,Allow Substitution,Boolean,Yes,,Allows a compatible resource to substitute for a preferred type.,New table
+ccsb_resourcerole,Resource Role,ccsb_allowconcurrentassignment,ccsb_AllowConcurrentAssignment,Allow Concurrent Assignment,Boolean,Yes,,Allows this role to be assigned concurrently where other rules permit it.,New table
+ccsb_resourcerole,Resource Role,ccsb_displaycolor,ccsb_DisplayColor,Display Color,String,No,,Hex color used for role display where configured.,New table
+ccsb_resourcerole,Resource Role,ccsb_sortorder,ccsb_SortOrder,Sort Order,Integer,No,,Display order.,New table
+ccsb_resourcerole,Resource Role,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether the resource role is active.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_name,ccsb_Name,Permission Profile Name,Primary Name,Yes,,Readable permission profile name.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_profilecode,ccsb_ProfileCode,Profile Code,String,Yes,,Stable permission-profile code.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_description,ccsb_Description,Description,Memo,No,,Purpose and authorised operational scope.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_profiletype,ccsb_ProfileType,Profile Type,Choice,Yes,831020000=Planner | 831020001=Dispatcher | 831020002=Resource Manager | 831020003=Release Manager | 831020004=Configuration Administrator | 831020005=Read Only | 831020006=Support,Intended operational persona.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_scopemode,ccsb_ScopeMode,Scope Mode,Choice,Yes,831020000=All Boards | 831020001=Board | 831020002=Location | 831020003=Group | 831020004=Assigned Work,Scope used when evaluating permission assignments.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canviewschedule,ccsb_CanViewSchedule,Can View Schedule,Boolean,Yes,,Allows viewing board data in scope.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_cancreateschedule,ccsb_CanCreateSchedule,Can Create Schedule,Boolean,Yes,,Allows creating schedule records in scope.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_caneditschedule,ccsb_CanEditSchedule,Can Edit Schedule,Boolean,Yes,,Allows editing schedule records in scope.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canassignresources,ccsb_CanAssignResources,Can Assign Resources,Boolean,Yes,,Allows assigning or unassigning resources.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canoverrideconflicts,ccsb_CanOverrideConflicts,Can Override Conflicts,Boolean,Yes,,Allows an authorised override of warnings or conflicts.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canpublish,ccsb_CanPublish,Can Publish,Boolean,Yes,,Allows publishing approved schedule versions.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canrollback,ccsb_CanRollback,Can Roll Back,Boolean,Yes,,Allows rollback of a publish operation where lifecycle policy permits it.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canmanageconfiguration,ccsb_CanManageConfiguration,Can Manage Configuration,Boolean,Yes,,Allows draft configuration changes.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canviewaudit,ccsb_CanViewAudit,Can View Audit,Boolean,Yes,,Allows viewing immutable snapshots and operation evidence.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_canmanageintegrations,ccsb_CanManageIntegrations,Can Manage Integrations,Boolean,Yes,,Allows controlled support actions for integration operations.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_dataverserolename,ccsb_DataverseRoleName,Dataverse Role Name,String,No,,Optional supporting Dataverse security-role name used by deployment validation.,New table
+ccsb_permissionprofile,Permission Profile,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether the permission profile is active.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_name,ccsb_Name,Permission Assignment Name,Primary Name,Yes,,Readable permission assignment name.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_principaltype,ccsb_PrincipalType,Principal Type,Choice,Yes,831020000=System User | 831020001=Team | 831020002=Business Unit | 831020003=Entra Group,Type of Dataverse or directory principal receiving the profile.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_principalid,ccsb_PrincipalId,Principal ID,String,Yes,,Dataverse or directory principal identifier stored as a string for polymorphic portability.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_principaldisplayname,ccsb_PrincipalDisplayName,Principal Display Name,String,No,,Friendly principal name captured for administration and audit.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_accesseffect,ccsb_AccessEffect,Access Effect,Choice,Yes,831020000=Grant | 831020001=Deny,Whether the assignment grants or explicitly denies the profile.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_scopetype,ccsb_ScopeType,Scope Type,Choice,Yes,831020000=All Boards | 831020001=Board | 831020002=Location | 831020003=Group Node | 831020004=Assigned Work,Scope to which the permission assignment applies.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_scopereferenceid,ccsb_ScopeReferenceId,Scope Reference ID,String,No,,Polymorphic scope record identifier stored as text.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_scopedisplayname,ccsb_ScopeDisplayName,Scope Display Name,String,No,,Friendly scope name retained for administration and audit.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_effectivefrom,ccsb_EffectiveFrom,Effective From,DateAndTime,No,,Timestamp from which the assignment is effective.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_effectiveto,ccsb_EffectiveTo,Effective To,DateAndTime,No,,Timestamp after which the assignment is no longer effective.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_approvalreference,ccsb_ApprovalReference,Approval Reference,String,No,,Optional approval ticket or change reference.,New table
+ccsb_permissionassignment,Permission Assignment,ccsb_isenabled,ccsb_IsEnabled,Enabled,Boolean,Yes,,Indicates whether the assignment is active.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_name,ccsb_Name,Runtime Projection Name,Primary Name,Yes,,Readable projection name.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_projectiontype,ccsb_ProjectionType,Projection Type,Choice,Yes,831020000=Board Configuration | 831020001=Mapping Manifest | 831020002=Resource Hierarchy | 831020003=Runtime Payload | 831020004=Permission Scope | 831020005=Validation Summary,Kind of runtime projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_scopetype,ccsb_ScopeType,Scope Type,Choice,Yes,831020000=Board | 831020001=Location | 831020002=Group | 831020003=User | 831020004=Global,Scope represented by the projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_scopekey,ccsb_ScopeKey,Scope Key,String,Yes,,Stable scope key used to retrieve the projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_payloadjson,ccsb_PayloadJson,Payload JSON,Memo,Yes,,Read-only serialized projection payload.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_iscompressed,ccsb_IsCompressed,Is Compressed,Boolean,Yes,,Indicates whether the payload is compressed or encoded.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_contenthash,ccsb_ContentHash,Content Hash,String,Yes,,Hash of the projection payload.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_projectionschemaversion,ccsb_ProjectionSchemaVersion,Projection Schema Version,String,Yes,,Version of the runtime projection contract.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_productversion,ccsb_ProductVersion,Product Version,String,No,,CCSB product semantic version used to generate this projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_configurationschemaversion,ccsb_ConfigurationSchemaVersion,Configuration Schema Version,String,No,,Configuration schema version of the normalized source used for this projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_sourcechangetoken,ccsb_SourceChangeToken,Source Change Token,String,No,,Source configuration change token used for staleness detection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_generatedon,ccsb_GeneratedOn,Generated On,DateAndTime,Yes,,Timestamp at which the projection was generated.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_expireson,ccsb_ExpiresOn,Expires On,DateAndTime,No,,Optional projection expiry timestamp.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_projectionstatus,ccsb_ProjectionStatus,Projection Status,Choice,Yes,831020000=Valid | 831020001=Stale | 831020002=Generating | 831020003=Failed | 831020004=Expired,Current usability of the projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_errordetail,ccsb_ErrorDetail,Error Detail,Memo,No,,Technical error detail when projection creation fails.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_recordcount,ccsb_RecordCount,Record Count,Integer,No,,Number of logical records represented by the projection.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_payloadsizebytes,ccsb_PayloadSizeBytes,Payload Size (Bytes),Integer,No,,Size of the serialized payload.,New table
+ccsb_runtimeprojection,Runtime Projection,ccsb_iscurrent,ccsb_IsCurrent,Is Current,Boolean,Yes,,Indicates whether this is the current projection for its type and scope.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_name,ccsb_Name,Validation Result Name,Primary Name,Yes,,Readable validation result name.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_validationrunid,ccsb_ValidationRunId,Validation Run ID,String,Yes,,Correlation identifier shared by validation results produced in one run.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_validationcode,ccsb_ValidationCode,Validation Code,String,Yes,,Stable validation rule code.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_validationcategory,ccsb_ValidationCategory,Validation Category,Choice,Yes,831020000=Schema | 831020001=Mapping | 831020002=Relationship | 831020003=Status | 831020004=Permission | 831020005=Runtime Projection | 831020006=Lifecycle | 831020007=Data Quality,Category of validation performed.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_severity,ccsb_Severity,Severity,Choice,Yes,831020000=Information | 831020001=Warning | 831020002=Error | 831020003=Blocking,Severity of the validation outcome.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_resultstatus,ccsb_ResultStatus,Result Status,Choice,Yes,831020000=Open | 831020001=Accepted | 831020002=Resolved | 831020003=Suppressed,Current handling state of the validation result.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_affectedentitylogicalname,ccsb_AffectedEntityLogicalName,Affected Entity Logical Name,String,No,,Logical name of the affected entity.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_affectedrecordid,ccsb_AffectedRecordId,Affected Record ID,String,No,,Affected record identifier stored as text.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_affectedfieldlogicalname,ccsb_AffectedFieldLogicalName,Affected Field Logical Name,String,No,,Logical name of the affected field.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_message,ccsb_Message,Message,String,Yes,,Short validation message for end users and administrators.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_detailjson,ccsb_DetailJson,Detail JSON,Memo,No,,Machine-readable evidence and detailed diagnostic content.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_recommendedaction,ccsb_RecommendedAction,Recommended Action,Memo,No,,Suggested corrective action.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_detectedon,ccsb_DetectedOn,Detected On,DateAndTime,Yes,,Timestamp at which the issue was detected.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_resolvedon,ccsb_ResolvedOn,Resolved On,DateAndTime,No,,Timestamp at which the issue was resolved or accepted.,New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_resolutionnote,ccsb_ResolutionNote,Resolution Note,Memo,No,,"Reason for resolution, acceptance, or suppression.",New table
+ccsb_configurationvalidationresult,Configuration Validation Result,ccsb_externalerrorcode,ccsb_ExternalErrorCode,External Error Code,String,No,,Source-system or technical error code where applicable.,New table
+ccsb_operation,Operation,ccsb_name,ccsb_Name,Operation Name,Primary Name,Yes,,Readable operation name.,New table
+ccsb_operation,Operation,ccsb_operationtype,ccsb_OperationType,Operation Type,Choice,Yes,831020000=Validate Board Version | 831020001=Generate Projection | 831020002=Publish Schedule | 831020003=Rollback Schedule | 831020004=Lock Scope | 831020005=Unlock Scope | 831020006=Import Configuration | 831020007=Clone Board Version | 831020008=Rebuild Cache | 831020009=Reconcile Integration,Type of operation executed by the product.,New table
+ccsb_operation,Operation,ccsb_operationstatus,ccsb_OperationStatus,Operation Status,Choice,Yes,831020000=Queued | 831020001=In Progress | 831020002=Succeeded | 831020003=Succeeded With Warnings | 831020004=Failed | 831020005=Cancelled,Current execution status.,New table
+ccsb_operation,Operation,ccsb_correlationid,ccsb_CorrelationId,Correlation ID,String,Yes,,End-to-end correlation identifier for telemetry and support.,New table
+ccsb_operation,Operation,ccsb_idempotencykey,ccsb_IdempotencyKey,Idempotency Key,String,No,,Stable request key preventing duplicate operation processing.,New table
+ccsb_operation,Operation,ccsb_targetscopetype,ccsb_TargetScopeType,Target Scope Type,Choice,Yes,831020000=Board | 831020001=Board Version | 831020002=Schedule Board | 831020003=Schedule Version | 831020004=Location | 831020005=Group | 831020006=Configuration Package,Scope acted on by the operation.,New table
+ccsb_operation,Operation,ccsb_targetscopereferenceid,ccsb_TargetScopeReferenceId,Target Scope Reference ID,String,No,,Polymorphic target identifier stored as text.,New table
+ccsb_operation,Operation,ccsb_requestedon,ccsb_RequestedOn,Requested On,DateAndTime,Yes,,Timestamp at which the operation was requested.,New table
+ccsb_operation,Operation,ccsb_startedon,ccsb_StartedOn,Started On,DateAndTime,No,,Timestamp at which processing began.,New table
+ccsb_operation,Operation,ccsb_completedon,ccsb_CompletedOn,Completed On,DateAndTime,No,,Timestamp at which processing ended.,New table
+ccsb_operation,Operation,ccsb_requestedpayloadjson,ccsb_RequestedPayloadJson,Requested Payload JSON,Memo,No,,Validated input payload supplied to the operation.,New table
+ccsb_operation,Operation,ccsb_resultjson,ccsb_ResultJson,Result JSON,Memo,No,,Result or summary payload produced by the operation.,New table
+ccsb_operation,Operation,ccsb_errorsummary,ccsb_ErrorSummary,Error Summary,String,No,,Short error summary for user-facing operation diagnostics.,New table
+ccsb_operation,Operation,ccsb_errordetail,ccsb_ErrorDetail,Error Detail,Memo,No,,Detailed technical error evidence.,New table
+ccsb_operation,Operation,ccsb_attemptcount,ccsb_AttemptCount,Attempt Count,Integer,Yes,,Number of processing attempts.,New table
+ccsb_operation,Operation,ccsb_retryafter,ccsb_RetryAfter,Retry After,DateAndTime,No,,Earliest timestamp at which a retry may be attempted.,New table
+ccsb_operation,Operation,ccsb_totalitemcount,ccsb_TotalItemCount,Total Item Count,Integer,No,,Total operation items expected.,New table
+ccsb_operation,Operation,ccsb_succeededitemcount,ccsb_SucceededItemCount,Succeeded Item Count,Integer,No,,Operation items successfully processed.,New table
+ccsb_operation,Operation,ccsb_faileditemcount,ccsb_FailedItemCount,Failed Item Count,Integer,No,,Operation items that failed.,New table
+ccsb_operation,Operation,ccsb_progresspercentage,ccsb_ProgressPercentage,Progress Percentage,Integer,No,,Reported progress from 0 to 100.,New table
+ccsb_operation,Operation,ccsb_iscancellable,ccsb_IsCancellable,Is Cancellable,Boolean,Yes,,Indicates whether the operation may be cancelled safely.,New table
+ccsb_operation,Operation,ccsb_retentionuntil,ccsb_RetentionUntil,Retention Until,DateAndTime,No,,Date after which operational evidence may be archived according to policy.,New table
+ccsb_operationitem,Operation Item,ccsb_name,ccsb_Name,Operation Item Name,Primary Name,Yes,,Readable operation item name.,New table
+ccsb_operationitem,Operation Item,ccsb_sequencenumber,ccsb_SequenceNumber,Sequence Number,Integer,Yes,,Deterministic sequence within the parent operation.,New table
+ccsb_operationitem,Operation Item,ccsb_itemkey,ccsb_ItemKey,Item Key,String,Yes,,Stable per-operation item key.,New table
+ccsb_operationitem,Operation Item,ccsb_itemtype,ccsb_ItemType,Item Type,Choice,Yes,831020000=Configuration | 831020001=Schedule Item | 831020002=Schedule Assignment | 831020003=Schedule Requirement | 831020004=Publish Snapshot | 831020005=Runtime Projection | 831020006=Integration Message,Type of item processed.,New table
+ccsb_operationitem,Operation Item,ccsb_actiontype,ccsb_ActionType,Action Type,Choice,Yes,831020000=Validate | 831020001=Create | 831020002=Update | 831020003=Delete | 831020004=Publish | 831020005=Rollback | 831020006=Project | 831020007=Reconcile,Action attempted for the operation item.,New table
+ccsb_operationitem,Operation Item,ccsb_itemstatus,ccsb_ItemStatus,Item Status,Choice,Yes,831020000=Queued | 831020001=In Progress | 831020002=Succeeded | 831020003=Warning | 831020004=Failed | 831020005=Skipped | 831020006=Cancelled,Current result for the operation item.,New table
+ccsb_operationitem,Operation Item,ccsb_sourceentitylogicalname,ccsb_SourceEntityLogicalName,Source Entity Logical Name,String,No,,Logical name of the source record.,New table
+ccsb_operationitem,Operation Item,ccsb_sourcerecordid,ccsb_SourceRecordId,Source Record ID,String,No,,Source record identifier stored as text.,New table
+ccsb_operationitem,Operation Item,ccsb_targetentitylogicalname,ccsb_TargetEntityLogicalName,Target Entity Logical Name,String,No,,Logical name of the target record.,New table
+ccsb_operationitem,Operation Item,ccsb_targetrecordid,ccsb_TargetRecordId,Target Record ID,String,No,,Target record identifier stored as text.,New table
+ccsb_operationitem,Operation Item,ccsb_requestpayloadjson,ccsb_RequestPayloadJson,Request Payload JSON,Memo,No,,Item-level input payload.,New table
+ccsb_operationitem,Operation Item,ccsb_resultpayloadjson,ccsb_ResultPayloadJson,Result Payload JSON,Memo,No,,Item-level result payload.,New table
+ccsb_operationitem,Operation Item,ccsb_errorcode,ccsb_ErrorCode,Error Code,String,No,,Technical or business error code.,New table
+ccsb_operationitem,Operation Item,ccsb_errormessage,ccsb_ErrorMessage,Error Message,String,No,,Short item-level error message.,New table
+ccsb_operationitem,Operation Item,ccsb_errordetail,ccsb_ErrorDetail,Error Detail,Memo,No,,Detailed technical error content.,New table
+ccsb_operationitem,Operation Item,ccsb_processedon,ccsb_ProcessedOn,Processed On,DateAndTime,No,,Timestamp at which this item was last processed.,New table
+ccsb_operationitem,Operation Item,ccsb_retrycount,ccsb_RetryCount,Retry Count,Integer,Yes,,Number of retries attempted for this item.,New table
+ccsb_operationitem,Operation Item,ccsb_isretryable,ccsb_IsRetryable,Is Retryable,Boolean,Yes,,Indicates whether this item is safe to retry.,New table
+ccsb_operationitem,Operation Item,ccsb_durationmilliseconds,ccsb_DurationMilliseconds,Duration (Milliseconds),Integer,No,,Processing duration for the item.,New table
+ccsb_operationitem,Operation Item,ccsb_correlationid,ccsb_CorrelationId,Correlation ID,String,No,,End-to-end correlation identifier.,New table
+ccsb_resource,,ccsb_externalresourcekey,ccsb_ExternalResourceKey,External Resource Key,String,No,,Stable external identifier for resource reconciliation.,Existing V1 extension
+ccsb_resource,,ccsb_effectivefrom,ccsb_EffectiveFrom,Effective From,DateOnly,No,,Date from which the resource is eligible for the board.,Existing V1 extension
+ccsb_resource,,ccsb_effectiveto,ccsb_EffectiveTo,Effective To,DateOnly,No,,Date after which the resource is not eligible for the board.,Existing V1 extension
+ccsb_service,,ccsb_externalservicekey,ccsb_ExternalServiceKey,External Service Key,String,No,,Stable external identifier for service reconciliation.,Existing V1 extension
+ccsb_service,,ccsb_requireslocation,ccsb_RequiresLocation,Requires Location,Boolean,Yes,,Indicates whether a location must be resolved before scheduling.,Existing V1 extension
+ccsb_scheduleboard,,ccsb_operationaltimezoneid,ccsb_OperationalTimeZoneId,Operational Time Zone ID,String,No,,Operational time zone used for schedule calculations and display.,Existing V1 extension
+ccsb_scheduleboard,,ccsb_isruntimeenabled,ccsb_IsRuntimeEnabled,Runtime Enabled,Boolean,Yes,,Controls whether this board may load and accept scheduling operations.,Existing V1 extension
+ccsb_scheduleitem,,ccsb_externalscheduleitemkey,ccsb_ExternalScheduleItemKey,External Schedule Item Key,String,No,,Stable external identifier for schedule-item reconciliation.,Existing V1 extension
+ccsb_location,,ccsb_parentlocationid,ccsb_ParentLocationId,Parent Location,Lookup,No (migration-safe),ccsb_location,Optional parent location for hierarchy.,Relationship
+ccsb_location,,ccsb_defaultcalendarid,ccsb_DefaultCalendarId,Default Calendar,Lookup,No (migration-safe),ccsb_calendar,Default working calendar for the location.,Relationship
+ccsb_boardregistry,,ccsb_defaultlocationid,ccsb_DefaultLocationId,Default Location,Lookup,No (migration-safe),ccsb_location,Default operational location of the board.,Relationship
+ccsb_boardregistry,,ccsb_defaultcalendarid,ccsb_DefaultCalendarId,Default Calendar,Lookup,No (migration-safe),ccsb_calendar,Default calendar used by the board.,Relationship
+ccsb_boardregistry,,ccsb_defaultviewid,ccsb_DefaultViewId,Default View,Lookup,No (migration-safe),ccsb_viewdefinition,Default board view definition.,Relationship
+ccsb_boardversion,,ccsb_boardid,ccsb_BoardId,Board,Lookup,No (migration-safe),ccsb_boardregistry,Board to which this immutable configuration version belongs.,Relationship
+ccsb_boardregistry,,ccsb_activeboardversionid,ccsb_ActiveBoardVersionId,Active Board Version,Lookup,No (migration-safe),ccsb_boardversion,Current active configuration version of the board.,Relationship
+ccsb_boardversion,,ccsb_supersedesboardversionid,ccsb_SupersedesBoardVersionId,Supersedes Board Version,Lookup,No (migration-safe),ccsb_boardversion,Prior version replaced by this version.,Relationship
+ccsb_boardversion,,ccsb_clonedfromboardversionid,ccsb_ClonedFromBoardVersionId,Cloned From Board Version,Lookup,No (migration-safe),ccsb_boardversion,Source version used to create this draft version.,Relationship
+ccsb_entitydefinition,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version governing this entity definition.,Relationship
+ccsb_fieldmapping,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version governing this field mapping.,Relationship
+ccsb_fieldmapping,,ccsb_entitydefinitionid,ccsb_EntityDefinitionId,Entity Definition,Lookup,No (migration-safe),ccsb_entitydefinition,Mapped entity that owns the source field.,Relationship
+ccsb_relationshipmapping,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version governing this relationship mapping.,Relationship
+ccsb_relationshipmapping,,ccsb_sourceentitydefinitionid,ccsb_SourceEntityDefinitionId,Source Entity Definition,Lookup,No (migration-safe),ccsb_entitydefinition,Source entity definition for the relationship.,Relationship
+ccsb_relationshipmapping,,ccsb_relatedentitydefinitionid,ccsb_RelatedEntityDefinitionId,Related Entity Definition,Lookup,No (migration-safe),ccsb_entitydefinition,Related entity definition for the relationship.,Relationship
+ccsb_statusmodel,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version governing this status model.,Relationship
+ccsb_statusmodel,,ccsb_sourceentitydefinitionid,ccsb_SourceEntityDefinitionId,Source Entity Definition,Lookup,No (migration-safe),ccsb_entitydefinition,Mapped entity whose status is governed by the status model.,Relationship
+ccsb_statusmodel,,ccsb_statusfieldmappingid,ccsb_StatusFieldMappingId,Status Field Mapping,Lookup,No (migration-safe),ccsb_fieldmapping,Field mapping that resolves the status field.,Relationship
+ccsb_resourcerole,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version governing this resource role.,Relationship
+ccsb_permissionprofile,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version governing this permission profile.,Relationship
+ccsb_permissionassignment,,ccsb_permissionprofileid,ccsb_PermissionProfileId,Permission Profile,Lookup,No (migration-safe),ccsb_permissionprofile,Profile granted or denied by this assignment.,Relationship
+ccsb_permissionassignment,,ccsb_boardid,ccsb_BoardId,Board,Lookup,No (migration-safe),ccsb_boardregistry,Optional board-specific permission scope.,Relationship
+ccsb_permissionassignment,,ccsb_locationid,ccsb_LocationId,Location,Lookup,No (migration-safe),ccsb_location,Optional location-specific permission scope.,Relationship
+ccsb_permissionassignment,,ccsb_groupnodeid,ccsb_GroupNodeId,Group Node,Lookup,No (migration-safe),ccsb_groupnode,Optional group-node permission scope.,Relationship
+ccsb_runtimeprojection,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Configuration version used to build the projection.,Relationship
+ccsb_configurationvalidationresult,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version validated by this result.,Relationship
+ccsb_configurationvalidationresult,,ccsb_operationid,ccsb_OperationId,Operation,Lookup,No (migration-safe),ccsb_operation,Operation that produced this validation evidence.,Relationship
+ccsb_operation,,ccsb_boardid,ccsb_BoardId,Board,Lookup,No (migration-safe),ccsb_boardregistry,Board acted on by this operation.,Relationship
+ccsb_operation,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board version acted on by this operation.,Relationship
+ccsb_operationitem,,ccsb_operationid,ccsb_OperationId,Operation,Lookup,No (migration-safe),ccsb_operation,Parent operation.,Relationship
+ccsb_operationitem,,ccsb_configurationvalidationresultid,ccsb_ConfigurationValidationResultId,Configuration Validation Result,Lookup,No (migration-safe),ccsb_configurationvalidationresult,Optional validation evidence associated with this item.,Relationship
+ccsb_resource,,ccsb_primarylocationid,ccsb_PrimaryLocationId,Primary Location,Lookup,No (migration-safe),ccsb_location,Primary operating location of this resource.,Relationship
+ccsb_resource,,ccsb_defaultresourceroleid,ccsb_DefaultResourceRoleId,Default Resource Role,Lookup,No (migration-safe),ccsb_resourcerole,Default role used when allocating this resource.,Relationship
+ccsb_service,,ccsb_defaultlocationid,ccsb_DefaultLocationId,Default Location,Lookup,No (migration-safe),ccsb_location,Default operational location for the service.,Relationship
+ccsb_scheduleboard,,ccsb_boardregistryid,ccsb_BoardRegistryId,Board Registry,Lookup,No (migration-safe),ccsb_boardregistry,Stable product board registry identity governing this operational schedule board.,Relationship
+ccsb_scheduleboard,,ccsb_activeboardversionid,ccsb_ActiveBoardVersionId,Active Board Version,Lookup,No (migration-safe),ccsb_boardversion,Configuration version active on the operational schedule board.,Relationship
+ccsb_scheduleversion,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Configuration version governing this published schedule version.,Relationship
+ccsb_scheduleversion,,ccsb_publishoperationid,ccsb_PublishOperationId,Publish Operation,Lookup,No (migration-safe),ccsb_operation,Operation that produced or changed this schedule version.,Relationship
+ccsb_boardconfiguration,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Versioned board configuration baseline.,Relationship
+ccsb_eventtypedefinition,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Version governing the event type definition.,Relationship
+ccsb_resourcedefinition,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Version governing the resource definition.,Relationship
+ccsb_groupdefinition,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Version governing the group definition.,Relationship
+ccsb_viewdefinition,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Version governing the view definition.,Relationship
+ccsb_ruledefinition,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Version governing the rule definition.,Relationship
+ccsb_statusdefinition,,ccsb_statusmodelid,ccsb_StatusModelId,Status Model,Lookup,No (migration-safe),ccsb_statusmodel,Status model containing this status definition.,Relationship
+ccsb_statustransition,,ccsb_statusmodelid,ccsb_StatusModelId,Status Model,Lookup,No (migration-safe),ccsb_statusmodel,Status model containing this transition.,Relationship
+ccsb_schedulerequirement,,ccsb_resourceroleid,ccsb_ResourceRoleId,Resource Role,Lookup,No (migration-safe),ccsb_resourcerole,Named role required by the schedule requirement.,Relationship
+ccsb_scheduleassignment,,ccsb_resourceroleid,ccsb_ResourceRoleId,Resource Role,Lookup,No (migration-safe),ccsb_resourcerole,Named role satisfied by the schedule assignment.,Relationship
+ccsb_scheduleitem,,ccsb_locationid,ccsb_LocationId,Location,Lookup,No (migration-safe),ccsb_location,Location at which the schedule item occurs.,Relationship
+ccsb_scheduleitem,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Board configuration version applied to the schedule item.,Relationship
+ccsb_publishsnapshot,,ccsb_boardversionid,ccsb_BoardVersionId,Board Version,Lookup,No (migration-safe),ccsb_boardversion,Configuration version recorded in the immutable publish snapshot.,Relationship
+ccsb_publishsnapshot,,ccsb_operationid,ccsb_OperationId,Operation,Lookup,No (migration-safe),ccsb_operation,Publish operation producing this snapshot.,Relationship

@@ -1,0 +1,288 @@
+{
+  "packageName": "CCSB Core Unmanaged Solution Generator",
+  "packageVersion": "1.0.0",
+  "purpose": "Creates the CCSB_Core unmanaged solution in a Dataverse development environment, adds the 26 requested custom tables with primary-name columns only, publishes metadata, and exports a Dataverse-generated unmanaged solution ZIP ready to import elsewhere.",
+  "solution": {
+    "uniqueName": "CCSB_Core",
+    "friendlyName": "CCSB Core",
+    "version": "1.0.0.0",
+    "description": "Base tables for the Custom Schedule Board product."
+  },
+  "publisher": {
+    "uniqueName": "CCSB",
+    "friendlyName": "CCSB",
+    "customizationPrefix": "ccsb",
+    "optionValuePrefix": 81000,
+    "description": "Publisher for Custom Schedule Board solution components."
+  },
+  "lcid": 1033,
+  "primaryName": {
+    "logicalName": "ccsb_name",
+    "schemaName": "ccsb_Name",
+    "maxLength": 200,
+    "requiredLevel": "None",
+    "format": "Text"
+  },
+  "tables": [
+    {
+      "logicalName": "ccsb_board",
+      "schemaName": "ccsb_Board",
+      "displayName": "Schedule Board",
+      "displayCollectionName": "Schedule Boards",
+      "primaryNameDisplayName": "Schedule Board Name",
+      "description": "Defines a reusable Custom Schedule Board instance.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_boardconfiguration",
+      "schemaName": "ccsb_BoardConfiguration",
+      "displayName": "Board Configuration",
+      "displayCollectionName": "Board Configurations",
+      "primaryNameDisplayName": "Board Configuration Name",
+      "description": "Stores a versioned configuration set for a Schedule Board.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_viewdefinition",
+      "schemaName": "ccsb_ViewDefinition",
+      "displayName": "View Definition",
+      "displayCollectionName": "View Definitions",
+      "primaryNameDisplayName": "View Definition Name",
+      "description": "Defines a configurable runtime view for a Schedule Board.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_resourcedefinition",
+      "schemaName": "ccsb_ResourceDefinition",
+      "displayName": "Resource Definition",
+      "displayCollectionName": "Resource Definitions",
+      "primaryNameDisplayName": "Resource Definition Name",
+      "description": "Defines a schedulable resource type and its scheduling behaviour.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_eventtypedefinition",
+      "schemaName": "ccsb_EventTypeDefinition",
+      "displayName": "Event Type Definition",
+      "displayCollectionName": "Event Type Definitions",
+      "primaryNameDisplayName": "Event Type Definition Name",
+      "description": "Defines a schedulable event type and its board behaviour.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_groupdefinition",
+      "schemaName": "ccsb_GroupDefinition",
+      "displayName": "Group Definition",
+      "displayCollectionName": "Group Definitions",
+      "primaryNameDisplayName": "Group Definition Name",
+      "description": "Defines a grouping and hierarchy scheme used by a Schedule Board.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_statusdefinition",
+      "schemaName": "ccsb_StatusDefinition",
+      "displayName": "Status Definition",
+      "displayCollectionName": "Status Definitions",
+      "primaryNameDisplayName": "Status Definition Name",
+      "description": "Defines a configurable business status, label and presentation behaviour.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_statustransition",
+      "schemaName": "ccsb_StatusTransition",
+      "displayName": "Status Transition",
+      "displayCollectionName": "Status Transitions",
+      "primaryNameDisplayName": "Status Transition Name",
+      "description": "Defines permitted transitions between scheduling statuses.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_ruledefinition",
+      "schemaName": "ccsb_RuleDefinition",
+      "displayName": "Rule Definition",
+      "displayCollectionName": "Rule Definitions",
+      "primaryNameDisplayName": "Rule Definition Name",
+      "description": "Defines a configurable scheduling validation or enforcement rule.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Configuration"
+    },
+    {
+      "logicalName": "ccsb_resource",
+      "schemaName": "ccsb_Resource",
+      "displayName": "Resource",
+      "displayCollectionName": "Resources",
+      "primaryNameDisplayName": "Resource Name",
+      "description": "Represents a native schedulable resource such as a worker, vehicle, room or equipment item.",
+      "ownershipType": "UserOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_service",
+      "schemaName": "ccsb_Service",
+      "displayName": "Service",
+      "displayCollectionName": "Services",
+      "primaryNameDisplayName": "Service Name",
+      "description": "Represents a native booking or service parent record.",
+      "ownershipType": "UserOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_calendar",
+      "schemaName": "ccsb_Calendar",
+      "displayName": "Calendar",
+      "displayCollectionName": "Calendars",
+      "primaryNameDisplayName": "Calendar Name",
+      "description": "Defines a reusable operating calendar.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_calendarrule",
+      "schemaName": "ccsb_CalendarRule",
+      "displayName": "Calendar Rule",
+      "displayCollectionName": "Calendar Rules",
+      "primaryNameDisplayName": "Calendar Rule Name",
+      "description": "Defines a recurring operating-hours rule for a Calendar.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_calendarexception",
+      "schemaName": "ccsb_CalendarException",
+      "displayName": "Calendar Exception",
+      "displayCollectionName": "Calendar Exceptions",
+      "primaryNameDisplayName": "Calendar Exception Name",
+      "description": "Defines a date-specific override, closure or exceptional operating period for a Calendar.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_publicholiday",
+      "schemaName": "ccsb_PublicHoliday",
+      "displayName": "Public Holiday",
+      "displayCollectionName": "Public Holidays",
+      "primaryNameDisplayName": "Public Holiday Name",
+      "description": "Stores public holiday reference data used by calendars and scheduling overlays.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_shift",
+      "schemaName": "ccsb_Shift",
+      "displayName": "Shift",
+      "displayCollectionName": "Shifts",
+      "primaryNameDisplayName": "Shift Name",
+      "description": "Represents a concrete scheduled shift for a resource.",
+      "ownershipType": "UserOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_availabilitywindow",
+      "schemaName": "ccsb_AvailabilityWindow",
+      "displayName": "Availability Window",
+      "displayCollectionName": "Availability Windows",
+      "primaryNameDisplayName": "Availability Window Name",
+      "description": "Represents an explicit availability, block or non-working interval for a resource.",
+      "ownershipType": "UserOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_leave",
+      "schemaName": "ccsb_Leave",
+      "displayName": "Leave",
+      "displayCollectionName": "Leave Records",
+      "primaryNameDisplayName": "Leave Name",
+      "description": "Represents a time-bound resource unavailability record. No sensitive leave reason is included in the base schema.",
+      "ownershipType": "UserOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_groupnode",
+      "schemaName": "ccsb_GroupNode",
+      "displayName": "Group Node",
+      "displayCollectionName": "Group Nodes",
+      "primaryNameDisplayName": "Group Node Name",
+      "description": "Represents a materialised node in a configured resource grouping hierarchy.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_groupmembership",
+      "schemaName": "ccsb_GroupMembership",
+      "displayName": "Group Membership",
+      "displayCollectionName": "Group Memberships",
+      "primaryNameDisplayName": "Group Membership Name",
+      "description": "Represents a resource membership in one resolved group hierarchy path.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Operational"
+    },
+    {
+      "logicalName": "ccsb_scheduleversion",
+      "schemaName": "ccsb_ScheduleVersion",
+      "displayName": "Schedule Version",
+      "displayCollectionName": "Schedule Versions",
+      "primaryNameDisplayName": "Schedule Version Name",
+      "description": "Represents a logical Draft, Published, Superseded or Rolled Back schedule version.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Schedule graph"
+    },
+    {
+      "logicalName": "ccsb_scheduleitem",
+      "schemaName": "ccsb_ScheduleItem",
+      "displayName": "Schedule Item",
+      "displayCollectionName": "Schedule Items",
+      "primaryNameDisplayName": "Schedule Item Name",
+      "description": "Represents a canonical scheduled booking, activity, task or service component.",
+      "ownershipType": "UserOwned",
+      "category": "Schedule graph"
+    },
+    {
+      "logicalName": "ccsb_schedulerequirement",
+      "schemaName": "ccsb_ScheduleRequirement",
+      "displayName": "Schedule Requirement",
+      "displayCollectionName": "Schedule Requirements",
+      "primaryNameDisplayName": "Schedule Requirement Name",
+      "description": "Represents required role, quantity, capacity or resource demand for a Schedule Item.",
+      "ownershipType": "UserOwned",
+      "category": "Schedule graph"
+    },
+    {
+      "logicalName": "ccsb_scheduleassignment",
+      "schemaName": "ccsb_ScheduleAssignment",
+      "displayName": "Schedule Assignment",
+      "displayCollectionName": "Schedule Assignments",
+      "primaryNameDisplayName": "Schedule Assignment Name",
+      "description": "Represents a resource allocation to a Schedule Item or Schedule Requirement.",
+      "ownershipType": "UserOwned",
+      "category": "Schedule graph"
+    },
+    {
+      "logicalName": "ccsb_conflict",
+      "schemaName": "ccsb_Conflict",
+      "displayName": "Scheduling Conflict",
+      "displayCollectionName": "Scheduling Conflicts",
+      "primaryNameDisplayName": "Scheduling Conflict Name",
+      "description": "Stores scheduling conflict evidence such as overlap, leave, capacity or rule violations.",
+      "ownershipType": "UserOwned",
+      "category": "Schedule graph"
+    },
+    {
+      "logicalName": "ccsb_publishsnapshot",
+      "schemaName": "ccsb_PublishSnapshot",
+      "displayName": "Publish Snapshot",
+      "displayCollectionName": "Publish Snapshots",
+      "primaryNameDisplayName": "Publish Snapshot Name",
+      "description": "Represents immutable publish and rollback snapshot evidence.",
+      "ownershipType": "OrganizationOwned",
+      "category": "Schedule graph"
+    }
+  ]
+}

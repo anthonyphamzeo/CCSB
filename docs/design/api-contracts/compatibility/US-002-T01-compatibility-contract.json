@@ -1,0 +1,308 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-002-T01",
+  "name": "CCSB product and schema compatibility contract",
+  "generatedForDate": "2026-07-08",
+  "contractDocument": "docs/design/api-contracts/compatibility/US-002-T01-compatibility-contract.md",
+  "sourcePackage": {
+    "foundationSource": "tools/provisioning/CCSB.FoundationSchema",
+    "schema": "tools/provisioning/CCSB.FoundationSchema/schema/ccsb.foundation.schema.json",
+    "program": "tools/provisioning/CCSB.FoundationSchema/Program.cs",
+    "project": "tools/provisioning/CCSB.FoundationSchema/CCSB.FoundationSchema.Provisioner.csproj",
+    "schemaVersion": "1.0.0",
+    "dataverseSolutionUniqueName": "ccsb_foundationschema",
+    "targetSolutionVersion": "1.0.0.1",
+    "sourceBuildVersion": "1.0.0.6",
+    "compatibilityReportPath": "out/foundation-schema-compatibility.json"
+  },
+  "versionDimensions": {
+    "productSemanticVersion": "1.0.0",
+    "foundationSolutionVersion": "1.0.0.1",
+    "configurationSchemaVersion": "1.0.0",
+    "runtimeProjectionSchemaVersion": "1.0.0",
+    "minimumSupportedProductVersion": "1.0.0",
+    "minimumSupportedConfigurationSchemaVersion": "1.0.0",
+    "minimumSupportedRuntimeProjectionSchemaVersion": "1.0.0"
+  },
+  "compatibilityRules": {
+    "productMajorMustMatch": true,
+    "configurationSchemaMajorMustMatch": true,
+    "runtimeProjectionMajorMustMatch": true,
+    "unsupportedDowngradeBlocksActivation": true,
+    "missingVersionBlocksActivation": true,
+    "staleProjectionBlocksRuntime": true,
+    "pendingMigrationBlocksActivation": true,
+    "liveSchemaCompatibilityReportRequired": true,
+    "supportedConfigurationSchemaVersions": [
+      "1.0.0"
+    ],
+    "supportedRuntimeProjectionSchemaVersions": [
+      "1.0.0"
+    ]
+  },
+  "supportedUpgradePaths": [
+    {
+      "id": "CCSB-UPGRADE-001",
+      "name": "Initial V1 install",
+      "from": {
+        "productSemanticVersion": null,
+        "configurationSchemaVersion": null,
+        "runtimeProjectionSchemaVersion": null
+      },
+      "to": {
+        "productSemanticVersion": "1.0.0",
+        "foundationSolutionVersion": "1.0.0.1",
+        "configurationSchemaVersion": "1.0.0",
+        "runtimeProjectionSchemaVersion": "1.0.0"
+      },
+      "migrationRequired": false,
+      "activationAllowed": true,
+      "requiredFeatureFlags": [
+        "ccsb.foundation.schema.1.0.0.1",
+        "ccsb.runtime.projection.1.0.0"
+      ],
+      "requiredEvidence": [
+        "foundation-schema-validator-pass",
+        "live-compatibility-report-zero-blockers",
+        "board-version-validation-pass",
+        "current-runtime-projection-valid"
+      ]
+    },
+    {
+      "id": "CCSB-UPGRADE-002",
+      "name": "V1 managed patch on same schema line",
+      "from": {
+        "productSemanticVersion": "1.0.0",
+        "configurationSchemaVersion": "1.0.0",
+        "runtimeProjectionSchemaVersion": "1.0.0"
+      },
+      "to": {
+        "productSemanticVersion": "1.0.0",
+        "foundationSolutionVersion": "1.0.0.1",
+        "configurationSchemaVersion": "1.0.0",
+        "runtimeProjectionSchemaVersion": "1.0.0"
+      },
+      "migrationRequired": false,
+      "activationAllowed": true,
+      "requiredFeatureFlags": [
+        "ccsb.foundation.schema.1.0.0.1",
+        "ccsb.runtime.projection.1.0.0"
+      ],
+      "requiredEvidence": [
+        "managed-import-rehearsal-pass",
+        "live-compatibility-report-zero-blockers",
+        "protected-record-counts-and-hashes-stable",
+        "board-version-validation-pass",
+        "current-runtime-projection-valid"
+      ]
+    }
+  ],
+  "blockedTransitions": [
+    {
+      "id": "CCSB-BLOCK-DOWNGRADE",
+      "condition": "target version is lower than persisted product, schema, or projection version",
+      "diagnosticCode": "CCSB-COMPAT-DOWNGRADE-BLOCKED"
+    },
+    {
+      "id": "CCSB-BLOCK-PRODUCT-MAJOR",
+      "condition": "target product major version differs from persisted product major version",
+      "diagnosticCode": "CCSB-COMPAT-PRODUCT-UNSUPPORTED"
+    },
+    {
+      "id": "CCSB-BLOCK-SCHEMA-MAJOR",
+      "condition": "configuration schema version is not in supportedConfigurationSchemaVersions",
+      "diagnosticCode": "CCSB-COMPAT-SCHEMA-UNSUPPORTED"
+    },
+    {
+      "id": "CCSB-BLOCK-PROJECTION-STALE",
+      "condition": "current runtime projection is missing, stale, failed, or on an unsupported schema version",
+      "diagnosticCode": "CCSB-COMPAT-PROJECTION-STALE"
+    },
+    {
+      "id": "CCSB-BLOCK-MIGRATION",
+      "condition": "migration state is pending, running, failed, blocked, or unknown",
+      "diagnosticCode": "CCSB-COMPAT-MIGRATION-REQUIRED"
+    },
+    {
+      "id": "CCSB-BLOCK-SCHEMA-REPORT",
+      "condition": "live Dataverse schema compatibility report is missing or has blockers",
+      "diagnosticCode": "CCSB-COMPAT-LIVE-SCHEMA-BLOCKED"
+    }
+  ],
+  "migrationStates": [
+    {
+      "value": "none",
+      "terminal": true,
+      "activationAllowed": true
+    },
+    {
+      "value": "pending",
+      "terminal": false,
+      "activationAllowed": false
+    },
+    {
+      "value": "running",
+      "terminal": false,
+      "activationAllowed": false
+    },
+    {
+      "value": "completed",
+      "terminal": true,
+      "activationAllowed": true
+    },
+    {
+      "value": "failed",
+      "terminal": true,
+      "activationAllowed": false
+    },
+    {
+      "value": "blocked",
+      "terminal": true,
+      "activationAllowed": false
+    }
+  ],
+  "activationPolicy": {
+    "failClosed": true,
+    "consumers": [
+      "ccsb_ValidateBoardVersion",
+      "ccsb_ActivateBoardVersion",
+      "configuration-service-runtime-bootstrap"
+    ],
+    "blockOnSeverities": [
+      "blocking",
+      "error"
+    ],
+    "allowWarnings": true,
+    "requiresCurrentProjection": true,
+    "requiresZeroPendingMigrations": true,
+    "requiresCompatibilityReportZeroBlockers": true,
+    "writesValidationResults": true
+  },
+  "diagnosticCodes": [
+    {
+      "code": "CCSB-COMPAT-PRODUCT-UNSUPPORTED",
+      "severity": "blocking",
+      "category": "ProductVersion",
+      "message": "The board version targets an unsupported CCSB product version.",
+      "recommendedAction": "Upgrade through a supported compatibility path or clone the board version for migration."
+    },
+    {
+      "code": "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+      "severity": "blocking",
+      "category": "ConfigurationSchema",
+      "message": "The board version uses an unsupported configuration schema version.",
+      "recommendedAction": "Run the schema migration/backfill package, then revalidate the board version."
+    },
+    {
+      "code": "CCSB-COMPAT-PROJECTION-STALE",
+      "severity": "blocking",
+      "category": "RuntimeProjection",
+      "message": "The runtime projection is missing, stale, failed, or on an unsupported projection schema version.",
+      "recommendedAction": "Regenerate the projection after configuration validation passes."
+    },
+    {
+      "code": "CCSB-COMPAT-MIGRATION-REQUIRED",
+      "severity": "blocking",
+      "category": "MigrationState",
+      "message": "A required compatibility migration has not completed successfully.",
+      "recommendedAction": "Complete or repair the migration before activation."
+    },
+    {
+      "code": "CCSB-COMPAT-DOWNGRADE-BLOCKED",
+      "severity": "blocking",
+      "category": "UpgradePath",
+      "message": "Downgrade activation is not supported for this board version.",
+      "recommendedAction": "Restore the prior active board pointer or deploy an additive forward repair."
+    },
+    {
+      "code": "CCSB-COMPAT-LIVE-SCHEMA-BLOCKED",
+      "severity": "blocking",
+      "category": "LiveSchema",
+      "message": "Live Dataverse schema compatibility validation is missing or has blocking diagnostics.",
+      "recommendedAction": "Run the foundation schema compatibility gate and resolve blockers."
+    },
+    {
+      "code": "CCSB-COMPAT-FEATURE-FLAG-DISABLED",
+      "severity": "blocking",
+      "category": "FeatureFlag",
+      "message": "A required compatibility feature flag is disabled.",
+      "recommendedAction": "Enable the feature flag only after release gates pass."
+    }
+  ],
+  "existingSchemaBindings": [
+    {
+      "entity": "ccsb_boardversion",
+      "fields": [
+        "ccsb_versionnumber",
+        "ccsb_versionlabel",
+        "ccsb_lifecyclestate",
+        "ccsb_validationstatus",
+        "ccsb_validationrunon",
+        "ccsb_configurationhash",
+        "ccsb_isimmutable"
+      ]
+    },
+    {
+      "entity": "ccsb_runtimeprojection",
+      "fields": [
+        "ccsb_projectionschemaversion",
+        "ccsb_projectionstatus",
+        "ccsb_sourcechangetoken",
+        "ccsb_contenthash",
+        "ccsb_generatedon",
+        "ccsb_iscurrent"
+      ]
+    },
+    {
+      "entity": "ccsb_configurationvalidationresult",
+      "fields": [
+        "ccsb_validationrunid",
+        "ccsb_validationcode",
+        "ccsb_validationcategory",
+        "ccsb_severity",
+        "ccsb_resultstatus",
+        "ccsb_detailjson",
+        "ccsb_recommendedaction"
+      ]
+    },
+    {
+      "entity": "ccsb_operation",
+      "fields": [
+        "ccsb_operationtype",
+        "ccsb_operationstatus",
+        "ccsb_correlationid",
+        "ccsb_resultjson",
+        "ccsb_errorsummary"
+      ]
+    }
+  ],
+  "plannedPersistenceBindings": [
+    {
+      "task": "US-002-T02",
+      "entity": "ccsb_boardversion",
+      "fields": [
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion",
+        "ccsb_migrationstate",
+        "ccsb_compatibilitystatus"
+      ]
+    },
+    {
+      "task": "US-002-T02",
+      "entity": "ccsb_runtimeprojection",
+      "fields": [
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion"
+      ]
+    }
+  ],
+  "acceptanceGates": [
+    "contract-versioned",
+    "source-schema-version-matches",
+    "supported-upgrade-paths-declared",
+    "activation-consumers-declared",
+    "fail-closed-rules-declared",
+    "diagnostic-codes-declared",
+    "existing-schema-bindings-validated"
+  ]
+}

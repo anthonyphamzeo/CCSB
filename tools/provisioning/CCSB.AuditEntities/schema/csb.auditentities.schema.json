@@ -1,0 +1,3325 @@
+{
+  "schemaVersion": "1.0.0",
+  "solution": {
+    "uniqueName": "CSB_AuditEntities",
+    "displayName": "CSB Audit Entities",
+    "version": "1.0.0.0",
+    "publisherPrefix": "ccsb",
+    "publisherPreferredUniqueName": "CSB_AuditEntitiesPublisher",
+    "publisherFriendlyName": "CSB Audit Entities Publisher",
+    "description": "Unmanaged solution containing CCSB audit, publish, snapshot, lock, resource capability, and outbox entities."
+  },
+  "tables": [
+    {
+      "schemaName": "ccsb_Resourcecapability",
+      "logicalName": "ccsb_resourcecapability",
+      "displayName": "Resource Capability",
+      "collectionName": "Resource Capabilitys",
+      "ownership": "UserOwned",
+      "description": "Keep user/team ownership. Resource capability rows are operationally close to bookable resources and should honor row-level resource stewardship.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Resource Capability Name",
+        "description": "Primary display name.",
+        "maxLength": 300
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_Capabilitykey",
+          "logicalName": "ccsb_capabilitykey",
+          "displayName": "Capabilitykey",
+          "type": "String",
+          "description": "Stable sanitized identity for upsert and dedupe.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Capabilitytype",
+          "logicalName": "ccsb_capabilitytype",
+          "displayName": "Capabilitytype",
+          "type": "Choice",
+          "description": "Domain: skill, certification, clearance, territory, facility feature, equipment, capacity, custom.",
+          "required": true,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Skill"
+            },
+            {
+              "value": 831030001,
+              "label": "Certification"
+            },
+            {
+              "value": 831030002,
+              "label": "Clearance"
+            },
+            {
+              "value": 831030003,
+              "label": "Territory"
+            },
+            {
+              "value": 831030004,
+              "label": "Facility Feature"
+            },
+            {
+              "value": 831030005,
+              "label": "Equipment"
+            },
+            {
+              "value": 831030006,
+              "label": "Capacity"
+            },
+            {
+              "value": 831030007,
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Capabilitycode",
+          "logicalName": "ccsb_capabilitycode",
+          "displayName": "Capabilitycode",
+          "type": "String",
+          "description": "Canonical capability code used by rule matching.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Capabilitysource",
+          "logicalName": "ccsb_capabilitysource",
+          "displayName": "Capabilitysource",
+          "type": "Choice",
+          "description": "Source domain: CCSB, Field Service, Project Operations, external, manual.",
+          "required": true,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "CCSB"
+            },
+            {
+              "value": 831030001,
+              "label": "Field Service"
+            },
+            {
+              "value": 831030002,
+              "label": "Project Operations"
+            },
+            {
+              "value": 831030003,
+              "label": "External"
+            },
+            {
+              "value": 831030004,
+              "label": "Manual"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Externalkey",
+          "logicalName": "ccsb_externalkey",
+          "displayName": "Externalkey",
+          "type": "String",
+          "description": "External/source-system identity when imported.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Sourcetablelogicalname",
+          "logicalName": "ccsb_sourcetablelogicalname",
+          "displayName": "Sourcetablelogicalname",
+          "type": "String",
+          "description": "Optional source table logical name for adapter traceability.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Sourcerecordid",
+          "logicalName": "ccsb_sourcerecordid",
+          "displayName": "Sourcerecord",
+          "type": "String",
+          "description": "Optional source record identifier.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Effectivefrom",
+          "logicalName": "ccsb_effectivefrom",
+          "displayName": "Effectivefrom",
+          "type": "DateTime",
+          "description": "Start of eligibility window.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Effectiveto",
+          "logicalName": "ccsb_effectiveto",
+          "displayName": "Effectiveto",
+          "type": "DateTime",
+          "description": "End of eligibility window.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Proficiencylevel",
+          "logicalName": "ccsb_proficiencylevel",
+          "displayName": "Proficiencylevel",
+          "type": "Choice",
+          "description": "Coarse proficiency/rating band.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "None"
+            },
+            {
+              "value": 831030001,
+              "label": "Beginner"
+            },
+            {
+              "value": 831030002,
+              "label": "Intermediate"
+            },
+            {
+              "value": 831030003,
+              "label": "Advanced"
+            },
+            {
+              "value": 831030004,
+              "label": "Expert"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Proficiencyvalue",
+          "logicalName": "ccsb_proficiencyvalue",
+          "displayName": "Proficiencyvalue",
+          "type": "Decimal",
+          "description": "Numeric proficiency score where a source uses values instead of bands.",
+          "required": false,
+          "isSecured": false,
+          "precision": 2,
+          "minValue": -100000000,
+          "maxValue": 100000000
+        },
+        {
+          "schemaName": "ccsb_Capacityunits",
+          "logicalName": "ccsb_capacityunits",
+          "displayName": "Capacityunits",
+          "type": "Decimal",
+          "description": "Capability capacity contribution or allocation units.",
+          "required": false,
+          "isSecured": false,
+          "precision": 2,
+          "minValue": -100000000,
+          "maxValue": 100000000
+        },
+        {
+          "schemaName": "ccsb_Verificationstatus",
+          "logicalName": "ccsb_verificationstatus",
+          "displayName": "Verificationstatus",
+          "type": "Choice",
+          "description": "Unverified, verified, expired, rejected, waived.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Unverified"
+            },
+            {
+              "value": 831030001,
+              "label": "Verified"
+            },
+            {
+              "value": 831030002,
+              "label": "Expired"
+            },
+            {
+              "value": 831030003,
+              "label": "Rejected"
+            },
+            {
+              "value": 831030004,
+              "label": "Waived"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Verifiedon",
+          "logicalName": "ccsb_verifiedon",
+          "displayName": "Verifiedon",
+          "type": "DateTime",
+          "description": "When the capability evidence was verified.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Expirydate",
+          "logicalName": "ccsb_expirydate",
+          "displayName": "Expirydate",
+          "type": "DateTime",
+          "description": "Certification or eligibility expiry date.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Iseligible",
+          "logicalName": "ccsb_iseligible",
+          "displayName": "Iseligible",
+          "type": "Boolean",
+          "description": "Computed or imported final eligibility flag used by scheduling rules.",
+          "required": true,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Capabilitystatus",
+          "logicalName": "ccsb_capabilitystatus",
+          "displayName": "Capabilitystatus",
+          "type": "Choice",
+          "description": "Active, inactive, superseded, archived.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Active"
+            },
+            {
+              "value": 831030001,
+              "label": "Inactive"
+            },
+            {
+              "value": 831030002,
+              "label": "Superseded"
+            },
+            {
+              "value": 831030003,
+              "label": "Archived"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Sourcehash",
+          "logicalName": "ccsb_sourcehash",
+          "displayName": "Sourcehash",
+          "type": "String",
+          "description": "Hash of source capability input for drift checks.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Notes",
+          "logicalName": "ccsb_notes",
+          "displayName": "Notes",
+          "type": "Memo",
+          "description": "Short steward notes. Keep sensitive evidence outside alternate keys.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_CapabilitykeyKey",
+          "displayName": "Resource Capability Key",
+          "fields": [
+            "ccsb_capabilitykey"
+          ]
+        }
+      ],
+      "mainForm": {
+        "name": "CSB - Resource Capability Main",
+        "sections": [
+          {
+            "tab": "General",
+            "section": "Summary",
+            "fields": [
+              "ccsb_name",
+              "ccsb_capabilitykey",
+              "ccsb_capabilitytype",
+              "ccsb_proficiencylevel",
+              "ccsb_verificationstatus"
+            ]
+          },
+          {
+            "tab": "General",
+            "section": "Relationships",
+            "fields": [
+              "ccsb_resourceid",
+              "ccsb_resourceroleid",
+              "ccsb_verifiedby"
+            ]
+          },
+          {
+            "tab": "Lifecycle",
+            "section": "Process",
+            "fields": [
+              "ccsb_capabilitysource",
+              "ccsb_effectivefrom",
+              "ccsb_effectiveto",
+              "ccsb_proficiencyvalue",
+              "ccsb_capacityunits",
+              "ccsb_verifiedon",
+              "ccsb_expirydate",
+              "ccsb_iseligible",
+              "ccsb_capabilitystatus"
+            ]
+          },
+          {
+            "tab": "Payload",
+            "section": "Payload and Diagnostics",
+            "fields": [
+              "ccsb_notes"
+            ]
+          },
+          {
+            "tab": "Administration",
+            "section": "Audit and Record State",
+            "fields": [
+              "ownerid",
+              "createdon",
+              "createdby",
+              "modifiedon",
+              "modifiedby",
+              "statecode",
+              "statuscode"
+            ]
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "CSB - Resource Capability - Active",
+          "purpose": "Active audit/control records ordered by most recently modified.",
+          "filter": {
+            "field": "statecode",
+            "operator": "eq",
+            "value": "0"
+          },
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_capabilitykey",
+            "ccsb_capabilitytype",
+            "ccsb_proficiencylevel",
+            "ccsb_verificationstatus",
+            "modifiedon"
+          ]
+        },
+        {
+          "name": "CSB - Resource Capability - All Records",
+          "purpose": "All audit/control records ordered by most recently modified.",
+          "filter": null,
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_capabilitykey",
+            "ccsb_capabilitytype",
+            "ccsb_proficiencylevel",
+            "ccsb_verificationstatus",
+            "modifiedon"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_Operationaudit",
+      "logicalName": "ccsb_operationaudit",
+      "displayName": "Operation Audit",
+      "collectionName": "Operation Audits",
+      "ownership": "OrganizationOwned",
+      "description": "Change from Codex previous design to organization-owned. Audit evidence should not inherit a user owner that could change access or business unit behavior.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Operation Audit Name",
+        "description": "Primary display name.",
+        "maxLength": 300
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_Auditeventkey",
+          "logicalName": "ccsb_auditeventkey",
+          "displayName": "Auditeventkey",
+          "type": "String",
+          "description": "Durable event identity, derived from operation id plus sequence.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Sequence",
+          "logicalName": "ccsb_sequence",
+          "displayName": "Sequence",
+          "type": "Integer",
+          "description": "Monotonic order within the operation.",
+          "required": true,
+          "isSecured": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_Actorprincipaltype",
+          "logicalName": "ccsb_actorprincipaltype",
+          "displayName": "Actorprincipaltype",
+          "type": "Choice",
+          "description": "User, team, application user, system, integration.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "User"
+            },
+            {
+              "value": 831030001,
+              "label": "Team"
+            },
+            {
+              "value": 831030002,
+              "label": "Application User"
+            },
+            {
+              "value": 831030003,
+              "label": "System"
+            },
+            {
+              "value": 831030004,
+              "label": "Integration"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Actorprincipalid",
+          "logicalName": "ccsb_actorprincipalid",
+          "displayName": "Actorprincipal",
+          "type": "String",
+          "description": "External principal identifier if not represented by systemuser.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Auditeventtype",
+          "logicalName": "ccsb_auditeventtype",
+          "displayName": "Auditeventtype",
+          "type": "Choice",
+          "description": "Validation, command, security, publish, rollback, lock, integration, support, system.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Validation"
+            },
+            {
+              "value": 831030001,
+              "label": "Command"
+            },
+            {
+              "value": 831030002,
+              "label": "Security"
+            },
+            {
+              "value": 831030003,
+              "label": "Publish"
+            },
+            {
+              "value": 831030004,
+              "label": "Rollback"
+            },
+            {
+              "value": 831030005,
+              "label": "Lock"
+            },
+            {
+              "value": 831030006,
+              "label": "Integration"
+            },
+            {
+              "value": 831030007,
+              "label": "Support"
+            },
+            {
+              "value": 831030008,
+              "label": "System"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Actiontype",
+          "logicalName": "ccsb_actiontype",
+          "displayName": "Actiontype",
+          "type": "Choice",
+          "description": "Create, update, delete, approve, reject, publish, rollback, lock, unlock, dispatch.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Create"
+            },
+            {
+              "value": 831030001,
+              "label": "Update"
+            },
+            {
+              "value": 831030002,
+              "label": "Delete"
+            },
+            {
+              "value": 831030003,
+              "label": "Approve"
+            },
+            {
+              "value": 831030004,
+              "label": "Reject"
+            },
+            {
+              "value": 831030005,
+              "label": "Publish"
+            },
+            {
+              "value": 831030006,
+              "label": "Rollback"
+            },
+            {
+              "value": 831030007,
+              "label": "Lock"
+            },
+            {
+              "value": 831030008,
+              "label": "Unlock"
+            },
+            {
+              "value": 831030009,
+              "label": "Dispatch"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Outcome",
+          "logicalName": "ccsb_outcome",
+          "displayName": "Outcome",
+          "type": "Choice",
+          "description": "Started, succeeded, failed, blocked, skipped, compensated.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Started"
+            },
+            {
+              "value": 831030001,
+              "label": "Succeeded"
+            },
+            {
+              "value": 831030002,
+              "label": "Failed"
+            },
+            {
+              "value": 831030003,
+              "label": "Blocked"
+            },
+            {
+              "value": 831030004,
+              "label": "Skipped"
+            },
+            {
+              "value": 831030005,
+              "label": "Compensated"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Severity",
+          "logicalName": "ccsb_severity",
+          "displayName": "Severity",
+          "type": "Choice",
+          "description": "Information, warning, error, critical.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Information"
+            },
+            {
+              "value": 831030001,
+              "label": "Warning"
+            },
+            {
+              "value": 831030002,
+              "label": "Error"
+            },
+            {
+              "value": 831030003,
+              "label": "Critical"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Correlationid",
+          "logicalName": "ccsb_correlationid",
+          "displayName": "Correlation",
+          "type": "String",
+          "description": "Cross-table and cross-service correlation identifier.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Causationid",
+          "logicalName": "ccsb_causationid",
+          "displayName": "Causation",
+          "type": "String",
+          "description": "Parent event or message id.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Idempotencykey",
+          "logicalName": "ccsb_idempotencykey",
+          "displayName": "Idempotencykey",
+          "type": "String",
+          "description": "Idempotency key supplied by API or worker.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Apioperation",
+          "logicalName": "ccsb_apioperation",
+          "displayName": "Apioperation",
+          "type": "String",
+          "description": "Custom API, plug-in, flow, or integration operation name.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Apiversion",
+          "logicalName": "ccsb_apiversion",
+          "displayName": "Apiversion",
+          "type": "String",
+          "description": "Contract version of the operation.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 50
+        },
+        {
+          "schemaName": "ccsb_Targetscopetype",
+          "logicalName": "ccsb_targetscopetype",
+          "displayName": "Targetscopetype",
+          "type": "Choice",
+          "description": "Board, version, requirement, assignment, resource, group, external.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Board"
+            },
+            {
+              "value": 831030001,
+              "label": "Version"
+            },
+            {
+              "value": 831030002,
+              "label": "Requirement"
+            },
+            {
+              "value": 831030003,
+              "label": "Assignment"
+            },
+            {
+              "value": 831030004,
+              "label": "Resource"
+            },
+            {
+              "value": 831030005,
+              "label": "Group"
+            },
+            {
+              "value": 831030006,
+              "label": "External"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Targetreferenceid",
+          "logicalName": "ccsb_targetreferenceid",
+          "displayName": "Targetreference",
+          "type": "String",
+          "description": "Record id or scope key affected by the action.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Reasoncategory",
+          "logicalName": "ccsb_reasoncategory",
+          "displayName": "Reasoncategory",
+          "type": "Choice",
+          "description": "Policy, user request, conflict, integration, data correction, support, system.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Policy"
+            },
+            {
+              "value": 831030001,
+              "label": "User Request"
+            },
+            {
+              "value": 831030002,
+              "label": "Conflict"
+            },
+            {
+              "value": 831030003,
+              "label": "Integration"
+            },
+            {
+              "value": 831030004,
+              "label": "Data Correction"
+            },
+            {
+              "value": 831030005,
+              "label": "Support"
+            },
+            {
+              "value": 831030006,
+              "label": "System"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Reasontext",
+          "logicalName": "ccsb_reasontext",
+          "displayName": "Reasontext",
+          "type": "Memo",
+          "description": "User-visible business reason, override reason, or support note.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Errorcode",
+          "logicalName": "ccsb_errorcode",
+          "displayName": "Errorcode",
+          "type": "String",
+          "description": "Stable error code.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Errordetail",
+          "logicalName": "ccsb_errordetail",
+          "displayName": "Errordetail",
+          "type": "Memo",
+          "description": "Diagnostic detail, sanitized before storage.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Occurredon",
+          "logicalName": "ccsb_occurredon",
+          "displayName": "Occurredon",
+          "type": "DateTime",
+          "description": "UTC timestamp when the event occurred.",
+          "required": true,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Policyversion",
+          "logicalName": "ccsb_policyversion",
+          "displayName": "Policyversion",
+          "type": "String",
+          "description": "Rule/policy version that governed the decision.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Diagnosticjson",
+          "logicalName": "ccsb_diagnosticjson",
+          "displayName": "Diagnosticjson",
+          "type": "Memo",
+          "description": "Structured diagnostics for support, never used as the canonical business payload.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Previousrecordhash",
+          "logicalName": "ccsb_previousrecordhash",
+          "displayName": "Previousrecordhash",
+          "type": "String",
+          "description": "Optional hash-chain pointer for tamper-evidence.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Recordhash",
+          "logicalName": "ccsb_recordhash",
+          "displayName": "Recordhash",
+          "type": "String",
+          "description": "Hash of immutable event payload fields.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Retentionuntil",
+          "logicalName": "ccsb_retentionuntil",
+          "displayName": "Retentionuntil",
+          "type": "DateTime",
+          "description": "Retention/archive boundary for support operations.",
+          "required": false,
+          "isSecured": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_AuditeventkeyKey",
+          "displayName": "Operation Audit Key",
+          "fields": [
+            "ccsb_auditeventkey"
+          ]
+        }
+      ],
+      "mainForm": {
+        "name": "CSB - Operation Audit Main",
+        "sections": [
+          {
+            "tab": "General",
+            "section": "Summary",
+            "fields": [
+              "ccsb_name",
+              "ccsb_auditeventkey",
+              "ccsb_actorprincipaltype",
+              "ccsb_auditeventtype",
+              "ccsb_actiontype"
+            ]
+          },
+          {
+            "tab": "General",
+            "section": "Relationships",
+            "fields": [
+              "ccsb_operationid",
+              "ccsb_operationitemid",
+              "ccsb_schedulechangeid",
+              "ccsb_publishsnapshotid",
+              "ccsb_publishlockid",
+              "ccsb_actorid"
+            ]
+          },
+          {
+            "tab": "Lifecycle",
+            "section": "Process",
+            "fields": [
+              "ccsb_sequence",
+              "ccsb_outcome",
+              "ccsb_severity",
+              "ccsb_targetscopetype",
+              "ccsb_reasoncategory",
+              "ccsb_occurredon",
+              "ccsb_retentionuntil"
+            ]
+          },
+          {
+            "tab": "Payload",
+            "section": "Payload and Diagnostics",
+            "fields": [
+              "ccsb_reasontext",
+              "ccsb_errordetail",
+              "ccsb_diagnosticjson"
+            ]
+          },
+          {
+            "tab": "Administration",
+            "section": "Audit and Record State",
+            "fields": [
+              "ownerid",
+              "createdon",
+              "createdby",
+              "modifiedon",
+              "modifiedby",
+              "statecode",
+              "statuscode"
+            ]
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "CSB - Operation Audit - Active",
+          "purpose": "Active audit/control records ordered by most recently modified.",
+          "filter": {
+            "field": "statecode",
+            "operator": "eq",
+            "value": "0"
+          },
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_auditeventkey",
+            "ccsb_actorprincipaltype",
+            "ccsb_auditeventtype",
+            "ccsb_actiontype",
+            "modifiedon"
+          ]
+        },
+        {
+          "name": "CSB - Operation Audit - All Records",
+          "purpose": "All audit/control records ordered by most recently modified.",
+          "filter": null,
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_auditeventkey",
+            "ccsb_actorprincipaltype",
+            "ccsb_auditeventtype",
+            "ccsb_actiontype",
+            "modifiedon"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_Schedulechange",
+      "logicalName": "ccsb_schedulechange",
+      "displayName": "Schedule Change",
+      "collectionName": "Schedule Changes",
+      "ownership": "OrganizationOwned",
+      "description": "Change from Codex previous design to organization-owned. This table is a product ledger for mutations, not personal work owned by the requester.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Schedule Change Name",
+        "description": "Primary display name.",
+        "maxLength": 300
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_Changekey",
+          "logicalName": "ccsb_changekey",
+          "displayName": "Changekey",
+          "type": "String",
+          "description": "Stable idempotent identity for the schedule mutation.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Correlationid",
+          "logicalName": "ccsb_correlationid",
+          "displayName": "Correlation",
+          "type": "String",
+          "description": "Cross-table correlation id.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Changetype",
+          "logicalName": "ccsb_changetype",
+          "displayName": "Changetype",
+          "type": "Choice",
+          "description": "Create, update, delete, move, assign, unassign, split, merge, rollback, publish.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Create"
+            },
+            {
+              "value": 831030001,
+              "label": "Update"
+            },
+            {
+              "value": 831030002,
+              "label": "Delete"
+            },
+            {
+              "value": 831030003,
+              "label": "Move"
+            },
+            {
+              "value": 831030004,
+              "label": "Assign"
+            },
+            {
+              "value": 831030005,
+              "label": "Unassign"
+            },
+            {
+              "value": 831030006,
+              "label": "Split"
+            },
+            {
+              "value": 831030007,
+              "label": "Merge"
+            },
+            {
+              "value": 831030008,
+              "label": "Rollback"
+            },
+            {
+              "value": 831030009,
+              "label": "Publish"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Changestatus",
+          "logicalName": "ccsb_changestatus",
+          "displayName": "Changestatus",
+          "type": "Choice",
+          "description": "Proposed, validated, approved, committed, published, rejected, superseded, rolled back, failed.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Proposed"
+            },
+            {
+              "value": 831030001,
+              "label": "Validated"
+            },
+            {
+              "value": 831030002,
+              "label": "Approved"
+            },
+            {
+              "value": 831030003,
+              "label": "Committed"
+            },
+            {
+              "value": 831030004,
+              "label": "Published"
+            },
+            {
+              "value": 831030005,
+              "label": "Rejected"
+            },
+            {
+              "value": 831030006,
+              "label": "Superseded"
+            },
+            {
+              "value": 831030007,
+              "label": "Rolled Back"
+            },
+            {
+              "value": 831030008,
+              "label": "Failed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Sourceorigin",
+          "logicalName": "ccsb_sourceorigin",
+          "displayName": "Sourceorigin",
+          "type": "Choice",
+          "description": "User, API, bulk import, optimizer, external integration, rollback, system.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "User"
+            },
+            {
+              "value": 831030001,
+              "label": "API"
+            },
+            {
+              "value": 831030002,
+              "label": "Bulk Import"
+            },
+            {
+              "value": 831030003,
+              "label": "Optimizer"
+            },
+            {
+              "value": 831030004,
+              "label": "External Integration"
+            },
+            {
+              "value": 831030005,
+              "label": "Rollback"
+            },
+            {
+              "value": 831030006,
+              "label": "System"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Sourceentitylogicalname",
+          "logicalName": "ccsb_sourceentitylogicalname",
+          "displayName": "Sourceentitylogicalname",
+          "type": "String",
+          "description": "Source table logical name for imported or adapter-created changes.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Sourcerecordid",
+          "logicalName": "ccsb_sourcerecordid",
+          "displayName": "Sourcerecord",
+          "type": "String",
+          "description": "Source record identifier.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Targetentitylogicalname",
+          "logicalName": "ccsb_targetentitylogicalname",
+          "displayName": "Targetentitylogicalname",
+          "type": "String",
+          "description": "Target Dataverse table logical name.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Targetrecordid",
+          "logicalName": "ccsb_targetrecordid",
+          "displayName": "Targetrecord",
+          "type": "String",
+          "description": "Target record id expected to be mutated.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Expectedrowversion",
+          "logicalName": "ccsb_expectedrowversion",
+          "displayName": "Expectedrowversion",
+          "type": "String",
+          "description": "Concurrency value observed before the write.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Fieldscopejson",
+          "logicalName": "ccsb_fieldscopejson",
+          "displayName": "Fieldscopejson",
+          "type": "Memo",
+          "description": "Managed field list touched by the change.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Beforepayloadjson",
+          "logicalName": "ccsb_beforepayloadjson",
+          "displayName": "Beforepayloadjson",
+          "type": "Memo",
+          "description": "Before image for managed rollback scope.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Proposedpayloadjson",
+          "logicalName": "ccsb_proposedpayloadjson",
+          "displayName": "Proposedpayloadjson",
+          "type": "Memo",
+          "description": "Proposed write payload before transformation.",
+          "required": true,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Committedpayloadjson",
+          "logicalName": "ccsb_committedpayloadjson",
+          "displayName": "Committedpayloadjson",
+          "type": "Memo",
+          "description": "Actual committed payload if different from proposal.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Rollbackimagejson",
+          "logicalName": "ccsb_rollbackimagejson",
+          "displayName": "Rollbackimagejson",
+          "type": "Memo",
+          "description": "Rollback image for managed fields.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Ruleoutcomejson",
+          "logicalName": "ccsb_ruleoutcomejson",
+          "displayName": "Ruleoutcomejson",
+          "type": "Memo",
+          "description": "Validation and policy result summary.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Requiresapproval",
+          "logicalName": "ccsb_requiresapproval",
+          "displayName": "Requiresapproval",
+          "type": "Boolean",
+          "description": "Whether the change requires approval.",
+          "required": false,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Approvedon",
+          "logicalName": "ccsb_approvedon",
+          "displayName": "Approvedon",
+          "type": "DateTime",
+          "description": "Approval timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Overridereason",
+          "logicalName": "ccsb_overridereason",
+          "displayName": "Overridereason",
+          "type": "Memo",
+          "description": "Business reason for override.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Requestedon",
+          "logicalName": "ccsb_requestedon",
+          "displayName": "Requestedon",
+          "type": "DateTime",
+          "description": "UTC request timestamp.",
+          "required": true,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Committedon",
+          "logicalName": "ccsb_committedon",
+          "displayName": "Committedon",
+          "type": "DateTime",
+          "description": "UTC commit timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Publishedon",
+          "logicalName": "ccsb_publishedon",
+          "displayName": "Publishedon",
+          "type": "DateTime",
+          "description": "UTC publish timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Changehash",
+          "logicalName": "ccsb_changehash",
+          "displayName": "Changehash",
+          "type": "String",
+          "description": "Hash of core change payload.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Isrollbackcandidate",
+          "logicalName": "ccsb_isrollbackcandidate",
+          "displayName": "Isrollbackcandidate",
+          "type": "Boolean",
+          "description": "Whether rollback tooling may use this change.",
+          "required": false,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Retentionuntil",
+          "logicalName": "ccsb_retentionuntil",
+          "displayName": "Retentionuntil",
+          "type": "DateTime",
+          "description": "Retention/archive boundary.",
+          "required": false,
+          "isSecured": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_ChangekeyKey",
+          "displayName": "Schedule Change Key",
+          "fields": [
+            "ccsb_changekey"
+          ]
+        }
+      ],
+      "mainForm": {
+        "name": "CSB - Schedule Change Main",
+        "sections": [
+          {
+            "tab": "General",
+            "section": "Summary",
+            "fields": [
+              "ccsb_name",
+              "ccsb_changekey",
+              "ccsb_changetype",
+              "ccsb_changestatus"
+            ]
+          },
+          {
+            "tab": "General",
+            "section": "Relationships",
+            "fields": [
+              "ccsb_boardid",
+              "ccsb_boardversionid",
+              "ccsb_scheduleversionid",
+              "ccsb_scheduleitemid",
+              "ccsb_scheduleassignmentid",
+              "ccsb_schedulerequirementid",
+              "ccsb_resourceid",
+              "ccsb_operationid",
+              "ccsb_operationitemid",
+              "ccsb_publishlockid",
+              "ccsb_requestedby",
+              "ccsb_approvedby"
+            ]
+          },
+          {
+            "tab": "Lifecycle",
+            "section": "Process",
+            "fields": [
+              "ccsb_sourceorigin",
+              "ccsb_requiresapproval",
+              "ccsb_approvedon",
+              "ccsb_requestedon",
+              "ccsb_committedon",
+              "ccsb_publishedon",
+              "ccsb_isrollbackcandidate",
+              "ccsb_retentionuntil"
+            ]
+          },
+          {
+            "tab": "Payload",
+            "section": "Payload and Diagnostics",
+            "fields": [
+              "ccsb_fieldscopejson",
+              "ccsb_beforepayloadjson",
+              "ccsb_proposedpayloadjson",
+              "ccsb_committedpayloadjson",
+              "ccsb_rollbackimagejson",
+              "ccsb_ruleoutcomejson",
+              "ccsb_overridereason"
+            ]
+          },
+          {
+            "tab": "Administration",
+            "section": "Audit and Record State",
+            "fields": [
+              "ownerid",
+              "createdon",
+              "createdby",
+              "modifiedon",
+              "modifiedby",
+              "statecode",
+              "statuscode"
+            ]
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "CSB - Schedule Change - Active",
+          "purpose": "Active audit/control records ordered by most recently modified.",
+          "filter": {
+            "field": "statecode",
+            "operator": "eq",
+            "value": "0"
+          },
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_changekey",
+            "ccsb_changetype",
+            "ccsb_changestatus",
+            "modifiedon"
+          ]
+        },
+        {
+          "name": "CSB - Schedule Change - All Records",
+          "purpose": "All audit/control records ordered by most recently modified.",
+          "filter": null,
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_changekey",
+            "ccsb_changetype",
+            "ccsb_changestatus",
+            "modifiedon"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_Publishsnapshotitem",
+      "logicalName": "ccsb_publishsnapshotitem",
+      "displayName": "Publish Snapshot Item",
+      "collectionName": "Publish Snapshot Items",
+      "ownership": "OrganizationOwned",
+      "description": "Keep organization-owned. Snapshot items are immutable evidence, not user-owned work records.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Publish Snapshot Item Name",
+        "description": "Primary display name.",
+        "maxLength": 300
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_Snapshotitemkey",
+          "logicalName": "ccsb_snapshotitemkey",
+          "displayName": "Snapshotitemkey",
+          "type": "String",
+          "description": "Stable snapshot item identity.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Sequence",
+          "logicalName": "ccsb_sequence",
+          "displayName": "Sequence",
+          "type": "Integer",
+          "description": "Order inside the snapshot.",
+          "required": true,
+          "isSecured": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_Snapshotitemtype",
+          "logicalName": "ccsb_snapshotitemtype",
+          "displayName": "Snapshotitemtype",
+          "type": "Choice",
+          "description": "Schedule item, assignment, requirement, resource, lock, metadata, external projection.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Schedule Item"
+            },
+            {
+              "value": 831030001,
+              "label": "Assignment"
+            },
+            {
+              "value": 831030002,
+              "label": "Requirement"
+            },
+            {
+              "value": 831030003,
+              "label": "Resource"
+            },
+            {
+              "value": 831030004,
+              "label": "Lock"
+            },
+            {
+              "value": 831030005,
+              "label": "Metadata"
+            },
+            {
+              "value": 831030006,
+              "label": "External Projection"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Capturestatus",
+          "logicalName": "ccsb_capturestatus",
+          "displayName": "Capturestatus",
+          "type": "Choice",
+          "description": "Captured, skipped, missing, transformed, failed.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Captured"
+            },
+            {
+              "value": 831030001,
+              "label": "Skipped"
+            },
+            {
+              "value": 831030002,
+              "label": "Missing"
+            },
+            {
+              "value": 831030003,
+              "label": "Transformed"
+            },
+            {
+              "value": 831030004,
+              "label": "Failed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Sourceentitylogicalname",
+          "logicalName": "ccsb_sourceentitylogicalname",
+          "displayName": "Sourceentitylogicalname",
+          "type": "String",
+          "description": "Logical name of the captured table.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Sourcerecordid",
+          "logicalName": "ccsb_sourcerecordid",
+          "displayName": "Sourcerecord",
+          "type": "String",
+          "description": "Captured record identifier.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Sourceversion",
+          "logicalName": "ccsb_sourceversion",
+          "displayName": "Sourceversion",
+          "type": "String",
+          "description": "Row version or source version at capture time.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Managedfieldscopejson",
+          "logicalName": "ccsb_managedfieldscopejson",
+          "displayName": "Managedfieldscopejson",
+          "type": "Memo",
+          "description": "Fields governed by rollback and official-state comparison.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Payloadjson",
+          "logicalName": "ccsb_payloadjson",
+          "displayName": "Payloadjson",
+          "type": "Memo",
+          "description": "Captured payload for the managed field scope.",
+          "required": true,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Payloadhash",
+          "logicalName": "ccsb_payloadhash",
+          "displayName": "Payloadhash",
+          "type": "String",
+          "description": "Hash of captured payload.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Rollbackimagejson",
+          "logicalName": "ccsb_rollbackimagejson",
+          "displayName": "Rollbackimagejson",
+          "type": "Memo",
+          "description": "Optional rollback-specific image if it differs from payload.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Isdeletedatcapture",
+          "logicalName": "ccsb_isdeletedatcapture",
+          "displayName": "Isdeletedatcapture",
+          "type": "Boolean",
+          "description": "Whether source row was deleted or absent at capture time.",
+          "required": false,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Isimmutable",
+          "logicalName": "ccsb_isimmutable",
+          "displayName": "Isimmutable",
+          "type": "Boolean",
+          "description": "Marks the item as immutable after snapshot close.",
+          "required": true,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Retentionuntil",
+          "logicalName": "ccsb_retentionuntil",
+          "displayName": "Retentionuntil",
+          "type": "DateTime",
+          "description": "Retention/archive boundary.",
+          "required": false,
+          "isSecured": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_SnapshotitemkeyKey",
+          "displayName": "Publish Snapshot Item Key",
+          "fields": [
+            "ccsb_snapshotitemkey"
+          ]
+        }
+      ],
+      "mainForm": {
+        "name": "CSB - Publish Snapshot Item Main",
+        "sections": [
+          {
+            "tab": "General",
+            "section": "Summary",
+            "fields": [
+              "ccsb_name",
+              "ccsb_snapshotitemkey",
+              "ccsb_snapshotitemtype",
+              "ccsb_capturestatus"
+            ]
+          },
+          {
+            "tab": "General",
+            "section": "Relationships",
+            "fields": [
+              "ccsb_publishsnapshotid",
+              "ccsb_schedulechangeid",
+              "ccsb_scheduleitemid",
+              "ccsb_scheduleassignmentid",
+              "ccsb_schedulerequirementid",
+              "ccsb_resourceid"
+            ]
+          },
+          {
+            "tab": "Lifecycle",
+            "section": "Process",
+            "fields": [
+              "ccsb_sequence",
+              "ccsb_isdeletedatcapture",
+              "ccsb_isimmutable",
+              "ccsb_retentionuntil"
+            ]
+          },
+          {
+            "tab": "Payload",
+            "section": "Payload and Diagnostics",
+            "fields": [
+              "ccsb_managedfieldscopejson",
+              "ccsb_payloadjson",
+              "ccsb_rollbackimagejson"
+            ]
+          },
+          {
+            "tab": "Administration",
+            "section": "Audit and Record State",
+            "fields": [
+              "ownerid",
+              "createdon",
+              "createdby",
+              "modifiedon",
+              "modifiedby",
+              "statecode",
+              "statuscode"
+            ]
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "CSB - Publish Snapshot Item - Active",
+          "purpose": "Active audit/control records ordered by most recently modified.",
+          "filter": {
+            "field": "statecode",
+            "operator": "eq",
+            "value": "0"
+          },
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_snapshotitemkey",
+            "ccsb_snapshotitemtype",
+            "ccsb_capturestatus",
+            "modifiedon"
+          ]
+        },
+        {
+          "name": "CSB - Publish Snapshot Item - All Records",
+          "purpose": "All audit/control records ordered by most recently modified.",
+          "filter": null,
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_snapshotitemkey",
+            "ccsb_snapshotitemtype",
+            "ccsb_capturestatus",
+            "modifiedon"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_Publishlock",
+      "logicalName": "ccsb_publishlock",
+      "displayName": "Publish Lock",
+      "collectionName": "Publish Locks",
+      "ownership": "OrganizationOwned",
+      "description": "Change from Codex previous design to organization-owned. A publish lock is a board protection record, not an owned personal row or worker lease.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Publish Lock Name",
+        "description": "Primary display name.",
+        "maxLength": 300
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_Lockkey",
+          "logicalName": "ccsb_lockkey",
+          "displayName": "Lockkey",
+          "type": "String",
+          "description": "Stable lock identity for scope and idempotency.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Locktype",
+          "logicalName": "ccsb_locktype",
+          "displayName": "Locktype",
+          "type": "Choice",
+          "description": "Publish protection, edit freeze, rollback protection, approval hold, external dependency.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Publish Protection"
+            },
+            {
+              "value": 831030001,
+              "label": "Edit Freeze"
+            },
+            {
+              "value": 831030002,
+              "label": "Rollback Protection"
+            },
+            {
+              "value": 831030003,
+              "label": "Approval Hold"
+            },
+            {
+              "value": 831030004,
+              "label": "External Dependency"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Locklevel",
+          "logicalName": "ccsb_locklevel",
+          "displayName": "Locklevel",
+          "type": "Choice",
+          "description": "Board, version, group, resource, item, field, external.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Board"
+            },
+            {
+              "value": 831030001,
+              "label": "Version"
+            },
+            {
+              "value": 831030002,
+              "label": "Group"
+            },
+            {
+              "value": 831030003,
+              "label": "Resource"
+            },
+            {
+              "value": 831030004,
+              "label": "Item"
+            },
+            {
+              "value": 831030005,
+              "label": "Field"
+            },
+            {
+              "value": 831030006,
+              "label": "External"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Lockstatus",
+          "logicalName": "ccsb_lockstatus",
+          "displayName": "Lockstatus",
+          "type": "Choice",
+          "description": "Active, released, expired, overridden, superseded.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Active"
+            },
+            {
+              "value": 831030001,
+              "label": "Released"
+            },
+            {
+              "value": 831030002,
+              "label": "Expired"
+            },
+            {
+              "value": 831030003,
+              "label": "Overridden"
+            },
+            {
+              "value": 831030004,
+              "label": "Superseded"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Scopetype",
+          "logicalName": "ccsb_scopetype",
+          "displayName": "Scopetype",
+          "type": "Choice",
+          "description": "Global board, time window, resource, requirement, assignment, external.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Global Board"
+            },
+            {
+              "value": 831030001,
+              "label": "Time Window"
+            },
+            {
+              "value": 831030002,
+              "label": "Resource"
+            },
+            {
+              "value": 831030003,
+              "label": "Requirement"
+            },
+            {
+              "value": 831030004,
+              "label": "Assignment"
+            },
+            {
+              "value": 831030005,
+              "label": "External"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Scopefromutc",
+          "logicalName": "ccsb_scopefromutc",
+          "displayName": "Scopefromutc",
+          "type": "DateTime",
+          "description": "Optional scope start time.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Scopetoutc",
+          "logicalName": "ccsb_scopetoutc",
+          "displayName": "Scopetoutc",
+          "type": "DateTime",
+          "description": "Optional scope end time.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Timezoneid",
+          "logicalName": "ccsb_timezoneid",
+          "displayName": "Timezone",
+          "type": "String",
+          "description": "Timezone used to interpret business scope.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Scopecriteriajson",
+          "logicalName": "ccsb_scopecriteriajson",
+          "displayName": "Scopecriteriajson",
+          "type": "Memo",
+          "description": "Structured scope criteria.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Protectedactionsjson",
+          "logicalName": "ccsb_protectedactionsjson",
+          "displayName": "Protectedactionsjson",
+          "type": "Memo",
+          "description": "Actions blocked or allowed by the lock.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Lockedon",
+          "logicalName": "ccsb_lockedon",
+          "displayName": "Lockedon",
+          "type": "DateTime",
+          "description": "UTC lock acquisition timestamp.",
+          "required": true,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Expireson",
+          "logicalName": "ccsb_expireson",
+          "displayName": "Expireson",
+          "type": "DateTime",
+          "description": "Business expiration time, not a worker heartbeat.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Releasedon",
+          "logicalName": "ccsb_releasedon",
+          "displayName": "Releasedon",
+          "type": "DateTime",
+          "description": "UTC release timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Overriddenon",
+          "logicalName": "ccsb_overriddenon",
+          "displayName": "Overriddenon",
+          "type": "DateTime",
+          "description": "UTC override timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Overridereason",
+          "logicalName": "ccsb_overridereason",
+          "displayName": "Overridereason",
+          "type": "Memo",
+          "description": "Governed reason for override.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Correlationid",
+          "logicalName": "ccsb_correlationid",
+          "displayName": "Correlation",
+          "type": "String",
+          "description": "Correlation id across lock and publish operations.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Isactive",
+          "logicalName": "ccsb_isactive",
+          "displayName": "Isactive",
+          "type": "Boolean",
+          "description": "Fast query flag for active lock views.",
+          "required": false,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Retentionuntil",
+          "logicalName": "ccsb_retentionuntil",
+          "displayName": "Retentionuntil",
+          "type": "DateTime",
+          "description": "Retention/archive boundary.",
+          "required": false,
+          "isSecured": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_LockkeyKey",
+          "displayName": "Publish Lock Key",
+          "fields": [
+            "ccsb_lockkey"
+          ]
+        }
+      ],
+      "mainForm": {
+        "name": "CSB - Publish Lock Main",
+        "sections": [
+          {
+            "tab": "General",
+            "section": "Summary",
+            "fields": [
+              "ccsb_name",
+              "ccsb_lockkey",
+              "ccsb_locktype",
+              "ccsb_locklevel",
+              "ccsb_lockstatus"
+            ]
+          },
+          {
+            "tab": "General",
+            "section": "Relationships",
+            "fields": [
+              "ccsb_boardid",
+              "ccsb_boardversionid",
+              "ccsb_scheduleversionid",
+              "ccsb_publishsnapshotid",
+              "ccsb_operationid",
+              "ccsb_groupnodeid",
+              "ccsb_resourceid",
+              "ccsb_scheduleitemid",
+              "ccsb_supersedeslockid",
+              "ccsb_lockedby",
+              "ccsb_releasedby",
+              "ccsb_overriddenby"
+            ]
+          },
+          {
+            "tab": "Lifecycle",
+            "section": "Process",
+            "fields": [
+              "ccsb_scopetype",
+              "ccsb_scopefromutc",
+              "ccsb_scopetoutc",
+              "ccsb_lockedon",
+              "ccsb_expireson",
+              "ccsb_releasedon",
+              "ccsb_overriddenon",
+              "ccsb_isactive",
+              "ccsb_retentionuntil"
+            ]
+          },
+          {
+            "tab": "Payload",
+            "section": "Payload and Diagnostics",
+            "fields": [
+              "ccsb_scopecriteriajson",
+              "ccsb_protectedactionsjson",
+              "ccsb_overridereason"
+            ]
+          },
+          {
+            "tab": "Administration",
+            "section": "Audit and Record State",
+            "fields": [
+              "ownerid",
+              "createdon",
+              "createdby",
+              "modifiedon",
+              "modifiedby",
+              "statecode",
+              "statuscode"
+            ]
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "CSB - Publish Lock - Active",
+          "purpose": "Active audit/control records ordered by most recently modified.",
+          "filter": {
+            "field": "statecode",
+            "operator": "eq",
+            "value": "0"
+          },
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_lockkey",
+            "ccsb_locktype",
+            "ccsb_locklevel",
+            "ccsb_lockstatus",
+            "modifiedon"
+          ]
+        },
+        {
+          "name": "CSB - Publish Lock - All Records",
+          "purpose": "All audit/control records ordered by most recently modified.",
+          "filter": null,
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_lockkey",
+            "ccsb_locktype",
+            "ccsb_locklevel",
+            "ccsb_lockstatus",
+            "modifiedon"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_Outboxevent",
+      "logicalName": "ccsb_outboxevent",
+      "displayName": "Outbox Event",
+      "collectionName": "Outbox Events",
+      "ownership": "OrganizationOwned",
+      "description": "Keep organization-owned. Outbox rows are durable integration work items and should not depend on a user owner.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Outbox Event Name",
+        "description": "Primary display name.",
+        "maxLength": 300
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_Eventkey",
+          "logicalName": "ccsb_eventkey",
+          "displayName": "Eventkey",
+          "type": "String",
+          "description": "Durable event identity for idempotent delivery.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Eventtype",
+          "logicalName": "ccsb_eventtype",
+          "displayName": "Eventtype",
+          "type": "Choice",
+          "description": "Published, changed, locked, unlocked, rollback, export, notification, integration command.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Published"
+            },
+            {
+              "value": 831030001,
+              "label": "Changed"
+            },
+            {
+              "value": 831030002,
+              "label": "Locked"
+            },
+            {
+              "value": 831030003,
+              "label": "Unlocked"
+            },
+            {
+              "value": 831030004,
+              "label": "Rollback"
+            },
+            {
+              "value": 831030005,
+              "label": "Export"
+            },
+            {
+              "value": 831030006,
+              "label": "Notification"
+            },
+            {
+              "value": 831030007,
+              "label": "Integration Command"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Eventversion",
+          "logicalName": "ccsb_eventversion",
+          "displayName": "Eventversion",
+          "type": "String",
+          "description": "Event contract version.",
+          "required": true,
+          "isSecured": false,
+          "maxLength": 50
+        },
+        {
+          "schemaName": "ccsb_Eventstatus",
+          "logicalName": "ccsb_eventstatus",
+          "displayName": "Eventstatus",
+          "type": "Choice",
+          "description": "Pending, processing, delivered, failed, dead-lettered, skipped, replayed.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Pending"
+            },
+            {
+              "value": 831030001,
+              "label": "Processing"
+            },
+            {
+              "value": 831030002,
+              "label": "Delivered"
+            },
+            {
+              "value": 831030003,
+              "label": "Failed"
+            },
+            {
+              "value": 831030004,
+              "label": "Dead Lettered"
+            },
+            {
+              "value": 831030005,
+              "label": "Skipped"
+            },
+            {
+              "value": 831030006,
+              "label": "Replayed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Correlationid",
+          "logicalName": "ccsb_correlationid",
+          "displayName": "Correlation",
+          "type": "String",
+          "description": "Cross-system correlation id.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Causationid",
+          "logicalName": "ccsb_causationid",
+          "displayName": "Causation",
+          "type": "String",
+          "description": "Message or event that caused this event.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Idempotencykey",
+          "logicalName": "ccsb_idempotencykey",
+          "displayName": "Idempotencykey",
+          "type": "String",
+          "description": "Consumer or producer idempotency key.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Aggregateentitylogicalname",
+          "logicalName": "ccsb_aggregateentitylogicalname",
+          "displayName": "Aggregateentitylogicalname",
+          "type": "String",
+          "description": "Aggregate table for ordered event streams.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Aggregaterecordid",
+          "logicalName": "ccsb_aggregaterecordid",
+          "displayName": "Aggregaterecord",
+          "type": "String",
+          "description": "Aggregate record id.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Aggregatesequence",
+          "logicalName": "ccsb_aggregatesequence",
+          "displayName": "Aggregatesequence",
+          "type": "Integer",
+          "description": "Per-aggregate sequence for ordered delivery.",
+          "required": false,
+          "isSecured": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_Partitionkey",
+          "logicalName": "ccsb_partitionkey",
+          "displayName": "Partitionkey",
+          "type": "String",
+          "description": "Partition/shard key for delivery workers.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Destinationtype",
+          "logicalName": "ccsb_destinationtype",
+          "displayName": "Destinationtype",
+          "type": "Choice",
+          "description": "Dataverse event, Power Automate, Service Bus, Event Grid, webhook, export, internal.",
+          "required": false,
+          "isSecured": false,
+          "choiceOptions": [
+            {
+              "value": 831030000,
+              "label": "Dataverse Event"
+            },
+            {
+              "value": 831030001,
+              "label": "Power Automate"
+            },
+            {
+              "value": 831030002,
+              "label": "Service Bus"
+            },
+            {
+              "value": 831030003,
+              "label": "Event Grid"
+            },
+            {
+              "value": 831030004,
+              "label": "Webhook"
+            },
+            {
+              "value": 831030005,
+              "label": "Export"
+            },
+            {
+              "value": 831030006,
+              "label": "Internal"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Destinationkey",
+          "logicalName": "ccsb_destinationkey",
+          "displayName": "Destinationkey",
+          "type": "String",
+          "description": "Logical destination configuration key; never raw URL, token, or secret.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Topic",
+          "logicalName": "ccsb_topic",
+          "displayName": "Topic",
+          "type": "String",
+          "description": "Topic or channel name.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Payloadcontenttype",
+          "logicalName": "ccsb_payloadcontenttype",
+          "displayName": "Payloadcontenttype",
+          "type": "String",
+          "description": "Payload content type.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Payloadjson",
+          "logicalName": "ccsb_payloadjson",
+          "displayName": "Payloadjson",
+          "type": "Memo",
+          "description": "Event body, sanitized and bounded.",
+          "required": true,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Payloadhash",
+          "logicalName": "ccsb_payloadhash",
+          "displayName": "Payloadhash",
+          "type": "String",
+          "description": "Hash of event payload.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Payloadsizebytes",
+          "logicalName": "ccsb_payloadsizebytes",
+          "displayName": "Payloadsizebytes",
+          "type": "Integer",
+          "description": "Serialized payload size for monitoring.",
+          "required": false,
+          "isSecured": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_Occurredon",
+          "logicalName": "ccsb_occurredon",
+          "displayName": "Occurredon",
+          "type": "DateTime",
+          "description": "Business event timestamp.",
+          "required": true,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Availableon",
+          "logicalName": "ccsb_availableon",
+          "displayName": "Availableon",
+          "type": "DateTime",
+          "description": "Earliest delivery time.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Lockeduntil",
+          "logicalName": "ccsb_lockeduntil",
+          "displayName": "Lockeduntil",
+          "type": "DateTime",
+          "description": "Transient claim timeout for delivery worker.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Locktoken",
+          "logicalName": "ccsb_locktoken",
+          "displayName": "Locktoken",
+          "type": "String",
+          "description": "Transient delivery claim token, not an alternate key.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_Attemptcount",
+          "logicalName": "ccsb_attemptcount",
+          "displayName": "Attemptcount",
+          "type": "Integer",
+          "description": "Number of delivery attempts.",
+          "required": false,
+          "isSecured": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_Maxattempts",
+          "logicalName": "ccsb_maxattempts",
+          "displayName": "Maxattempts",
+          "type": "Integer",
+          "description": "Maximum attempts before dead letter.",
+          "required": false,
+          "isSecured": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_Retryafter",
+          "logicalName": "ccsb_retryafter",
+          "displayName": "Retryafter",
+          "type": "DateTime",
+          "description": "Next retry time.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Lastattempton",
+          "logicalName": "ccsb_lastattempton",
+          "displayName": "Lastattempton",
+          "type": "DateTime",
+          "description": "Most recent attempt timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Deliveredon",
+          "logicalName": "ccsb_deliveredon",
+          "displayName": "Deliveredon",
+          "type": "DateTime",
+          "description": "Successful delivery timestamp.",
+          "required": false,
+          "isSecured": false
+        },
+        {
+          "schemaName": "ccsb_Errorcode",
+          "logicalName": "ccsb_errorcode",
+          "displayName": "Errorcode",
+          "type": "String",
+          "description": "Last stable delivery error code.",
+          "required": false,
+          "isSecured": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Errordetail",
+          "logicalName": "ccsb_errordetail",
+          "displayName": "Errordetail",
+          "type": "Memo",
+          "description": "Sanitized delivery error detail.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Deadletterreason",
+          "logicalName": "ccsb_deadletterreason",
+          "displayName": "Deadletterreason",
+          "type": "Memo",
+          "description": "Governed reason event moved to dead letter.",
+          "required": false,
+          "isSecured": true,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_Isreplayable",
+          "logicalName": "ccsb_isreplayable",
+          "displayName": "Isreplayable",
+          "type": "Boolean",
+          "description": "Whether governed replay is allowed.",
+          "required": false,
+          "isSecured": false,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_Retentionuntil",
+          "logicalName": "ccsb_retentionuntil",
+          "displayName": "Retentionuntil",
+          "type": "DateTime",
+          "description": "Retention/archive boundary.",
+          "required": false,
+          "isSecured": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_EventkeyKey",
+          "displayName": "Outbox Event Key",
+          "fields": [
+            "ccsb_eventkey"
+          ]
+        }
+      ],
+      "mainForm": {
+        "name": "CSB - Outbox Event Main",
+        "sections": [
+          {
+            "tab": "General",
+            "section": "Summary",
+            "fields": [
+              "ccsb_name",
+              "ccsb_eventkey",
+              "ccsb_eventtype",
+              "ccsb_eventstatus",
+              "ccsb_destinationtype"
+            ]
+          },
+          {
+            "tab": "General",
+            "section": "Relationships",
+            "fields": [
+              "ccsb_boardid",
+              "ccsb_boardversionid",
+              "ccsb_scheduleversionid",
+              "ccsb_operationid",
+              "ccsb_schedulechangeid",
+              "ccsb_publishsnapshotid",
+              "ccsb_publishlockid"
+            ]
+          },
+          {
+            "tab": "Lifecycle",
+            "section": "Process",
+            "fields": [
+              "ccsb_aggregatesequence",
+              "ccsb_payloadsizebytes",
+              "ccsb_occurredon",
+              "ccsb_availableon",
+              "ccsb_lockeduntil",
+              "ccsb_attemptcount",
+              "ccsb_maxattempts",
+              "ccsb_retryafter",
+              "ccsb_lastattempton",
+              "ccsb_deliveredon",
+              "ccsb_isreplayable",
+              "ccsb_retentionuntil"
+            ]
+          },
+          {
+            "tab": "Payload",
+            "section": "Payload and Diagnostics",
+            "fields": [
+              "ccsb_payloadjson",
+              "ccsb_errordetail",
+              "ccsb_deadletterreason"
+            ]
+          },
+          {
+            "tab": "Administration",
+            "section": "Audit and Record State",
+            "fields": [
+              "ownerid",
+              "createdon",
+              "createdby",
+              "modifiedon",
+              "modifiedby",
+              "statecode",
+              "statuscode"
+            ]
+          }
+        ]
+      },
+      "views": [
+        {
+          "name": "CSB - Outbox Event - Active",
+          "purpose": "Active audit/control records ordered by most recently modified.",
+          "filter": {
+            "field": "statecode",
+            "operator": "eq",
+            "value": "0"
+          },
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_eventkey",
+            "ccsb_eventtype",
+            "ccsb_eventstatus",
+            "ccsb_destinationtype",
+            "modifiedon"
+          ]
+        },
+        {
+          "name": "CSB - Outbox Event - All Records",
+          "purpose": "All audit/control records ordered by most recently modified.",
+          "filter": null,
+          "sort": {
+            "field": "modifiedon",
+            "descending": true
+          },
+          "columns": [
+            "ccsb_name",
+            "ccsb_eventkey",
+            "ccsb_eventtype",
+            "ccsb_eventstatus",
+            "ccsb_destinationtype",
+            "modifiedon"
+          ]
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "schemaName": "ccsb_resource_resourcecapability_resource",
+      "referencedEntity": "ccsb_resource",
+      "referencingEntity": "ccsb_resourcecapability",
+      "lookupSchemaName": "ccsb_Resourceid",
+      "lookupLogicalName": "ccsb_resourceid",
+      "lookupDisplayName": "Resource",
+      "collectionLabel": "Resourcecapabilitys",
+      "description": "Resource capability belongs to a CCSB resource.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_resourcerole_resourcecapability_resourcerole",
+      "referencedEntity": "ccsb_resourcerole",
+      "referencingEntity": "ccsb_resourcecapability",
+      "lookupSchemaName": "ccsb_Resourceroleid",
+      "lookupLogicalName": "ccsb_resourceroleid",
+      "lookupDisplayName": "Resourcerole",
+      "collectionLabel": "Resourcecapabilitys",
+      "description": "Optional role-specific capability context.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_resourcecapability_verifiedby",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_resourcecapability",
+      "lookupSchemaName": "ccsb_Verifiedby",
+      "lookupLogicalName": "ccsb_verifiedby",
+      "lookupDisplayName": "Verifiedby",
+      "collectionLabel": "Resourcecapabilitys",
+      "description": "Verification accountability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_operation_operationaudit_operation",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_operationaudit",
+      "lookupSchemaName": "ccsb_Operationid",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "collectionLabel": "Operationaudits",
+      "description": "Audit event traces to operation header.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_operationitem_operationaudit_operationitem",
+      "referencedEntity": "ccsb_operationitem",
+      "referencingEntity": "ccsb_operationaudit",
+      "lookupSchemaName": "ccsb_Operationitemid",
+      "lookupLogicalName": "ccsb_operationitemid",
+      "lookupDisplayName": "Operationitem",
+      "collectionLabel": "Operationaudits",
+      "description": "Audit event traces to operation item.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_schedulechange_operationaudit_schedulechange",
+      "referencedEntity": "ccsb_schedulechange",
+      "referencingEntity": "ccsb_operationaudit",
+      "lookupSchemaName": "ccsb_Schedulechangeid",
+      "lookupLogicalName": "ccsb_schedulechangeid",
+      "lookupDisplayName": "Schedulechange",
+      "collectionLabel": "Operationaudits",
+      "description": "Audit event traces to a schedule change when applicable.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishsnapshot_operationaudit_publishsnapshot",
+      "referencedEntity": "ccsb_publishsnapshot",
+      "referencingEntity": "ccsb_operationaudit",
+      "lookupSchemaName": "ccsb_Publishsnapshotid",
+      "lookupLogicalName": "ccsb_publishsnapshotid",
+      "lookupDisplayName": "Publishsnapshot",
+      "collectionLabel": "Operationaudits",
+      "description": "Audit event traces to a publish snapshot when applicable.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishlock_operationaudit_publishlock",
+      "referencedEntity": "ccsb_publishlock",
+      "referencingEntity": "ccsb_operationaudit",
+      "lookupSchemaName": "ccsb_Publishlockid",
+      "lookupLogicalName": "ccsb_publishlockid",
+      "lookupDisplayName": "Publishlock",
+      "collectionLabel": "Operationaudits",
+      "description": "Audit event traces to a publish lock when applicable.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_operationaudit_actor",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_operationaudit",
+      "lookupSchemaName": "ccsb_Actorid",
+      "lookupLogicalName": "ccsb_actorid",
+      "lookupDisplayName": "Actor",
+      "collectionLabel": "Operationaudits",
+      "description": "Dataverse actor traceability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_board_schedulechange_board",
+      "referencedEntity": "ccsb_board",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Boardid",
+      "lookupLogicalName": "ccsb_boardid",
+      "lookupDisplayName": "Board",
+      "collectionLabel": "Schedulechanges",
+      "description": "Board-level filtering and security views.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_boardversion_schedulechange_boardversion",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Boardversionid",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Boardversion",
+      "collectionLabel": "Schedulechanges",
+      "description": "Version-aware scheduling ledger.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleversion_schedulechange_scheduleversion",
+      "referencedEntity": "ccsb_scheduleversion",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Scheduleversionid",
+      "lookupLogicalName": "ccsb_scheduleversionid",
+      "lookupDisplayName": "Scheduleversion",
+      "collectionLabel": "Schedulechanges",
+      "description": "Schedule version affected by the change.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleitem_schedulechange_scheduleitem",
+      "referencedEntity": "ccsb_scheduleitem",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Scheduleitemid",
+      "lookupLogicalName": "ccsb_scheduleitemid",
+      "lookupDisplayName": "Scheduleitem",
+      "collectionLabel": "Schedulechanges",
+      "description": "Item-level mutation target.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleassignment_schedulechange_scheduleassignment",
+      "referencedEntity": "ccsb_scheduleassignment",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Scheduleassignmentid",
+      "lookupLogicalName": "ccsb_scheduleassignmentid",
+      "lookupDisplayName": "Scheduleassignment",
+      "collectionLabel": "Schedulechanges",
+      "description": "Assignment-level mutation target.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_schedulerequirement_schedulechange_schedulerequirement",
+      "referencedEntity": "ccsb_schedulerequirement",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Schedulerequirementid",
+      "lookupLogicalName": "ccsb_schedulerequirementid",
+      "lookupDisplayName": "Schedulerequirement",
+      "collectionLabel": "Schedulechanges",
+      "description": "Requirement-level mutation target.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_resource_schedulechange_resource",
+      "referencedEntity": "ccsb_resource",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Resourceid",
+      "lookupLogicalName": "ccsb_resourceid",
+      "lookupDisplayName": "Resource",
+      "collectionLabel": "Schedulechanges",
+      "description": "Resource-level mutation target.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_operation_schedulechange_operation",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Operationid",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "collectionLabel": "Schedulechanges",
+      "description": "Command traceability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_operationitem_schedulechange_operationitem",
+      "referencedEntity": "ccsb_operationitem",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Operationitemid",
+      "lookupLogicalName": "ccsb_operationitemid",
+      "lookupDisplayName": "Operationitem",
+      "collectionLabel": "Schedulechanges",
+      "description": "Batch item traceability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishlock_schedulechange_publishlock",
+      "referencedEntity": "ccsb_publishlock",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Publishlockid",
+      "lookupLogicalName": "ccsb_publishlockid",
+      "lookupDisplayName": "Publishlock",
+      "collectionLabel": "Schedulechanges",
+      "description": "Lock checked by the change.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_schedulechange_requestedby",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Requestedby",
+      "lookupLogicalName": "ccsb_requestedby",
+      "lookupDisplayName": "Requestedby",
+      "collectionLabel": "Schedulechanges",
+      "description": "Requester accountability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_schedulechange_approvedby",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_schedulechange",
+      "lookupSchemaName": "ccsb_Approvedby",
+      "lookupLogicalName": "ccsb_approvedby",
+      "lookupDisplayName": "Approvedby",
+      "collectionLabel": "Schedulechanges",
+      "description": "Approver accountability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishsnapshot_publishsnapshotitem_publishsnapshot",
+      "referencedEntity": "ccsb_publishsnapshot",
+      "referencingEntity": "ccsb_publishsnapshotitem",
+      "lookupSchemaName": "ccsb_Publishsnapshotid",
+      "lookupLogicalName": "ccsb_publishsnapshotid",
+      "lookupDisplayName": "Publishsnapshot",
+      "collectionLabel": "Publishsnapshotitems",
+      "description": "Snapshot header owns the item.",
+      "required": true,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_schedulechange_publishsnapshotitem_schedulechange",
+      "referencedEntity": "ccsb_schedulechange",
+      "referencingEntity": "ccsb_publishsnapshotitem",
+      "lookupSchemaName": "ccsb_Schedulechangeid",
+      "lookupLogicalName": "ccsb_schedulechangeid",
+      "lookupDisplayName": "Schedulechange",
+      "collectionLabel": "Publishsnapshotitems",
+      "description": "Change-to-snapshot traceability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleitem_publishsnapshotitem_scheduleitem",
+      "referencedEntity": "ccsb_scheduleitem",
+      "referencingEntity": "ccsb_publishsnapshotitem",
+      "lookupSchemaName": "ccsb_Scheduleitemid",
+      "lookupLogicalName": "ccsb_scheduleitemid",
+      "lookupDisplayName": "Scheduleitem",
+      "collectionLabel": "Publishsnapshotitems",
+      "description": "Captured schedule item.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleassignment_publishsnapshotitem_scheduleassignment",
+      "referencedEntity": "ccsb_scheduleassignment",
+      "referencingEntity": "ccsb_publishsnapshotitem",
+      "lookupSchemaName": "ccsb_Scheduleassignmentid",
+      "lookupLogicalName": "ccsb_scheduleassignmentid",
+      "lookupDisplayName": "Scheduleassignment",
+      "collectionLabel": "Publishsnapshotitems",
+      "description": "Captured assignment.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_schedulerequirement_publishsnapshotitem_schedulerequirement",
+      "referencedEntity": "ccsb_schedulerequirement",
+      "referencingEntity": "ccsb_publishsnapshotitem",
+      "lookupSchemaName": "ccsb_Schedulerequirementid",
+      "lookupLogicalName": "ccsb_schedulerequirementid",
+      "lookupDisplayName": "Schedulerequirement",
+      "collectionLabel": "Publishsnapshotitems",
+      "description": "Captured requirement.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_resource_publishsnapshotitem_resource",
+      "referencedEntity": "ccsb_resource",
+      "referencingEntity": "ccsb_publishsnapshotitem",
+      "lookupSchemaName": "ccsb_Resourceid",
+      "lookupLogicalName": "ccsb_resourceid",
+      "lookupDisplayName": "Resource",
+      "collectionLabel": "Publishsnapshotitems",
+      "description": "Captured resource.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_board_publishlock_board",
+      "referencedEntity": "ccsb_board",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Boardid",
+      "lookupLogicalName": "ccsb_boardid",
+      "lookupDisplayName": "Board",
+      "collectionLabel": "Publishlocks",
+      "description": "Board lock scope.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_boardversion_publishlock_boardversion",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Boardversionid",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Boardversion",
+      "collectionLabel": "Publishlocks",
+      "description": "Version lock scope.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleversion_publishlock_scheduleversion",
+      "referencedEntity": "ccsb_scheduleversion",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Scheduleversionid",
+      "lookupLogicalName": "ccsb_scheduleversionid",
+      "lookupDisplayName": "Scheduleversion",
+      "collectionLabel": "Publishlocks",
+      "description": "Schedule version lock scope.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishsnapshot_publishlock_publishsnapshot",
+      "referencedEntity": "ccsb_publishsnapshot",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Publishsnapshotid",
+      "lookupLogicalName": "ccsb_publishsnapshotid",
+      "lookupDisplayName": "Publishsnapshot",
+      "collectionLabel": "Publishlocks",
+      "description": "Snapshot that created or is protected by the lock.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_operation_publishlock_operation",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Operationid",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "collectionLabel": "Publishlocks",
+      "description": "Operation that acquired the lock.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_groupnode_publishlock_groupnode",
+      "referencedEntity": "ccsb_groupnode",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Groupnodeid",
+      "lookupLogicalName": "ccsb_groupnodeid",
+      "lookupDisplayName": "Groupnode",
+      "collectionLabel": "Publishlocks",
+      "description": "Group/node lock scope.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_resource_publishlock_resource",
+      "referencedEntity": "ccsb_resource",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Resourceid",
+      "lookupLogicalName": "ccsb_resourceid",
+      "lookupDisplayName": "Resource",
+      "collectionLabel": "Publishlocks",
+      "description": "Resource lock scope.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleitem_publishlock_scheduleitem",
+      "referencedEntity": "ccsb_scheduleitem",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Scheduleitemid",
+      "lookupLogicalName": "ccsb_scheduleitemid",
+      "lookupDisplayName": "Scheduleitem",
+      "collectionLabel": "Publishlocks",
+      "description": "Schedule item lock scope.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishlock_publishlock_supersedeslock",
+      "referencedEntity": "ccsb_publishlock",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Supersedeslockid",
+      "lookupLogicalName": "ccsb_supersedeslockid",
+      "lookupDisplayName": "Supersedeslock",
+      "collectionLabel": "Publishlocks",
+      "description": "Lock lineage when a later lock supersedes an earlier lock.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_publishlock_lockedby",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Lockedby",
+      "lookupLogicalName": "ccsb_lockedby",
+      "lookupDisplayName": "Lockedby",
+      "collectionLabel": "Publishlocks",
+      "description": "Lock acquisition accountability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_publishlock_releasedby",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Releasedby",
+      "lookupLogicalName": "ccsb_releasedby",
+      "lookupDisplayName": "Releasedby",
+      "collectionLabel": "Publishlocks",
+      "description": "Release accountability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_systemuser_publishlock_overriddenby",
+      "referencedEntity": "systemuser",
+      "referencingEntity": "ccsb_publishlock",
+      "lookupSchemaName": "ccsb_Overriddenby",
+      "lookupLogicalName": "ccsb_overriddenby",
+      "lookupDisplayName": "Overriddenby",
+      "collectionLabel": "Publishlocks",
+      "description": "Override accountability.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_board_outboxevent_board",
+      "referencedEntity": "ccsb_board",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Boardid",
+      "lookupLogicalName": "ccsb_boardid",
+      "lookupDisplayName": "Board",
+      "collectionLabel": "Outboxevents",
+      "description": "Board context for filtering and partitioning.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_boardversion_outboxevent_boardversion",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Boardversionid",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Boardversion",
+      "collectionLabel": "Outboxevents",
+      "description": "Board version context.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_scheduleversion_outboxevent_scheduleversion",
+      "referencedEntity": "ccsb_scheduleversion",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Scheduleversionid",
+      "lookupLogicalName": "ccsb_scheduleversionid",
+      "lookupDisplayName": "Scheduleversion",
+      "collectionLabel": "Outboxevents",
+      "description": "Schedule version context.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_operation_outboxevent_operation",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Operationid",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "collectionLabel": "Outboxevents",
+      "description": "Operation that emitted the event.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_schedulechange_outboxevent_schedulechange",
+      "referencedEntity": "ccsb_schedulechange",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Schedulechangeid",
+      "lookupLogicalName": "ccsb_schedulechangeid",
+      "lookupDisplayName": "Schedulechange",
+      "collectionLabel": "Outboxevents",
+      "description": "Change event source.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishsnapshot_outboxevent_publishsnapshot",
+      "referencedEntity": "ccsb_publishsnapshot",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Publishsnapshotid",
+      "lookupLogicalName": "ccsb_publishsnapshotid",
+      "lookupDisplayName": "Publishsnapshot",
+      "collectionLabel": "Outboxevents",
+      "description": "Publish event source.",
+      "required": false,
+      "failIfTargetMissing": true
+    },
+    {
+      "schemaName": "ccsb_publishlock_outboxevent_publishlock",
+      "referencedEntity": "ccsb_publishlock",
+      "referencingEntity": "ccsb_outboxevent",
+      "lookupSchemaName": "ccsb_Publishlockid",
+      "lookupLogicalName": "ccsb_publishlockid",
+      "lookupDisplayName": "Publishlock",
+      "collectionLabel": "Outboxevents",
+      "description": "Lock event source.",
+      "required": false,
+      "failIfTargetMissing": true
+    }
+  ]
+}
