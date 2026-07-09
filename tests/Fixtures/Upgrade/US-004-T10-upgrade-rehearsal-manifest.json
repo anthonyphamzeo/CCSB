@@ -1,0 +1,216 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-004-T10",
+  "name": "CCSB managed schema upgrade rehearsal contract",
+  "generatedForDate": "2026-07-08",
+  "policyDocument": "docs/implementation/deployment/US-004-T10-schema-migration-upgrade-policy.md",
+  "sourcePolicyDocument": "tools/provisioning/CCSB.FoundationSchema/docs/Schema_Migration_and_Upgrade_Policy.md",
+  "sourcePackage": {
+    "foundationSource": "tools/provisioning/CCSB.FoundationSchema",
+    "schema": "tools/provisioning/CCSB.FoundationSchema/schema/ccsb.foundation.schema.json",
+    "program": "tools/provisioning/CCSB.FoundationSchema/Program.cs",
+    "runWrapper": "tools/provisioning/CCSB.FoundationSchema/run-provisioner.ps1",
+    "interactiveWrapper": "tools/provisioning/CCSB.FoundationSchema/Start-CCSBInteractiveSchemaBuild.ps1",
+    "project": "tools/provisioning/CCSB.FoundationSchema/CCSB.FoundationSchema.Provisioner.csproj",
+    "schemaVersion": "1.0.0",
+    "dataverseSolutionUniqueName": "ccsb_foundationschema",
+    "targetSolutionVersion": "1.0.0.1",
+    "sourceBuildVersion": "1.0.0.6",
+    "managedPackage": "out/CCSB_FoundationSchema_1_0_0_1_managed.zip",
+    "unmanagedPackage": "out/CCSB_FoundationSchema_1_0_0_1_unmanaged.zip",
+    "managedExportSwitches": [
+      "-ExportManaged",
+      "--export-managed"
+    ],
+    "compatibilityReportPath": "out/foundation-schema-compatibility.json"
+  },
+  "changePolicy": {
+    "allowedChangeTypes": [
+      "add-table",
+      "add-optional-field",
+      "add-choice-option",
+      "add-restrict-lookup-relationship",
+      "add-alternate-key-before-use",
+      "add-nonblocking-validation-rule",
+      "add-idempotent-backfill",
+      "add-side-by-side-projection-version"
+    ],
+    "prohibitedChangeTypes": [
+      "delete-table",
+      "delete-field",
+      "rename-logical-name",
+      "repurpose-choice-value",
+      "change-field-type",
+      "reduce-string-length",
+      "tighten-required-level-before-backfill",
+      "change-delete-behavior-from-restrict",
+      "mutate-active-boardversion",
+      "mutate-publishsnapshot",
+      "delete-audit-or-outbox-records",
+      "import-unmanaged-to-production"
+    ],
+    "backfillRules": [
+      {
+        "id": "BF-001",
+        "name": "Board registry compatibility defaults",
+        "mode": "additive",
+        "runAfterManagedImport": true,
+        "idempotent": true,
+        "mutatesImmutableArtifacts": false,
+        "auditRequired": true,
+        "scopeKey": "ccsb_boardcode",
+        "targetEntities": [
+          "ccsb_boardregistry",
+          "ccsb_boardversion"
+        ]
+      },
+      {
+        "id": "BF-002",
+        "name": "Runtime projection schema stamp",
+        "mode": "additive",
+        "runAfterManagedImport": true,
+        "idempotent": true,
+        "mutatesImmutableArtifacts": false,
+        "auditRequired": true,
+        "scopeKey": "ccsb_boardversionid",
+        "targetEntities": [
+          "ccsb_runtimeprojection",
+          "ccsb_configurationvalidationresult"
+        ]
+      },
+      {
+        "id": "BF-003",
+        "name": "Publish evidence compatibility stamp",
+        "mode": "additive",
+        "runAfterManagedImport": true,
+        "idempotent": true,
+        "mutatesImmutableArtifacts": false,
+        "auditRequired": true,
+        "scopeKey": "ccsb_scheduleversionid",
+        "targetEntities": [
+          "ccsb_publishsnapshot",
+          "ccsb_publishsnapshotitem",
+          "ccsb_schedulechange",
+          "ccsb_operationaudit",
+          "ccsb_outboxevent"
+        ]
+      }
+    ],
+    "featureFlags": [
+      {
+        "key": "ccsb.foundation.schema.1.0.0.1",
+        "defaultState": "off",
+        "enableAfter": "managed import, live compatibility validation, and backfill pass"
+      },
+      {
+        "key": "ccsb.runtime.projection.1.0.0",
+        "defaultState": "off",
+        "enableAfter": "current projections validate against schema contract 1.0.0"
+      },
+      {
+        "key": "ccsb.nativeGraph.enabled",
+        "defaultState": "off",
+        "enableAfter": "native graph board version validates and mapped mode remains compatible"
+      }
+    ],
+    "compatibilityPeriods": [
+      {
+        "fromSolutionVersion": "1.0.0.0",
+        "toSolutionVersion": "1.0.0.1",
+        "minimumDays": 90,
+        "priorBoardVersionsReadable": true,
+        "priorProjectionVersionsReadable": true,
+        "blockingRulePromotionAllowedAfterDays": 90
+      }
+    ],
+    "rollbackLimits": {
+      "schemaRollbackSupported": false,
+      "metadataRepairStrategy": "additive-forward-managed-solution",
+      "runtimeRollbackMechanism": "disable feature flags and keep or restore the prior active board version pointer",
+      "dataRollbackMechanism": "use publish snapshots and schedule-change rollback images through product APIs",
+      "immutableArtifacts": [
+        "ccsb_boardversion active or retired rows",
+        "ccsb_publishsnapshot",
+        "ccsb_publishsnapshotitem",
+        "ccsb_operationaudit",
+        "ccsb_outboxevent"
+      ]
+    }
+  },
+  "rehearsal": {
+    "environments": [
+      "DEV unmanaged validation and managed export",
+      "TEST managed import rehearsal"
+    ],
+    "stages": [
+      {
+        "id": "T10-RH-001",
+        "category": "static-validation",
+        "name": "Run static schema and T10 policy validators"
+      },
+      {
+        "id": "T10-RH-002",
+        "category": "live-validation",
+        "name": "Run -ValidateLiveOnly and write compatibility report"
+      },
+      {
+        "id": "T10-RH-003",
+        "category": "managed-export",
+        "name": "Export CCSB_FoundationSchema_1_0_0_1_managed.zip from DEV"
+      },
+      {
+        "id": "T10-RH-004",
+        "category": "managed-import",
+        "name": "Import managed package into TEST using solution upgrade path"
+      },
+      {
+        "id": "T10-RH-005",
+        "category": "precheck-snapshot",
+        "name": "Capture pre-upgrade counts and hashes for protected records"
+      },
+      {
+        "id": "T10-RH-006",
+        "category": "backfill",
+        "name": "Run idempotent backfill with feature flags off"
+      },
+      {
+        "id": "T10-RH-007",
+        "category": "compatibility-validation",
+        "name": "Run schema and board compatibility validation after backfill"
+      },
+      {
+        "id": "T10-RH-008",
+        "category": "feature-activation",
+        "name": "Enable feature flags in order after validation passes"
+      },
+      {
+        "id": "T10-RH-009",
+        "category": "rollback-drill",
+        "name": "Disable flags and verify previous active board/projection path remains readable"
+      },
+      {
+        "id": "T10-RH-010",
+        "category": "postcheck-snapshot",
+        "name": "Compare post-upgrade counts and hashes for protected records"
+      }
+    ],
+    "dataProtectionAssertions": [
+      "active-board-version-unchanged-until-lifecycle-activation",
+      "publish-snapshot-and-items-hash-stable",
+      "operation-audit-and-outbox-append-only",
+      "publish-locks-retained-with-expiry-and-retention",
+      "runtime-projections-versioned-side-by-side",
+      "schedule-change-rollback-images-preserved"
+    ],
+    "acceptanceGates": [
+      "static-policy-validator-pass",
+      "foundation-schema-validator-pass",
+      "dotnet-build-pass",
+      "live-compatibility-report-zero-blockers",
+      "managed-import-rehearsal-pass",
+      "backfill-idempotency-pass",
+      "protected-record-counts-and-hashes-stable",
+      "rollback-drill-pass"
+    ]
+  }
+}

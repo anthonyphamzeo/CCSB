@@ -1,0 +1,11 @@
+--- Program.cs (v1.0.0.0)
++++ Program.cs (v1.0.0.1)
+@@
+-        var entity = TryRetrieveEntity(entityLogicalName, EntityFilters.Keys);
++        // EntityFilters has no Keys member. Request full metadata because EntityMetadata.Keys
++        // is returned only with the complete entity definition.
++        var entity = TryRetrieveEntity(entityLogicalName, EntityFilters.All);
+@@
+-        if (entity.Keys.Any(k => string.Equals(k.SchemaName, key.SchemaName, StringComparison.OrdinalIgnoreCase)))
++        var existingKeys = entity.Keys ?? Array.Empty<EntityKeyMetadata>();
++        if (existingKeys.Any(k => string.Equals(k.SchemaName, key.SchemaName, StringComparison.OrdinalIgnoreCase)))

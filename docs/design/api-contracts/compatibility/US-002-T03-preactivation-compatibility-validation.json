@@ -1,0 +1,453 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-002-T03",
+  "name": "CCSB pre-activation compatibility validation contract",
+  "generatedForDate": "2026-07-09",
+  "validationDocument": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md",
+  "referenceImplementation": "tools/validation/compatibility/US-002-T03-reference-validator.py",
+  "validationFixtures": "tests/Fixtures/Compatibility/US-002-T03-validation-fixtures.json",
+  "sourceCompatibilityContract": "docs/design/api-contracts/compatibility/US-002-T01-compatibility-contract.json",
+  "sourceMetadataContract": "docs/design/data-model/compatibility/US-002-T02-compatibility-metadata.json",
+  "sourceUpgradeManifest": "tests/Fixtures/Upgrade/US-004-T10-upgrade-rehearsal-manifest.json",
+  "sourceSchema": "tools/provisioning/CCSB.FoundationSchema/schema/ccsb.foundation.schema.json",
+  "targetVersions": {
+    "productSemanticVersion": "1.0.0",
+    "foundationSolutionVersion": "1.0.0.1",
+    "configurationSchemaVersion": "1.0.0",
+    "runtimeProjectionSchemaVersion": "1.0.0"
+  },
+  "evaluation": {
+    "failClosed": true,
+    "deterministic": true,
+    "blockOnSeverities": [
+      "blocking",
+      "error"
+    ],
+    "allowWarningOnlyActivation": true,
+    "missingInputIsBlocking": true,
+    "diagnosticOrder": "rule order, then affected record identifier",
+    "duplicatePolicy": "one diagnostic per code, affected record, and affected field",
+    "eligibleLifecycleStates": [
+      "Ready"
+    ],
+    "allowedMigrationStates": [
+      "None",
+      "Completed"
+    ],
+    "allowedProjectionStatuses": [
+      "Valid"
+    ],
+    "supportedSourceTypes": [
+      "Native CCSB",
+      "Customer Owned"
+    ]
+  },
+  "validationRuleGroups": [
+    {
+      "id": "T03-RG-001",
+      "name": "Activation request and configuration",
+      "required": true,
+      "rules": [
+        {
+          "id": "CCSB-T03-REQUEST-COMPLETE",
+          "description": "Board identity, target versions, configuration hash, and eligible lifecycle state are present.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-EVIDENCE-MISSING",
+            "CCSB-COMPAT-CONFIGURATION-INVALID"
+          ]
+        },
+        {
+          "id": "CCSB-T03-CONFIGURATION-CHECKS",
+          "description": "All required normalized configuration checks pass or warn and are bound to the current configuration hash.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-CONFIGURATION-INVALID",
+            "CCSB-COMPAT-VALIDATION-STALE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T03-RG-002",
+      "name": "Product, schema, and migration compatibility",
+      "required": true,
+      "rules": [
+        {
+          "id": "CCSB-T03-VERSION-METADATA",
+          "description": "Board product and configuration schema versions are present and supported by the target contract.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-METADATA-MISSING",
+            "CCSB-COMPAT-PRODUCT-UNSUPPORTED",
+            "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+            "CCSB-COMPAT-DOWNGRADE-BLOCKED"
+          ]
+        },
+        {
+          "id": "CCSB-T03-MIGRATION-STATE",
+          "description": "The migration state is None or Completed and every required migrated-data check passes.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-MIGRATION-REQUIRED",
+            "CCSB-COMPAT-MIGRATED-DATA-INVALID"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T03-RG-003",
+      "name": "Mapping compatibility",
+      "required": true,
+      "rules": [
+        {
+          "id": "CCSB-T03-ENTITY-DEFINITIONS",
+          "description": "Enabled entity definitions use a supported source type and have current valid metadata evidence.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-SOURCE-TYPE-UNSUPPORTED",
+            "CCSB-COMPAT-MAPPING-METADATA-STALE"
+          ]
+        },
+        {
+          "id": "CCSB-T03-FIELD-MAPPINGS",
+          "description": "Required semantic field mappings resolve and source/target data types remain compatible.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-MAPPING-REQUIRED-MISSING",
+            "CCSB-COMPAT-MAPPING-TYPE-MISMATCH"
+          ]
+        },
+        {
+          "id": "CCSB-T03-RELATIONSHIP-MAPPINGS",
+          "description": "Required relationships resolve with supported cardinality, endpoints, and navigation metadata.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-RELATIONSHIP-INCOMPATIBLE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T03-RG-004",
+      "name": "Release evidence and feature flags",
+      "required": true,
+      "rules": [
+        {
+          "id": "CCSB-T03-FEATURE-FLAGS",
+          "description": "Every feature flag required by the selected upgrade path is explicitly enabled.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-FEATURE-FLAG-DISABLED"
+          ]
+        },
+        {
+          "id": "CCSB-T03-LIVE-SCHEMA",
+          "description": "A current live schema compatibility report exists with zero blockers.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-LIVE-SCHEMA-BLOCKED"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T03-RG-005",
+      "name": "Runtime projection",
+      "required": true,
+      "rules": [
+        {
+          "id": "CCSB-T03-PROJECTION-CURRENT",
+          "description": "One current valid projection matches the board versions, target projection schema, configuration hash, and source change token.",
+          "diagnosticCodes": [
+            "CCSB-COMPAT-PROJECTION-STALE",
+            "CCSB-COMPAT-PROJECTION-METADATA-MISMATCH"
+          ]
+        }
+      ]
+    }
+  ],
+  "requiredFeatureFlags": [
+    "ccsb.foundation.schema.1.0.0.1",
+    "ccsb.runtime.projection.1.0.0"
+  ],
+  "requiredConfigurationChecks": [
+    "normalized-config-complete",
+    "configuration-hash-current",
+    "board-validation-current"
+  ],
+  "requiredMigrationDataChecks": [
+    "compatibility-metadata-backfill",
+    "projection-version-backfill",
+    "protected-record-integrity"
+  ],
+  "activationIntegration": {
+    "validationConsumer": "ccsb_ValidateBoardVersion",
+    "activationConsumer": "ccsb_ActivateBoardVersion",
+    "validationSnapshotBoundary": "Read board aggregate, mappings, feature flags, migration evidence, live schema report, and current projection at one Dataverse consistency boundary.",
+    "validationSequence": [
+      "load target contract and immutable diagnostic catalog",
+      "read board aggregate and evidence snapshot",
+      "evaluate all rule groups without short-circuiting",
+      "persist one validation-result row per diagnostic",
+      "update board validation and compatibility status",
+      "return validationRunId, configurationHash, targetVersions, allowed, and diagnostics"
+    ],
+    "activationSequence": [
+      "re-read board lifecycle, row version, configuration hash, validationRunId, and compatibility status",
+      "reject a missing, blocked, or stale validation result",
+      "rerun compatibility validation when evidence or row version changed",
+      "within the activation transaction, change the active pointer only when allowed is true",
+      "return a structured denial without mutating lifecycle or active pointers when allowed is false"
+    ],
+    "staleValidationRule": "The validation token is valid only for the same boardVersionId, configurationHash, targetVersions, evidenceFingerprint, and Dataverse row version.",
+    "denialBehavior": {
+      "customApiSucceeded": false,
+      "activePointerMutated": false,
+      "boardLifecycleMutated": false,
+      "diagnosticsPersisted": true,
+      "primaryErrorCode": "CCSB-COMPAT-ACTIVATION-BLOCKED"
+    }
+  },
+  "resultContract": {
+    "requiredFields": [
+      "validationRunId",
+      "boardVersionId",
+      "configurationHash",
+      "targetVersions",
+      "evidenceFingerprint",
+      "allowed",
+      "outcome",
+      "compatibilityStatus",
+      "diagnostics"
+    ],
+    "outcomes": [
+      "Pass",
+      "Warning",
+      "Block"
+    ],
+    "compatibilityStatuses": [
+      "Compatible",
+      "Compatible With Warnings",
+      "Incompatible"
+    ],
+    "diagnosticRequiredFields": [
+      "code",
+      "severity",
+      "category",
+      "message",
+      "recommendedAction",
+      "remediationLink",
+      "affectedRecordId",
+      "affectedField"
+    ]
+  },
+  "persistenceBindings": {
+    "boardVersion": {
+      "entity": "ccsb_boardversion",
+      "fields": [
+        "ccsb_validationstatus",
+        "ccsb_validationrunon",
+        "ccsb_compatibilitystatus",
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion",
+        "ccsb_migrationstate",
+        "ccsb_configurationhash"
+      ]
+    },
+    "diagnostics": {
+      "entity": "ccsb_configurationvalidationresult",
+      "fields": [
+        "ccsb_validationrunid",
+        "ccsb_validationcode",
+        "ccsb_validationcategory",
+        "ccsb_severity",
+        "ccsb_resultstatus",
+        "ccsb_affectedentitylogicalname",
+        "ccsb_affectedrecordid",
+        "ccsb_affectedfieldlogicalname",
+        "ccsb_message",
+        "ccsb_detailjson",
+        "ccsb_recommendedaction",
+        "ccsb_detectedon"
+      ],
+      "detailJsonRequiredProperties": [
+        "ruleId",
+        "expected",
+        "actual",
+        "remediationLink",
+        "targetVersions",
+        "evidenceFingerprint"
+      ]
+    },
+    "operation": {
+      "entity": "ccsb_operation",
+      "fields": [
+        "ccsb_operationtype",
+        "ccsb_operationstatus",
+        "ccsb_correlationid",
+        "ccsb_resultjson",
+        "ccsb_errorsummary"
+      ]
+    }
+  },
+  "diagnosticCatalog": [
+    {
+      "code": "CCSB-COMPAT-ACTIVATION-BLOCKED",
+      "severity": "blocking",
+      "category": "Activation",
+      "message": "Board activation is blocked by one or more compatibility diagnostics.",
+      "recommendedAction": "Resolve every blocking diagnostic and run validation again.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#activation-denial"
+    },
+    {
+      "code": "CCSB-COMPAT-EVIDENCE-MISSING",
+      "severity": "blocking",
+      "category": "Evidence",
+      "message": "Required compatibility evidence is missing.",
+      "recommendedAction": "Generate the missing evidence and revalidate the unchanged board version.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#configuration-and-evidence"
+    },
+    {
+      "code": "CCSB-COMPAT-CONFIGURATION-INVALID",
+      "severity": "blocking",
+      "category": "Configuration",
+      "message": "The normalized board configuration is incomplete or invalid for activation.",
+      "recommendedAction": "Correct the reported configuration record or lifecycle state and revalidate.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#configuration-and-evidence"
+    },
+    {
+      "code": "CCSB-COMPAT-VALIDATION-STALE",
+      "severity": "blocking",
+      "category": "Configuration",
+      "message": "Validation evidence does not describe the current configuration hash or row version.",
+      "recommendedAction": "Run validation against the current board version before activation.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#stale-validation-protection"
+    },
+    {
+      "code": "CCSB-COMPAT-METADATA-MISSING",
+      "severity": "blocking",
+      "category": "CompatibilityMetadata",
+      "message": "Product, configuration schema, migration, or compatibility metadata is missing.",
+      "recommendedAction": "Run the compatibility metadata backfill and revalidate.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#version-and-migration-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-PRODUCT-UNSUPPORTED",
+      "severity": "blocking",
+      "category": "ProductVersion",
+      "message": "The board version targets an unsupported CCSB product version.",
+      "recommendedAction": "Migrate through a supported product upgrade path.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#version-and-migration-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+      "severity": "blocking",
+      "category": "ConfigurationSchema",
+      "message": "The board version uses an unsupported configuration schema version.",
+      "recommendedAction": "Run the supported configuration schema migration and revalidate.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#version-and-migration-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-DOWNGRADE-BLOCKED",
+      "severity": "blocking",
+      "category": "UpgradePath",
+      "message": "Downgrade activation is not supported.",
+      "recommendedAction": "Restore the prior active pointer or deploy an additive forward repair.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#version-and-migration-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-MIGRATION-REQUIRED",
+      "severity": "blocking",
+      "category": "MigrationState",
+      "message": "A required compatibility migration has not completed successfully.",
+      "recommendedAction": "Complete or repair the migration before activation.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#version-and-migration-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-MIGRATED-DATA-INVALID",
+      "severity": "blocking",
+      "category": "MigratedData",
+      "message": "Migrated data failed an integrity or completeness check.",
+      "recommendedAction": "Repair the affected records, rerun the idempotent migration, and revalidate.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#version-and-migration-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-SOURCE-TYPE-UNSUPPORTED",
+      "severity": "blocking",
+      "category": "Mapping",
+      "message": "An enabled entity definition uses an unsupported source type.",
+      "recommendedAction": "Use a supported Dataverse source type or disable the entity definition.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#mapping-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-MAPPING-METADATA-STALE",
+      "severity": "blocking",
+      "category": "Mapping",
+      "message": "Mapped entity metadata is invalid or stale.",
+      "recommendedAction": "Refresh source metadata, correct the mapping, and revalidate.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#mapping-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-MAPPING-REQUIRED-MISSING",
+      "severity": "blocking",
+      "category": "Mapping",
+      "message": "A required semantic field mapping is missing or unresolved.",
+      "recommendedAction": "Create or enable the required mapping and validate its source field.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#mapping-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-MAPPING-TYPE-MISMATCH",
+      "severity": "blocking",
+      "category": "Mapping",
+      "message": "A mapped source field is incompatible with its target data type.",
+      "recommendedAction": "Correct the source field, target type, or governed transformation.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#mapping-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-RELATIONSHIP-INCOMPATIBLE",
+      "severity": "blocking",
+      "category": "Mapping",
+      "message": "A required relationship mapping is unresolved or has incompatible metadata.",
+      "recommendedAction": "Correct the relationship endpoints, cardinality, or navigation metadata.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#mapping-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-FEATURE-FLAG-DISABLED",
+      "severity": "blocking",
+      "category": "FeatureFlag",
+      "message": "A required compatibility feature flag is missing or disabled.",
+      "recommendedAction": "Enable the flag only after its release gates pass, then revalidate.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#feature-flags-and-live-schema"
+    },
+    {
+      "code": "CCSB-COMPAT-LIVE-SCHEMA-BLOCKED",
+      "severity": "blocking",
+      "category": "LiveSchema",
+      "message": "Live Dataverse schema validation is missing, stale, or has blockers.",
+      "recommendedAction": "Run the foundation live compatibility gate and resolve all blockers.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#feature-flags-and-live-schema"
+    },
+    {
+      "code": "CCSB-COMPAT-PROJECTION-STALE",
+      "severity": "blocking",
+      "category": "RuntimeProjection",
+      "message": "The runtime projection is missing, stale, invalid, or bound to an old configuration hash.",
+      "recommendedAction": "Regenerate the projection from the validated configuration.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#runtime-projection-validation"
+    },
+    {
+      "code": "CCSB-COMPAT-PROJECTION-METADATA-MISMATCH",
+      "severity": "blocking",
+      "category": "RuntimeProjection",
+      "message": "Projection product or configuration schema metadata does not match the board version.",
+      "recommendedAction": "Regenerate the projection from the same validated board version.",
+      "remediationLink": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.md#runtime-projection-validation"
+    }
+  ],
+  "acceptanceGates": [
+    "all-five-rule-groups-evaluated",
+    "configuration-and-mappings-validated",
+    "required-feature-flags-validated",
+    "migrated-data-evidence-validated",
+    "runtime-projection-validated",
+    "machine-readable-diagnostics-returned",
+    "every-diagnostic-has-remediation-link",
+    "activation-fails-closed-without-pointer-mutation",
+    "validation-results-persisted",
+    "stale-validation-rejected",
+    "reference-fixtures-pass",
+    "static-validator-pass"
+  ]
+}

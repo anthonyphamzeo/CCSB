@@ -1,0 +1,23 @@
+{
+  "entityLogicalNameRegex": "^ccsb_[a-z][a-z0-9]*$",
+  "fieldLogicalNameRegex": "^ccsb_[a-z][a-z0-9]*$",
+  "relationshipSchemaRegex": "^(ccsb_[a-z0-9]+|systemuser)_(ccsb_[a-z0-9]+)(_[a-z0-9]+)?$",
+  "requiredChecks": [
+    "Every custom CCSB table logical name starts with ccsb_ and is lowercase.",
+    "Every proposed table has primary id ccsb_<entity>id and primary name ccsb_name.",
+    "Every custom field starts with ccsb_, except Dataverse system columns.",
+    "Every lookup field ends with id and its target table exists in current or proposed metadata.",
+    "Every new relationship uses Delete Restrict unless an explicit architecture decision approves otherwise.",
+    "Alternate key fields are Text, Whole Number, Decimal, DateTime, Choice, or Lookup; are not field-secured; and stay below Dataverse key size limits.",
+    "New fields on existing tables are optional at metadata level, then enforced by validation at activation/publish time.",
+    "No existing logical name is renamed or dropped in a minor release.",
+    "Payload, image, diagnostic, reason, and actor display fields are either minimized or field-secured.",
+    "Evidence/control tables have table audit enabled and are protected by server-side append-only/update rules."
+  ],
+  "backwardCompatibilityRules": [
+    "Additive tables and optional columns are minor-version compatible.",
+    "Changing type, logical name, ownership, or key composition is major-version breaking.",
+    "Changing choice integer values is breaking; adding new choice values is minor-version compatible when consumers tolerate unknown values.",
+    "Tightening a required field at metadata level is breaking for existing environments; enforce requiredness through activation validation first."
+  ]
+}

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCSB Optimized Database Design Evidence v1.1</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5f6f82;
+      --line: #d7dee8;
+      --panel: #f7f9fc;
+      --nav: #102033;
+      --accent: #116466;
+      --accent2: #7c3aed;
+      --warn: #9a5b00;
+      --ok: #137333;
+      --code: #edf2f7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 14px/1.55 "Segoe UI", Arial, sans-serif;
+      background: white;
+    }
+    nav {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 280px;
+      padding: 24px 18px;
+      background: var(--nav);
+      color: white;
+      overflow-y: auto;
+    }
+    nav h1 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    nav p {
+      margin: 0 0 18px;
+      color: #c9d7e8;
+      font-size: 12px;
+    }
+    nav a {
+      display: block;
+      color: #e9f3ff;
+      text-decoration: none;
+      padding: 7px 8px;
+      border-radius: 6px;
+      overflow-wrap: anywhere;
+    }
+    nav a:hover { background: rgba(255,255,255,.12); }
+    main {
+      margin-left: 280px;
+      padding: 34px 42px 80px;
+      max-width: 1480px;
+    }
+    section { margin: 0 0 34px; }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      letter-spacing: 0;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 8px;
+    }
+    h3 { margin: 24px 0 10px; font-size: 19px; letter-spacing: 0; }
+    h4 { margin: 18px 0 8px; font-size: 15px; }
+    p { max-width: 1120px; }
+    .lede {
+      font-size: 17px;
+      max-width: 1160px;
+    }
+    .callout {
+      border-left: 5px solid var(--accent);
+      background: var(--panel);
+      padding: 14px 16px;
+      margin: 14px 0 20px;
+    }
+    .warnbox { border-left-color: var(--warn); }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 18px 0 24px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: white;
+      min-height: 84px;
+    }
+    .metric b { display: block; font-size: 26px; color: var(--accent); }
+    .metric span { display: block; color: var(--muted); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+    th {
+      background: #eaf1f8;
+      color: #16283a;
+      font-weight: 650;
+    }
+    table.dense th, table.dense td { font-size: 12px; padding: 7px 8px; }
+    table.wide th:nth-child(1), table.wide td:nth-child(1) { width: 86px; }
+    code {
+      background: var(--code);
+      border-radius: 4px;
+      padding: 1px 4px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .92em;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e8eef5;
+      color: #24384d;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .badge.ok { background: #e5f4ea; color: var(--ok); }
+    .badge.warn { background: #fff3dc; color: var(--warn); }
+    .badge.info { background: #eaf0ff; color: #254f9b; }
+    .entity {
+      border-top: 1px solid var(--line);
+      padding-top: 4px;
+    }
+    .entity-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      align-items: center;
+      margin: 8px 0 10px;
+    }
+    ul { margin-top: 6px; }
+    li { margin: 4px 0; }
+    .decision-list li { margin-bottom: 8px; }
+    @media (max-width: 920px) {
+      nav { position: static; width: auto; max-height: none; }
+      main { margin-left: 0; padding: 24px 18px 64px; }
+      table { table-layout: auto; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>CCSB Database Optimization v1.1</h1>
+    <p>Evidence-backed hybrid design generated 2026-07-04</p>
+    <a href="#summary">Decision</a>
+<a href="#evidence">Evidence</a>
+<a href="#changes">Changes</a>
+<a href="#schema">Optimized Schema</a>
+<a href="#relationships">Relationships</a>
+<a href="#validation">Validation Rules</a>
+<a href="#migration">Migration Plan</a>
+<a href="#appendix">Appendix</a>
+<a href="#ccsb-resourcecapability">Resource Capability</a>
+<a href="#ccsb-operationaudit">Operation Audit</a>
+<a href="#ccsb-schedulechange">Schedule Change</a>
+<a href="#ccsb-publishsnapshotitem">Publish Snapshot Item</a>
+<a href="#ccsb-publishlock">Publish Lock</a>
+<a href="#ccsb-outboxevent">Outbox Event</a>
+  </nav>
+  <main>
+    <section id="summary">
+      <h2>Decision</h2>
+      <p class="lede">Adopt a controlled hybrid design: keep the lean product boundary from the ChatGPT Plus document, apply the comparison document's corrections, and retain only the Codex fields and relationships that protect publish, rollback, audit, and integration behavior in P0.</p>
+      <div class="metrics"><div class="metric"><b>6</b><span>Optimized tables</span></div>
+<div class="metric"><b>191</b><span>Optimized P0 fields</span></div>
+<div class="metric"><b>46</b><span>Optimized P0 relationships</span></div>
+<div class="metric"><b>20</b><span>Field-secured candidates</span></div>
+<div class="metric"><b>3</b><span>Ownership decisions changed from Codex v1.1</span></div>
+<div class="metric"><b>214</b><span>Previous Codex field count</span></div>
+<div class="metric"><b>67</b><span>Previous Codex relationship count</span></div></div>
+      <div class="callout warnbox">
+        <strong>Most important correction:</strong> change <code>ccsb_operationaudit</code>, <code>ccsb_schedulechange</code>, and <code>ccsb_publishlock</code> from the previous Codex user-owned proposal to <strong>OrganizationOwned</strong> before table creation. Dataverse ownership cannot be changed after the table is created.
+      </div>
+      <ul class="decision-list">
+        <li><strong>Use user/team ownership only where user-level stewardship matters:</strong> <code>ccsb_resourcecapability</code>.</li>
+        <li><strong>Use organization ownership for evidence and control:</strong> audit, schedule ledger, snapshot item, publish lock, and outbox records.</li>
+        <li><strong>Keep publish lock as a business lock:</strong> worker leases and delivery claims belong in outbox or a future lease table.</li>
+        <li><strong>Keep audit small:</strong> audit records store product decisions, reasons, policy, outcome, and correlation; payload images stay in schedulechange/snapshotitem.</li>
+        <li><strong>Use adapter alignment:</strong> map to Field Service, URS, and Project Operations concepts without hard dependencies unless a solution dependency is explicitly declared.</li>
+      </ul>
+    </section>
+
+    <section id="evidence">
+      <h2>Evidence Reviewed</h2>
+      <h3>Project Documents</h3>
+      <table><thead><tr><th>Source</th><th>Location</th><th>Evidence contribution</th></tr></thead><tbody><tr><td>ChatGPT Plus design</td><td><code>C:/Users/Anthony/Downloads/CCSB_Entity_Design_and_Canonical_Inventory_v1_0.html</code></td><td>Lean product-owned schema, all six new tables organization-owned, strong canonical naming and scope control.</td></tr>
+<tr><td>Hybrid comparison document</td><td><code>C:/Users/Anthony/Downloads/CCSB_Entity_Design_Comparison_and_Hybrid_Recommendation_v1_0.html</code></td><td>Recommended a controlled hybrid: use Plus as structural baseline and import selected Codex fields where they close real gaps.</td></tr>
+<tr><td>Previous Codex schema package</td><td><code>deliverables/entity-schema-design/ccsb-entity-design-canonical-inventory-validation.html</code></td><td>Broader schema proposal with 214 fields and 67 relationships, useful for coverage but too broad for P0 implementation.</td></tr></tbody></table>
+      <h3>Microsoft/Dynamics Evidence</h3>
+      <table><thead><tr><th>Source</th><th>Relevant evidence</th><th>Design use</th></tr></thead><tbody><tr><td><a href="https://learn.microsoft.com/en-us/power-apps/developer/data-platform/entity-metadata">Table definitions in Microsoft Dataverse</a></td><td>Custom table logical names are lower case, custom table names cannot be changed after creation except entity set name, and new tables can only be Organization or User/Team owned. Ownership cannot be changed after creation.</td><td>Freeze the ownership matrix before import; use ccsb_ logical names; keep business lifecycle fields separate from statecode/statuscode.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/power-apps/developer/data-platform/configure-entity-relationship-cascading-behavior">Configure table relationship cascading behavior</a></td><td>Dataverse supports NoCascade, Restrict, RemoveLink, Cascade, Active, and UserOwned cascade behavior; Restrict prevents parent deletion when child rows exist.</td><td>Use Restrict delete and NoCascade for governance, evidence, lock, snapshot, and outbox relationships.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/power-apps/developer/data-platform/define-alternate-keys-entity">Work with alternate keys</a></td><td>Alternate keys uniquely identify rows by business columns, are limited by key size and count, cannot use field-level-secured attributes, and special characters in key values can break GET/PATCH/upsert integration usage.</td><td>Use sanitized durable keys only; never make transient tokens such as lock tokens alternate keys.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/power-platform/admin/field-level-security">Column-level security</a></td><td>Column security controls read, create, and update permissions for sensitive columns, but lookup columns, primary name columns, system columns, virtual table columns, and formula columns cannot be secured.</td><td>Secure JSON payload, reason, diagnostic, and error fields; do not attempt to secure lookup, primary name, status, or alternate key columns.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing">Manage Dataverse auditing</a></td><td>Auditing is configured at environment, table, and column levels, logs create/update/delete and sharing changes, consumes log storage, has retention behavior, and does not audit definition changes or retrieve/export operations.</td><td>Use Dataverse audit for platform history, but keep ccsb_operationaudit for product semantics, policy, correlation, and reason evidence.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/power-apps/developer/data-platform/custom-api">Create and use custom APIs</a></td><td>Custom APIs can consolidate operations callable from code or Power Automate, usually combine with plug-ins, can require an execute privilege, and managed API components should be non-customizable.</td><td>Route schedule writes, publish, rollback, lock, and outbox creation through governed APIs rather than direct table edits.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/dynamics365/project-operations/project-management/schedule-api-preview">Project schedule APIs</a></td><td>Project schedule APIs create, update, and delete scheduling entities through the Project scheduling engine; operation sets execute multiple schedule operations as a unit.</td><td>Use adapter and operation/correlation fields instead of hard-coding direct CRUD assumptions for Project Operations entities.</td></tr>
+<tr><td><a href="https://learn.microsoft.com/en-us/dynamics365/field-service/developer/reference/entities/msdyn_resourcerequirement">Field Service Resource Requirement table</a></td><td>The Field Service resource requirement table is UserOwned and includes resource type, duration, effort, percentage capacity, territory, and time-window concepts.</td><td>Align requirement and capability concepts to Field Service vocabulary without making CCSB depend on msdyn_ tables being installed.</td></tr></tbody></table>
+    </section>
+
+    <section id="changes">
+      <h2>Evidence-Based Changes</h2>
+      <p>The table below is the change log that should be used to update the schema design and to explain the optimization in architecture review.</p>
+      <table class="wide"><thead><tr><th>ID</th><th>Area</th><th>Optimized change</th><th>Evidence</th><th>Why CCSB should do it</th><th>Migration impact</th></tr></thead><tbody><tr><td><code>CHG-001</code></td><td>Ownership</td><td>Use OrganizationOwned for operationaudit, schedulechange, publishlock, publishsnapshotitem, and outboxevent; use UserOwned only for resourcecapability.</td><td>Dataverse ownership is chosen at table creation and cannot be changed later; organization ownership is recommended when granular user-level control is unnecessary.</td><td>Prevents audit, ledger, lock, and integration rows from losing visibility or changing behavior because a user owner, business unit, or assignment cascade changes.</td><td>Breaking if previous unmanaged tables were already created as UserOwned. Recreate before data load or migrate into new tables.</td></tr>
+<tr><td><code>CHG-002</code></td><td>Publish Lock</td><td>Define publishlock as a business protection lock, not a distributed worker lease.</td><td>Alternate-key guidance warns against unsafe key values and field-secured key columns; cascade guidance favors bounded explicit relationships for governance records.</td><td>Lock scope, override, and release are business facts. Worker claim/heartbeat fields are transient operational state and belong on outbox or a separate lease table.</td><td>Remove lock-token alternate key. Keep any worker lease need as P1 ccsb_operationlease or outbox claim fields.</td></tr>
+<tr><td><code>CHG-003</code></td><td>Relationships</td><td>Reduce relationship fan-out and use Restrict delete plus NoCascade for control/evidence tables.</td><td>Dataverse Restrict prevents referenced row deletion while children exist; NoCascade avoids inherited owner/share/reparent surprises.</td><td>Evidence records must remain stable and queryable. Not every cross-reference needs a physical lookup in P0; correlation ids and operation ids cover traceability.</td><td>Keep direct lookups only where forms, security views, or common queries require them. Add deferred links after telemetry proves need.</td></tr>
+<tr><td><code>CHG-004</code></td><td>Schedule Change</td><td>Use ccsb_changestatus and ccsb_proposedpayloadjson; add committedpayloadjson only for transformed or partial commits.</td><td>Dataverse already has platform statecode/statuscode; Project Operations schedule APIs perform scheduling mutations through API contracts and operation sets.</td><td>Avoids confusing product lifecycle with platform state. Separates requested payload from actual committed payload for adapter-driven writes.</td><td>Rename ccsb_changestate if introduced; update plug-ins/flows/PCF to read changestatus.</td></tr>
+<tr><td><code>CHG-005</code></td><td>Operation Audit</td><td>Keep product audit concise and append-only; do not store full before/after images in operationaudit.</td><td>Dataverse audit logs platform changes and consumes log storage; CCSB needs product-specific policy, correlation, and reason evidence.</td><td>Searchable audit events stay small while schedulechange/snapshotitem own the larger rollback and payload evidence.</td><td>Move image-heavy audit fields to schedulechange or publishsnapshotitem. Add policyversion, diagnosticjson, and previousrecordhash as P1 or secure fields.</td></tr>
+<tr><td><code>CHG-006</code></td><td>Outbox</td><td>Combine aggregate ordering and secure destination keys; never store endpoint URLs, secrets, SAS URLs, or tokens.</td><td>Column-level security controls sensitive field access, but secure columns still require careful profile management and some columns cannot be secured.</td><td>Destination configuration should be resolved through secure platform configuration, not persisted in integration events.</td><td>Use ccsb_destinationtype and ccsb_destinationkey. Treat payload/error/dead-letter fields as field-secured and retention-managed.</td></tr>
+<tr><td><code>CHG-007</code></td><td>Field Mapping</td><td>Extend existing field mapping with ccsb_isrollbackmanaged, ccsb_issensitive, and ccsb_isdisplayonly before enforcing rollback scope.</td><td>The comparison document identified that field-scoped rollback requires managed field flags; column security guidance shows not every sensitive field can be secured by type.</td><td>Rollback and UI presentation rules need explicit metadata rather than inferring from labels or payload content.</td><td>Add fields to existing ccsb_fieldmapping or equivalent mapping table before enabling field-scoped publish/rollback enforcement.</td></tr>
+<tr><td><code>CHG-008</code></td><td>Custom APIs</td><td>Require Custom APIs/plug-ins for publish, rollback, lock, unlock, schedule mutation, and outbox creation.</td><td>Dataverse Custom APIs can consolidate operations, invoke plug-in logic, require privileges, and should be non-customizable in managed solutions.</td><td>Direct CRUD would bypass validation, concurrency, audit, snapshot, and outbox guarantees.</td><td>Security roles should deny normal app users direct write privileges on control tables and expose API privileges instead.</td></tr></tbody></table>
+    </section>
+
+    <section id="schema">
+      <h2>Optimized Schema Overview</h2>
+      <p>This is the recommended P0 physical model. P1 fields are named only where they solve a known future issue but should not be imported until the owning workflow is ready.</p>
+      <table><thead><tr><th>Entity</th><th>Optimized ownership</th><th>Plus document</th><th>Previous Codex</th><th>Decision</th></tr></thead><tbody><tr><td><code>ccsb_resourcecapability</code></td><td><span class="badge info">UserOwned</span></td><td>OrganizationOwned</td><td><span class="badge ok">UserOwned</span></td><td>Keep user/team ownership. Resource capability rows are operationally close to bookable resources and should honor row-level resource stewardship.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><span class="badge ok">OrganizationOwned</span></td><td>OrganizationOwned</td><td><span class="badge warn">UserOwned</span></td><td>Change from Codex previous design to organization-owned. Audit evidence should not inherit a user owner that could change access or business unit behavior.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><span class="badge ok">OrganizationOwned</span></td><td>OrganizationOwned</td><td><span class="badge warn">UserOwned</span></td><td>Change from Codex previous design to organization-owned. This table is a product ledger for mutations, not personal work owned by the requester.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><span class="badge ok">OrganizationOwned</span></td><td>OrganizationOwned</td><td><span class="badge ok">OrganizationOwned</span></td><td>Keep organization-owned. Snapshot items are immutable evidence, not user-owned work records.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><span class="badge ok">OrganizationOwned</span></td><td>OrganizationOwned</td><td><span class="badge warn">UserOwned</span></td><td>Change from Codex previous design to organization-owned. A publish lock is a board protection record, not an owned personal row or worker lease.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><span class="badge ok">OrganizationOwned</span></td><td>OrganizationOwned</td><td><span class="badge ok">OrganizationOwned</span></td><td>Keep organization-owned. Outbox rows are durable integration work items and should not depend on a user owner.</td></tr></tbody></table>
+    </section>
+
+    <section id="relationships">
+      <h2>P0 Relationship Set</h2>
+      <p>Relationship fan-out is intentionally lower than the prior broad Codex proposal. Use direct lookups for common forms, navigation, and security views; use operation, correlation, source identity, and payload hashes for deeper traceability.</p>
+      <table class="dense"><thead><tr><th>Source</th><th>Lookup</th><th>Target</th><th>Required</th><th>Cascade</th><th>Why kept in P0</th></tr></thead><tbody><tr><td><code>ccsb_resourcecapability</code></td><td><code>ccsb_resourceid</code></td><td><code>ccsb_resource</code></td><td>Runtime required</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Resource capability belongs to a CCSB resource.</td></tr>
+<tr><td><code>ccsb_resourcecapability</code></td><td><code>ccsb_resourceroleid</code></td><td><code>ccsb_resourcerole</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Optional role-specific capability context.</td></tr>
+<tr><td><code>ccsb_resourcecapability</code></td><td><code>ccsb_verifiedby</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Verification accountability.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><code>ccsb_operationid</code></td><td><code>ccsb_operation</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Audit event traces to operation header.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><code>ccsb_operationitemid</code></td><td><code>ccsb_operationitem</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Audit event traces to operation item.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><code>ccsb_schedulechangeid</code></td><td><code>ccsb_schedulechange</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Audit event traces to a schedule change when applicable.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><code>ccsb_publishsnapshotid</code></td><td><code>ccsb_publishsnapshot</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Audit event traces to a publish snapshot when applicable.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><code>ccsb_publishlockid</code></td><td><code>ccsb_publishlock</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Audit event traces to a publish lock when applicable.</td></tr>
+<tr><td><code>ccsb_operationaudit</code></td><td><code>ccsb_actorid</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Dataverse actor traceability.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_boardid</code></td><td><code>ccsb_board</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Board-level filtering and security views.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_boardversionid</code></td><td><code>ccsb_boardversion</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Version-aware scheduling ledger.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_scheduleversionid</code></td><td><code>ccsb_scheduleversion</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Schedule version affected by the change.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_scheduleitemid</code></td><td><code>ccsb_scheduleitem</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Item-level mutation target.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_scheduleassignmentid</code></td><td><code>ccsb_scheduleassignment</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Assignment-level mutation target.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_schedulerequirementid</code></td><td><code>ccsb_schedulerequirement</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Requirement-level mutation target.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_resourceid</code></td><td><code>ccsb_resource</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Resource-level mutation target.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_operationid</code></td><td><code>ccsb_operation</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Command traceability.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_operationitemid</code></td><td><code>ccsb_operationitem</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Batch item traceability.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_publishlockid</code></td><td><code>ccsb_publishlock</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Lock checked by the change.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_requestedby</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Requester accountability.</td></tr>
+<tr><td><code>ccsb_schedulechange</code></td><td><code>ccsb_approvedby</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Approver accountability.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><code>ccsb_publishsnapshotid</code></td><td><code>ccsb_publishsnapshot</code></td><td>Yes</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Snapshot header owns the item.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><code>ccsb_schedulechangeid</code></td><td><code>ccsb_schedulechange</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Change-to-snapshot traceability.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><code>ccsb_scheduleitemid</code></td><td><code>ccsb_scheduleitem</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Captured schedule item.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><code>ccsb_scheduleassignmentid</code></td><td><code>ccsb_scheduleassignment</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Captured assignment.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><code>ccsb_schedulerequirementid</code></td><td><code>ccsb_schedulerequirement</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Captured requirement.</td></tr>
+<tr><td><code>ccsb_publishsnapshotitem</code></td><td><code>ccsb_resourceid</code></td><td><code>ccsb_resource</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Captured resource.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_boardid</code></td><td><code>ccsb_board</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Board lock scope.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_boardversionid</code></td><td><code>ccsb_boardversion</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Version lock scope.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_scheduleversionid</code></td><td><code>ccsb_scheduleversion</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Schedule version lock scope.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_publishsnapshotid</code></td><td><code>ccsb_publishsnapshot</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Snapshot that created or is protected by the lock.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_operationid</code></td><td><code>ccsb_operation</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Operation that acquired the lock.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_groupnodeid</code></td><td><code>ccsb_groupnode</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Group/node lock scope.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_resourceid</code></td><td><code>ccsb_resource</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Resource lock scope.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_scheduleitemid</code></td><td><code>ccsb_scheduleitem</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Schedule item lock scope.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_supersedeslockid</code></td><td><code>ccsb_publishlock</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Lock lineage when a later lock supersedes an earlier lock.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_lockedby</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Lock acquisition accountability.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_releasedby</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Release accountability.</td></tr>
+<tr><td><code>ccsb_publishlock</code></td><td><code>ccsb_overriddenby</code></td><td><code>systemuser</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Override accountability.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_boardid</code></td><td><code>ccsb_board</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Board context for filtering and partitioning.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_boardversionid</code></td><td><code>ccsb_boardversion</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Board version context.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_scheduleversionid</code></td><td><code>ccsb_scheduleversion</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Schedule version context.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_operationid</code></td><td><code>ccsb_operation</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Operation that emitted the event.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_schedulechangeid</code></td><td><code>ccsb_schedulechange</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Change event source.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_publishsnapshotid</code></td><td><code>ccsb_publishsnapshot</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Publish event source.</td></tr>
+<tr><td><code>ccsb_outboxevent</code></td><td><code>ccsb_publishlockid</code></td><td><code>ccsb_publishlock</code></td><td>No</td><td>Delete Restrict; assign/share/reparent NoCascade</td><td>Lock event source.</td></tr></tbody></table>
+    </section>
+
+    <section id="validation">
+      <h2>Logical-Name and Schema Validation</h2>
+      <p>These checks should become automated package validation rules before future schema imports.</p>
+      <table><thead><tr><th>ID</th><th>Rule</th><th>Automated test</th></tr></thead><tbody><tr><td><code>VAL-001</code></td><td>Logical names</td><td>All custom tables and columns must start with ccsb_, be lower-case, and match ^ccsb_[a-z0-9]+(_[a-z0-9]+)*$ except platform columns and systemuser lookups.</td></tr>
+<tr><td><code>VAL-002</code></td><td>Ownership freeze</td><td>Fail build/package review when a new table ownership differs from the approved ownership matrix.</td></tr>
+<tr><td><code>VAL-003</code></td><td>Alternate keys</td><td>Fail when alternate-key columns are field-secured, too long, contain unsafe integration characters, or exceed Dataverse count/size constraints.</td></tr>
+<tr><td><code>VAL-004</code></td><td>Relationship cascade</td><td>Fail when control/evidence relationships use Cascade delete or cascading assign/share/reparent unless an exception record exists.</td></tr>
+<tr><td><code>VAL-005</code></td><td>Sensitive fields</td><td>Warn when payload, diagnostic, reason, error, token, or secret-like columns are not marked field-secured or intentionally excluded.</td></tr>
+<tr><td><code>VAL-006</code></td><td>No raw secret storage</td><td>Fail when field names or sample data include url, sas, token, secret, password, connectionstring, or endpoint unless the approved purpose is a logical configuration key.</td></tr>
+<tr><td><code>VAL-007</code></td><td>State vocabulary</td><td>Warn when custom lifecycle fields use state/statecode naming. Prefer status or explicit business terms.</td></tr>
+<tr><td><code>VAL-008</code></td><td>Dependency mapping</td><td>Every lookup to Field Service, Project Operations, or URS concepts must be optional or adapter-owned unless the target solution is a declared dependency.</td></tr></tbody></table>
+    </section>
+
+    <section id="migration">
+      <h2>Migration and Continuation Plan</h2>
+      <p>Implement these steps in order. The first two steps are deliberately front-loaded because changing ownership or logical names later is the highest-cost failure mode.</p>
+      <table><thead><tr><th>ID</th><th>Step</th><th>Action</th></tr></thead><tbody><tr><td><code>MIG-001</code></td><td>Stop and recreate if wrong ownership already exists</td><td>If operationaudit, schedulechange, or publishlock were created as UserOwned, do not build on them. Ownership cannot be changed after table creation. Recreate before production data is loaded, or migrate records into new OrganizationOwned tables with canonical names.</td></tr>
+<tr><td><code>MIG-002</code></td><td>Rename before import where possible</td><td>Use ccsb_auditeventkey, ccsb_occurredon, ccsb_changestatus, ccsb_sequence, ccsb_proposedpayloadjson, ccsb_destinationtype, and ccsb_destinationkey. Keep old names only as temporary migration aliases in integration maps, not as canonical schema.</td></tr>
+<tr><td><code>MIG-003</code></td><td>Protect alternate keys</td><td>Alternate-key fields must be clean text or supported simple types, not field-secured, and sanitized for GET/PATCH/upsert. Do not use lock tokens, raw external URLs, or secret-bearing values in keys.</td></tr>
+<tr><td><code>MIG-004</code></td><td>Add field mapping flags first</td><td>Before enforcing publish/rollback scope, add ccsb_isrollbackmanaged, ccsb_issensitive, and ccsb_isdisplayonly to the existing field mapping table and backfill values.</td></tr>
+<tr><td><code>MIG-005</code></td><td>Move direct writes behind APIs</td><td>Configure security roles and command surfaces so users invoke Custom APIs. Plug-ins then create schedulechange, operationaudit, publishsnapshotitem, publishlock, and outboxevent rows in one governed flow.</td></tr>
+<tr><td><code>MIG-006</code></td><td>Phase relationships</td><td>Deploy only the P0 lookup set in this report. Add deferred relationships when model-driven navigation, reporting, or Dataverse query telemetry proves they are needed.</td></tr>
+<tr><td><code>MIG-007</code></td><td>Secure payload and diagnostics</td><td>Create field security profiles for payloadjson, diagnosticjson, reason, error, and dead-letter fields. Test with a non-system-admin account because system administrators bypass column security.</td></tr>
+<tr><td><code>MIG-008</code></td><td>Plan retention and archive</td><td>Define retentionuntil values and archive jobs for audit, snapshot, lock, and outbox tables. Dataverse audit log retention is separate from CCSB product-retention fields.</td></tr></tbody></table>
+    </section>
+
+    
+            <section class="entity" id="ccsb-resourcecapability">
+              <h3><code>ccsb_resourcecapability</code></h3>
+              <div class="entity-head">
+                <span><span class="badge info">UserOwned</span></span>
+                <span><strong>Keys:</strong> <code>ccsb_capabilitykey</code></span>
+              </div>
+              <p><strong>Decision:</strong> Keep user/team ownership. Resource capability rows are operationally close to bookable resources and should honor row-level resource stewardship.</p>
+              <p><strong>Audit/security posture:</strong> Enable Dataverse audit on business columns. Do not secure alternate-key columns.</p>
+              <table class="dense"><thead><tr><th>Logical name</th><th>Type</th><th>Required</th><th>Security</th><th>Purpose</th><th>Constraints</th></tr></thead><tbody><tr><td><code>ccsb_resourcecapabilityid</code></td><td>Uniqueidentifier</td><td>System</td><td>Standard</td><td>Primary Dataverse identifier.</td><td></td></tr>
+<tr><td><code>ccsb_name</code></td><td>Primary Name</td><td>Yes</td><td>Standard</td><td>Lookup display name for forms and views.</td><td>Max 300.</td></tr>
+<tr><td><code>ccsb_capabilitykey</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Stable sanitized identity for upsert and dedupe.</td><td>Alternate key; max 200.</td></tr>
+<tr><td><code>ccsb_resourceid</code></td><td>Lookup</td><td>Runtime required</td><td>Standard</td><td>CCSB resource that owns the capability.</td><td></td></tr>
+<tr><td><code>ccsb_resourceroleid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Optional role context when a capability varies by role.</td><td></td></tr>
+<tr><td><code>ccsb_capabilitytype</code></td><td>Choice</td><td>Yes</td><td>Standard</td><td>Domain: skill, certification, clearance, territory, facility feature, equipment, capacity, custom.</td><td></td></tr>
+<tr><td><code>ccsb_capabilitycode</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Canonical capability code used by rule matching.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_capabilitysource</code></td><td>Choice</td><td>Yes</td><td>Standard</td><td>Source domain: CCSB, Field Service, Project Operations, external, manual.</td><td></td></tr>
+<tr><td><code>ccsb_externalkey</code></td><td>Text</td><td>No</td><td>Standard</td><td>External/source-system identity when imported.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_sourcetablelogicalname</code></td><td>Text</td><td>No</td><td>Standard</td><td>Optional source table logical name for adapter traceability.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_sourcerecordid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Optional source record identifier.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_effectivefrom</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Start of eligibility window.</td><td></td></tr>
+<tr><td><code>ccsb_effectiveto</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>End of eligibility window.</td><td></td></tr>
+<tr><td><code>ccsb_proficiencylevel</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Coarse proficiency/rating band.</td><td></td></tr>
+<tr><td><code>ccsb_proficiencyvalue</code></td><td>Decimal</td><td>No</td><td>Standard</td><td>Numeric proficiency score where a source uses values instead of bands.</td><td></td></tr>
+<tr><td><code>ccsb_capacityunits</code></td><td>Decimal</td><td>No</td><td>Standard</td><td>Capability capacity contribution or allocation units.</td><td></td></tr>
+<tr><td><code>ccsb_verificationstatus</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Unverified, verified, expired, rejected, waived.</td><td></td></tr>
+<tr><td><code>ccsb_verifiedon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>When the capability evidence was verified.</td><td></td></tr>
+<tr><td><code>ccsb_verifiedby</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>User who verified the evidence.</td><td></td></tr>
+<tr><td><code>ccsb_expirydate</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Certification or eligibility expiry date.</td><td></td></tr>
+<tr><td><code>ccsb_iseligible</code></td><td>Boolean</td><td>Yes</td><td>Standard</td><td>Computed or imported final eligibility flag used by scheduling rules.</td><td></td></tr>
+<tr><td><code>ccsb_capabilitystatus</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Active, inactive, superseded, archived.</td><td></td></tr>
+<tr><td><code>ccsb_sourcehash</code></td><td>Text</td><td>No</td><td>Standard</td><td>Hash of source capability input for drift checks.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_notes</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Short steward notes. Keep sensitive evidence outside alternate keys.</td><td></td></tr></tbody></table>
+              <h4>Deferred or Rejected From P0</h4>
+              <ul><li>ccsb_proficiencymodel and ccsb_proficiencylabel: add only when multiple scoring models are actually configured.</li><li>ccsb_isprimary: defer unless UI or rules need a single preferred capability in a group.</li><li>ccsb_capabilitydefinition: future normalized taxonomy table if reusable capability governance becomes larger than one table can carry.</li></ul>
+            </section>
+            
+            <section class="entity" id="ccsb-operationaudit">
+              <h3><code>ccsb_operationaudit</code></h3>
+              <div class="entity-head">
+                <span><span class="badge ok">OrganizationOwned</span></span>
+                <span><strong>Keys:</strong> <code>ccsb_auditeventkey</code></span>
+              </div>
+              <p><strong>Decision:</strong> Change from Codex previous design to organization-owned. Audit evidence should not inherit a user owner that could change access or business unit behavior.</p>
+              <p><strong>Audit/security posture:</strong> Enable Dataverse audit, but treat this table as the product audit ledger. Updates should be limited to retention/archive metadata.</p>
+              <table class="dense"><thead><tr><th>Logical name</th><th>Type</th><th>Required</th><th>Security</th><th>Purpose</th><th>Constraints</th></tr></thead><tbody><tr><td><code>ccsb_operationauditid</code></td><td>Uniqueidentifier</td><td>System</td><td>Standard</td><td>Primary Dataverse identifier.</td><td></td></tr>
+<tr><td><code>ccsb_name</code></td><td>Primary Name</td><td>Yes</td><td>Standard</td><td>Short event title.</td><td>Max 300.</td></tr>
+<tr><td><code>ccsb_auditeventkey</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Durable event identity, derived from operation id plus sequence.</td><td>Alternate key; max 200.</td></tr>
+<tr><td><code>ccsb_operationid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Operation header that caused the event.</td><td></td></tr>
+<tr><td><code>ccsb_operationitemid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Operation item when the event is item-specific.</td><td></td></tr>
+<tr><td><code>ccsb_sequence</code></td><td>Whole Number</td><td>Yes</td><td>Standard</td><td>Monotonic order within the operation.</td><td></td></tr>
+<tr><td><code>ccsb_schedulechangeid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule change related to the event.</td><td></td></tr>
+<tr><td><code>ccsb_publishsnapshotid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Publish snapshot related to the event.</td><td></td></tr>
+<tr><td><code>ccsb_publishlockid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Publish lock related to the event.</td><td></td></tr>
+<tr><td><code>ccsb_actorid</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>Interactive or application user represented in Dataverse.</td><td></td></tr>
+<tr><td><code>ccsb_actorprincipaltype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>User, team, application user, system, integration.</td><td></td></tr>
+<tr><td><code>ccsb_actorprincipalid</code></td><td>Text</td><td>No</td><td>Standard</td><td>External principal identifier if not represented by systemuser.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_auditeventtype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Validation, command, security, publish, rollback, lock, integration, support, system.</td><td></td></tr>
+<tr><td><code>ccsb_actiontype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Create, update, delete, approve, reject, publish, rollback, lock, unlock, dispatch.</td><td></td></tr>
+<tr><td><code>ccsb_outcome</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Started, succeeded, failed, blocked, skipped, compensated.</td><td></td></tr>
+<tr><td><code>ccsb_severity</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Information, warning, error, critical.</td><td></td></tr>
+<tr><td><code>ccsb_correlationid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Cross-table and cross-service correlation identifier.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_causationid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Parent event or message id.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_idempotencykey</code></td><td>Text</td><td>No</td><td>Standard</td><td>Idempotency key supplied by API or worker.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_apioperation</code></td><td>Text</td><td>No</td><td>Standard</td><td>Custom API, plug-in, flow, or integration operation name.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_apiversion</code></td><td>Text</td><td>No</td><td>Standard</td><td>Contract version of the operation.</td><td>Max 50.</td></tr>
+<tr><td><code>ccsb_targetscopetype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Board, version, requirement, assignment, resource, group, external.</td><td></td></tr>
+<tr><td><code>ccsb_targetreferenceid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Record id or scope key affected by the action.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_reasoncategory</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Policy, user request, conflict, integration, data correction, support, system.</td><td></td></tr>
+<tr><td><code>ccsb_reasontext</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>User-visible business reason, override reason, or support note.</td><td></td></tr>
+<tr><td><code>ccsb_errorcode</code></td><td>Text</td><td>No</td><td>Standard</td><td>Stable error code.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_errordetail</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Diagnostic detail, sanitized before storage.</td><td></td></tr>
+<tr><td><code>ccsb_occurredon</code></td><td>DateTime</td><td>Yes</td><td>Standard</td><td>UTC timestamp when the event occurred.</td><td></td></tr>
+<tr><td><code>ccsb_policyversion</code></td><td>Text</td><td>No</td><td>Standard</td><td>Rule/policy version that governed the decision.</td><td>P1 if policy engine versioning is not ready.</td></tr>
+<tr><td><code>ccsb_diagnosticjson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Structured diagnostics for support, never used as the canonical business payload.</td><td>P1 or secure-only.</td></tr>
+<tr><td><code>ccsb_previousrecordhash</code></td><td>Text</td><td>No</td><td>Standard</td><td>Optional hash-chain pointer for tamper-evidence.</td><td>P1; max 128.</td></tr>
+<tr><td><code>ccsb_recordhash</code></td><td>Text</td><td>No</td><td>Standard</td><td>Hash of immutable event payload fields.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_retentionuntil</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Retention/archive boundary for support operations.</td><td></td></tr></tbody></table>
+              <h4>Deferred or Rejected From P0</h4>
+              <ul><li>Full before/after/delta images in operationaudit. Keep them in schedulechange or publishsnapshotitem so audit stays searchable and bounded.</li><li>High-volume plug-in trace details. Use Dataverse plug-in trace/Application Insights and store only sanitized references here.</li></ul>
+            </section>
+            
+            <section class="entity" id="ccsb-schedulechange">
+              <h3><code>ccsb_schedulechange</code></h3>
+              <div class="entity-head">
+                <span><span class="badge ok">OrganizationOwned</span></span>
+                <span><strong>Keys:</strong> <code>ccsb_changekey</code></span>
+              </div>
+              <p><strong>Decision:</strong> Change from Codex previous design to organization-owned. This table is a product ledger for mutations, not personal work owned by the requester.</p>
+              <p><strong>Audit/security posture:</strong> Enable auditing. State transitions should be controlled by Custom APIs and plug-ins.</p>
+              <table class="dense"><thead><tr><th>Logical name</th><th>Type</th><th>Required</th><th>Security</th><th>Purpose</th><th>Constraints</th></tr></thead><tbody><tr><td><code>ccsb_schedulechangeid</code></td><td>Uniqueidentifier</td><td>System</td><td>Standard</td><td>Primary Dataverse identifier.</td><td></td></tr>
+<tr><td><code>ccsb_name</code></td><td>Primary Name</td><td>Yes</td><td>Standard</td><td>Readable change summary.</td><td>Max 300.</td></tr>
+<tr><td><code>ccsb_changekey</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Stable idempotent identity for the schedule mutation.</td><td>Alternate key; max 200.</td></tr>
+<tr><td><code>ccsb_boardid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Board affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_boardversionid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Planning version affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleversionid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule version affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleitemid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule item affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleassignmentid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Assignment affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_schedulerequirementid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Requirement affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_resourceid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Resource affected by the change.</td><td></td></tr>
+<tr><td><code>ccsb_operationid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Command/operation that requested the change.</td><td></td></tr>
+<tr><td><code>ccsb_operationitemid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Operation item that requested the change.</td><td></td></tr>
+<tr><td><code>ccsb_publishlockid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Lock checked or acquired for this mutation.</td><td></td></tr>
+<tr><td><code>ccsb_correlationid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Cross-table correlation id.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_changetype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Create, update, delete, move, assign, unassign, split, merge, rollback, publish.</td><td></td></tr>
+<tr><td><code>ccsb_changestatus</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Proposed, validated, approved, committed, published, rejected, superseded, rolled back, failed.</td><td></td></tr>
+<tr><td><code>ccsb_sourceorigin</code></td><td>Choice</td><td>No</td><td>Standard</td><td>User, API, bulk import, optimizer, external integration, rollback, system.</td><td></td></tr>
+<tr><td><code>ccsb_sourceentitylogicalname</code></td><td>Text</td><td>No</td><td>Standard</td><td>Source table logical name for imported or adapter-created changes.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_sourcerecordid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Source record identifier.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_targetentitylogicalname</code></td><td>Text</td><td>No</td><td>Standard</td><td>Target Dataverse table logical name.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_targetrecordid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Target record id expected to be mutated.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_expectedrowversion</code></td><td>Text</td><td>No</td><td>Standard</td><td>Concurrency value observed before the write.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_fieldscopejson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Managed field list touched by the change.</td><td></td></tr>
+<tr><td><code>ccsb_beforepayloadjson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Before image for managed rollback scope.</td><td></td></tr>
+<tr><td><code>ccsb_proposedpayloadjson</code></td><td>Multiline Text</td><td>Yes</td><td>Field security recommended</td><td>Proposed write payload before transformation.</td><td></td></tr>
+<tr><td><code>ccsb_committedpayloadjson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Actual committed payload if different from proposal.</td><td>Required only for partial or transformed commits.</td></tr>
+<tr><td><code>ccsb_rollbackimagejson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Rollback image for managed fields.</td><td></td></tr>
+<tr><td><code>ccsb_ruleoutcomejson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Validation and policy result summary.</td><td></td></tr>
+<tr><td><code>ccsb_requiresapproval</code></td><td>Boolean</td><td>No</td><td>Standard</td><td>Whether the change requires approval.</td><td></td></tr>
+<tr><td><code>ccsb_approvedby</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>Approver for governed change.</td><td></td></tr>
+<tr><td><code>ccsb_approvedon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Approval timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_overridereason</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Business reason for override.</td><td></td></tr>
+<tr><td><code>ccsb_requestedby</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>Requester represented in Dataverse.</td><td></td></tr>
+<tr><td><code>ccsb_requestedon</code></td><td>DateTime</td><td>Yes</td><td>Standard</td><td>UTC request timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_committedon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>UTC commit timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_publishedon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>UTC publish timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_changehash</code></td><td>Text</td><td>No</td><td>Standard</td><td>Hash of core change payload.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_isrollbackcandidate</code></td><td>Boolean</td><td>No</td><td>Standard</td><td>Whether rollback tooling may use this change.</td><td></td></tr>
+<tr><td><code>ccsb_retentionuntil</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Retention/archive boundary.</td><td></td></tr></tbody></table>
+              <h4>Deferred or Rejected From P0</h4>
+              <ul><li>Direct conflict, publishsnapshotitem, and predecessor lookups. Use operation and correlation first; add direct links when navigation or query volume proves the need.</li><li>ccsb_changestate. Use ccsb_changestatus to avoid confusion with Dataverse statecode.</li></ul>
+            </section>
+            
+            <section class="entity" id="ccsb-publishsnapshotitem">
+              <h3><code>ccsb_publishsnapshotitem</code></h3>
+              <div class="entity-head">
+                <span><span class="badge ok">OrganizationOwned</span></span>
+                <span><strong>Keys:</strong> <code>ccsb_snapshotitemkey</code></span>
+              </div>
+              <p><strong>Decision:</strong> Keep organization-owned. Snapshot items are immutable evidence, not user-owned work records.</p>
+              <p><strong>Audit/security posture:</strong> Enable auditing. Deny update/delete except archive tooling.</p>
+              <table class="dense"><thead><tr><th>Logical name</th><th>Type</th><th>Required</th><th>Security</th><th>Purpose</th><th>Constraints</th></tr></thead><tbody><tr><td><code>ccsb_publishsnapshotitemid</code></td><td>Uniqueidentifier</td><td>System</td><td>Standard</td><td>Primary Dataverse identifier.</td><td></td></tr>
+<tr><td><code>ccsb_name</code></td><td>Primary Name</td><td>Yes</td><td>Standard</td><td>Readable snapshot item name.</td><td>Max 300.</td></tr>
+<tr><td><code>ccsb_snapshotitemkey</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Stable snapshot item identity.</td><td>Alternate key; max 200.</td></tr>
+<tr><td><code>ccsb_publishsnapshotid</code></td><td>Lookup</td><td>Yes</td><td>Standard</td><td>Snapshot header.</td><td></td></tr>
+<tr><td><code>ccsb_sequence</code></td><td>Whole Number</td><td>Yes</td><td>Standard</td><td>Order inside the snapshot.</td><td></td></tr>
+<tr><td><code>ccsb_snapshotitemtype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Schedule item, assignment, requirement, resource, lock, metadata, external projection.</td><td></td></tr>
+<tr><td><code>ccsb_capturestatus</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Captured, skipped, missing, transformed, failed.</td><td></td></tr>
+<tr><td><code>ccsb_schedulechangeid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Change that produced or is protected by this item.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleitemid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule item captured.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleassignmentid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Assignment captured.</td><td></td></tr>
+<tr><td><code>ccsb_schedulerequirementid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Requirement captured.</td><td></td></tr>
+<tr><td><code>ccsb_resourceid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Resource captured.</td><td></td></tr>
+<tr><td><code>ccsb_sourceentitylogicalname</code></td><td>Text</td><td>No</td><td>Standard</td><td>Logical name of the captured table.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_sourcerecordid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Captured record identifier.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_sourceversion</code></td><td>Text</td><td>No</td><td>Standard</td><td>Row version or source version at capture time.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_managedfieldscopejson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Fields governed by rollback and official-state comparison.</td><td></td></tr>
+<tr><td><code>ccsb_payloadjson</code></td><td>Multiline Text</td><td>Yes</td><td>Field security recommended</td><td>Captured payload for the managed field scope.</td><td></td></tr>
+<tr><td><code>ccsb_payloadhash</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Hash of captured payload.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_rollbackimagejson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Optional rollback-specific image if it differs from payload.</td><td></td></tr>
+<tr><td><code>ccsb_isdeletedatcapture</code></td><td>Boolean</td><td>No</td><td>Standard</td><td>Whether source row was deleted or absent at capture time.</td><td></td></tr>
+<tr><td><code>ccsb_isimmutable</code></td><td>Boolean</td><td>Yes</td><td>Standard</td><td>Marks the item as immutable after snapshot close.</td><td></td></tr>
+<tr><td><code>ccsb_retentionuntil</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Retention/archive boundary.</td><td></td></tr></tbody></table>
+              <h4>Deferred or Rejected From P0</h4>
+              <ul><li>Duplicate board, version, operation, and actor fields already available from the snapshot header unless reporting proves a denormalized read requirement.</li><li>Relationship context and predecessor hash. Add in P1 for hash-chain lineage or differential publish features.</li></ul>
+            </section>
+            
+            <section class="entity" id="ccsb-publishlock">
+              <h3><code>ccsb_publishlock</code></h3>
+              <div class="entity-head">
+                <span><span class="badge ok">OrganizationOwned</span></span>
+                <span><strong>Keys:</strong> <code>ccsb_lockkey</code></span>
+              </div>
+              <p><strong>Decision:</strong> Change from Codex previous design to organization-owned. A publish lock is a board protection record, not an owned personal row or worker lease.</p>
+              <p><strong>Audit/security posture:</strong> Enable auditing. Lock/unlock/override must be Custom API operations.</p>
+              <table class="dense"><thead><tr><th>Logical name</th><th>Type</th><th>Required</th><th>Security</th><th>Purpose</th><th>Constraints</th></tr></thead><tbody><tr><td><code>ccsb_publishlockid</code></td><td>Uniqueidentifier</td><td>System</td><td>Standard</td><td>Primary Dataverse identifier.</td><td></td></tr>
+<tr><td><code>ccsb_name</code></td><td>Primary Name</td><td>Yes</td><td>Standard</td><td>Readable lock name.</td><td>Max 300.</td></tr>
+<tr><td><code>ccsb_lockkey</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Stable lock identity for scope and idempotency.</td><td>Alternate key; max 200.</td></tr>
+<tr><td><code>ccsb_boardid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Board protected by the lock.</td><td></td></tr>
+<tr><td><code>ccsb_boardversionid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Board version protected by the lock.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleversionid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule version protected by the lock.</td><td></td></tr>
+<tr><td><code>ccsb_publishsnapshotid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Snapshot or publish event that created the lock.</td><td></td></tr>
+<tr><td><code>ccsb_operationid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Operation that acquired the lock.</td><td></td></tr>
+<tr><td><code>ccsb_groupnodeid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Requirement group or board node in scope.</td><td></td></tr>
+<tr><td><code>ccsb_resourceid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Resource in scope.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleitemid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule item in scope.</td><td></td></tr>
+<tr><td><code>ccsb_locktype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Publish protection, edit freeze, rollback protection, approval hold, external dependency.</td><td></td></tr>
+<tr><td><code>ccsb_locklevel</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Board, version, group, resource, item, field, external.</td><td></td></tr>
+<tr><td><code>ccsb_lockstatus</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Active, released, expired, overridden, superseded.</td><td></td></tr>
+<tr><td><code>ccsb_scopetype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Global board, time window, resource, requirement, assignment, external.</td><td></td></tr>
+<tr><td><code>ccsb_scopefromutc</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Optional scope start time.</td><td></td></tr>
+<tr><td><code>ccsb_scopetoutc</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Optional scope end time.</td><td></td></tr>
+<tr><td><code>ccsb_timezoneid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Timezone used to interpret business scope.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_scopecriteriajson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Structured scope criteria.</td><td></td></tr>
+<tr><td><code>ccsb_protectedactionsjson</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Actions blocked or allowed by the lock.</td><td></td></tr>
+<tr><td><code>ccsb_lockedby</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>User or app user that acquired the lock.</td><td></td></tr>
+<tr><td><code>ccsb_lockedon</code></td><td>DateTime</td><td>Yes</td><td>Standard</td><td>UTC lock acquisition timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_expireson</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Business expiration time, not a worker heartbeat.</td><td></td></tr>
+<tr><td><code>ccsb_releasedby</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>User or app user that released the lock.</td><td></td></tr>
+<tr><td><code>ccsb_releasedon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>UTC release timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_overriddenby</code></td><td>Lookup systemuser</td><td>No</td><td>Standard</td><td>User authorized to override the lock.</td><td></td></tr>
+<tr><td><code>ccsb_overriddenon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>UTC override timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_overridereason</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Governed reason for override.</td><td></td></tr>
+<tr><td><code>ccsb_supersedeslockid</code></td><td>Lookup ccsb_publishlock</td><td>No</td><td>Standard</td><td>Previous lock superseded by this one.</td><td></td></tr>
+<tr><td><code>ccsb_correlationid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Correlation id across lock and publish operations.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_isactive</code></td><td>Boolean</td><td>No</td><td>Standard</td><td>Fast query flag for active lock views.</td><td></td></tr>
+<tr><td><code>ccsb_retentionuntil</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Retention/archive boundary.</td><td></td></tr></tbody></table>
+              <h4>Deferred or Rejected From P0</h4>
+              <ul><li>ccsb_locktoken as an alternate key. A token is transient and can contain unsafe characters; keep it out of durable identity.</li><li>Worker heartbeat, lease owner, and claim fields. If a queue worker lease is needed, create ccsb_operationlease or use outbox claim fields rather than mixing lease semantics into publishlock.</li></ul>
+            </section>
+            
+            <section class="entity" id="ccsb-outboxevent">
+              <h3><code>ccsb_outboxevent</code></h3>
+              <div class="entity-head">
+                <span><span class="badge ok">OrganizationOwned</span></span>
+                <span><strong>Keys:</strong> <code>ccsb_eventkey</code></span>
+              </div>
+              <p><strong>Decision:</strong> Keep organization-owned. Outbox rows are durable integration work items and should not depend on a user owner.</p>
+              <p><strong>Audit/security posture:</strong> Enable audit on status, attempt, and error fields. Payload fields should be secured and retention-managed.</p>
+              <table class="dense"><thead><tr><th>Logical name</th><th>Type</th><th>Required</th><th>Security</th><th>Purpose</th><th>Constraints</th></tr></thead><tbody><tr><td><code>ccsb_outboxeventid</code></td><td>Uniqueidentifier</td><td>System</td><td>Standard</td><td>Primary Dataverse identifier.</td><td></td></tr>
+<tr><td><code>ccsb_name</code></td><td>Primary Name</td><td>Yes</td><td>Standard</td><td>Readable event name.</td><td>Max 300.</td></tr>
+<tr><td><code>ccsb_eventkey</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Durable event identity for idempotent delivery.</td><td>Alternate key; max 200.</td></tr>
+<tr><td><code>ccsb_eventtype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Published, changed, locked, unlocked, rollback, export, notification, integration command.</td><td></td></tr>
+<tr><td><code>ccsb_eventversion</code></td><td>Text</td><td>Yes</td><td>Standard</td><td>Event contract version.</td><td>Max 50.</td></tr>
+<tr><td><code>ccsb_eventstatus</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Pending, processing, delivered, failed, dead-lettered, skipped, replayed.</td><td></td></tr>
+<tr><td><code>ccsb_boardid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Board context.</td><td></td></tr>
+<tr><td><code>ccsb_boardversionid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Board version context.</td><td></td></tr>
+<tr><td><code>ccsb_scheduleversionid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule version context.</td><td></td></tr>
+<tr><td><code>ccsb_operationid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Operation that produced the event.</td><td></td></tr>
+<tr><td><code>ccsb_schedulechangeid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Schedule change that produced the event.</td><td></td></tr>
+<tr><td><code>ccsb_publishsnapshotid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Snapshot that produced the event.</td><td></td></tr>
+<tr><td><code>ccsb_publishlockid</code></td><td>Lookup</td><td>No</td><td>Standard</td><td>Lock that produced the event.</td><td></td></tr>
+<tr><td><code>ccsb_correlationid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Cross-system correlation id.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_causationid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Message or event that caused this event.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_idempotencykey</code></td><td>Text</td><td>No</td><td>Standard</td><td>Consumer or producer idempotency key.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_aggregateentitylogicalname</code></td><td>Text</td><td>No</td><td>Standard</td><td>Aggregate table for ordered event streams.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_aggregaterecordid</code></td><td>Text</td><td>No</td><td>Standard</td><td>Aggregate record id.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_aggregatesequence</code></td><td>Whole Number</td><td>No</td><td>Standard</td><td>Per-aggregate sequence for ordered delivery.</td><td></td></tr>
+<tr><td><code>ccsb_partitionkey</code></td><td>Text</td><td>No</td><td>Standard</td><td>Partition/shard key for delivery workers.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_destinationtype</code></td><td>Choice</td><td>No</td><td>Standard</td><td>Dataverse event, Power Automate, Service Bus, Event Grid, webhook, export, internal.</td><td></td></tr>
+<tr><td><code>ccsb_destinationkey</code></td><td>Text</td><td>No</td><td>Standard</td><td>Logical destination configuration key; never raw URL, token, or secret.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_topic</code></td><td>Text</td><td>No</td><td>Standard</td><td>Topic or channel name.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_payloadcontenttype</code></td><td>Text</td><td>No</td><td>Standard</td><td>Payload content type.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_payloadjson</code></td><td>Multiline Text</td><td>Yes</td><td>Field security recommended</td><td>Event body, sanitized and bounded.</td><td></td></tr>
+<tr><td><code>ccsb_payloadhash</code></td><td>Text</td><td>No</td><td>Standard</td><td>Hash of event payload.</td><td>Max 128.</td></tr>
+<tr><td><code>ccsb_payloadsizebytes</code></td><td>Whole Number</td><td>No</td><td>Standard</td><td>Serialized payload size for monitoring.</td><td></td></tr>
+<tr><td><code>ccsb_occurredon</code></td><td>DateTime</td><td>Yes</td><td>Standard</td><td>Business event timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_availableon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Earliest delivery time.</td><td></td></tr>
+<tr><td><code>ccsb_lockeduntil</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Transient claim timeout for delivery worker.</td><td></td></tr>
+<tr><td><code>ccsb_locktoken</code></td><td>Text</td><td>No</td><td>Standard</td><td>Transient delivery claim token, not an alternate key.</td><td>Max 200.</td></tr>
+<tr><td><code>ccsb_attemptcount</code></td><td>Whole Number</td><td>No</td><td>Standard</td><td>Number of delivery attempts.</td><td></td></tr>
+<tr><td><code>ccsb_maxattempts</code></td><td>Whole Number</td><td>No</td><td>Standard</td><td>Maximum attempts before dead letter.</td><td></td></tr>
+<tr><td><code>ccsb_retryafter</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Next retry time.</td><td></td></tr>
+<tr><td><code>ccsb_lastattempton</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Most recent attempt timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_deliveredon</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Successful delivery timestamp.</td><td></td></tr>
+<tr><td><code>ccsb_errorcode</code></td><td>Text</td><td>No</td><td>Standard</td><td>Last stable delivery error code.</td><td>Max 100.</td></tr>
+<tr><td><code>ccsb_errordetail</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Sanitized delivery error detail.</td><td></td></tr>
+<tr><td><code>ccsb_deadletterreason</code></td><td>Multiline Text</td><td>No</td><td>Field security recommended</td><td>Governed reason event moved to dead letter.</td><td></td></tr>
+<tr><td><code>ccsb_isreplayable</code></td><td>Boolean</td><td>No</td><td>Standard</td><td>Whether governed replay is allowed.</td><td></td></tr>
+<tr><td><code>ccsb_retentionuntil</code></td><td>DateTime</td><td>No</td><td>Standard</td><td>Retention/archive boundary.</td><td></td></tr></tbody></table>
+              <h4>Deferred or Rejected From P0</h4>
+              <ul><li>Raw endpoint URLs, connection strings, tokens, SAS URLs, or secrets. Resolve destinationkey through secure configuration outside this table.</li><li>Delivery enablement. Persist the outbox in P0; turn on external dispatch only after retry, dead-letter, and monitoring runbooks exist.</li></ul>
+            </section>
+            
+
+    <section id="appendix">
+      <h2>Appendix: Design Notes</h2>
+      <h3>Why the hybrid is better than either input unchanged</h3>
+      <p>The Plus design is appropriately lean but under-specifies runtime evidence, outbox delivery, and rollback fields that CCSB needs to operate safely. The previous Codex design covers those concerns but over-rotates into P0 breadth, especially ownership choices and relationship density. The optimized design keeps the product boundary small while preserving the fields required for governed mutation, publish evidence, retryable integration, and rollback.</p>
+      <h3>Recommended versioning strategy</h3>
+      <ul>
+        <li><strong>Schema v1.1:</strong> create the six optimized tables with ownership, keys, security, and P0 relationships from this report.</li>
+        <li><strong>Schema v1.2:</strong> add policy hash-chain fields, snapshot predecessor relationships, and capability taxonomy only after APIs and data volume justify them.</li>
+        <li><strong>Schema v2.0:</strong> introduce dedicated lease or dispatch tables only if operational telemetry proves outbox claim fields are insufficient.</li>
+      </ul>
+      <h3>Implementation acceptance criteria</h3>
+      <ul>
+        <li>All six tables import with the approved ownership matrix.</li>
+        <li>All alternate keys are sanitized, unique, non-field-secured, and below Dataverse key limits.</li>
+        <li>All control/evidence relationships use Restrict delete and NoCascade assign/share/reparent unless exception-approved.</li>
+        <li>Payload, diagnostic, reason, error, and dead-letter fields are field-security reviewed.</li>
+        <li>Model-driven app users cannot directly bypass Custom APIs for publish, rollback, lock, unlock, or schedule mutation workflows.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

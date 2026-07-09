@@ -1,0 +1,11 @@
+﻿EpicID,EpicTitle,Release,Notes,WorkItemType,Status,Source
+E01,Product foundation and ALM,V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E02,Board configuration and runtime projection,V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026; CCSB v2.1 PCF Controls Addendum
+E03,"Resource, grouping and capacity configuration",V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E04,Runtime workspace and read model,V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026; CCSB v2.1 PCF Controls Addendum
+E05,Schedule graph operations,V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E06,"Requirements, conflicts and unscheduled work",V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E07,"Publish, locks and rollback",V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E08,"Security, APIs, audit and support",V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E09,Quality and release gates,V1,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026
+E10,Deferred direction,Later,,Epic,Not Started,CCSB Consolidated Project Document v2.0; CCSB Deep Market Research & Competitive Analysis 2026

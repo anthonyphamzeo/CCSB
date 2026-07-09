@@ -1,0 +1,23 @@
+--- Program.cs (v1.0.0.3)
++++ Program.cs (v1.0.0.4)
+@@
++using Microsoft.Xrm.Sdk.Messages;
+@@
+- var request = new OrganizationRequest("RetrieveEntity");
+- request.Parameters["LogicalName"] = logicalName;
+- request.Parameters["EntityFilters"] = filters;
+- request.Parameters["RetrieveAsIfPublished"] = true;
+- var response = _service.Execute(request);
++ var request = new RetrieveEntityRequest
++ {
++     LogicalName = logicalName,
++     EntityFilters = filters,
++     RetrieveAsIfPublished = true,
++ };
++ var response = (RetrieveEntityResponse)_service.Execute(request);
+@@
+- var request = new OrganizationRequest("RetrieveAttribute");
++ var request = new RetrieveAttributeRequest
+@@
+- var response = _service.Execute(request);
++ var response = (RetrieveAttributeResponse)_service.Execute(request);

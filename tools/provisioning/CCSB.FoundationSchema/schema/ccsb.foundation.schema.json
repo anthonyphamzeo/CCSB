@@ -1,0 +1,3774 @@
+{
+  "schemaVersion": "1.0.0",
+  "solution": {
+    "uniqueName": "ccsb_foundationschema",
+    "displayName": "CCSB Foundation Schema",
+    "version": "1.0.0.1",
+    "publisherPrefix": "ccsb",
+    "publisherPreferredUniqueName": "planora",
+    "description": "Foundation configuration, mapping, policy, runtime projection, and operation schema for Planora / CCSB."
+  },
+  "tables": [
+    {
+      "schemaName": "ccsb_Location",
+      "logicalName": "ccsb_location",
+      "displayName": "Location",
+      "collectionName": "Locations",
+      "ownership": "UserOwned",
+      "description": "Operational location, facility, service area, region, cluster, or virtual location used to scope boards, resources, services, availability, and permissions.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Location Name",
+        "description": "Human-readable name of the location.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_LocationCode",
+          "logicalName": "ccsb_locationcode",
+          "displayName": "Location Code",
+          "type": "String",
+          "description": "Stable human-readable or source-system code for the location.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_LocationType",
+          "logicalName": "ccsb_locationtype",
+          "displayName": "Location Type",
+          "type": "Choice",
+          "description": "Classifies how the location is used operationally.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Facility"
+            },
+            {
+              "value": 831020001,
+              "label": "Service Area"
+            },
+            {
+              "value": 831020002,
+              "label": "Region"
+            },
+            {
+              "value": 831020003,
+              "label": "Cluster"
+            },
+            {
+              "value": 831020004,
+              "label": "Virtual Location"
+            },
+            {
+              "value": 831020005,
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ExternalKey",
+          "logicalName": "ccsb_externalkey",
+          "displayName": "External Key",
+          "type": "String",
+          "description": "Stable key used to reconcile this location to an external source.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_TimeZoneId",
+          "logicalName": "ccsb_timezoneid",
+          "displayName": "Time Zone ID",
+          "type": "String",
+          "description": "IANA or Windows time-zone identifier used for local schedule display and validation.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_AddressLine1",
+          "logicalName": "ccsb_addressline1",
+          "displayName": "Address Line 1",
+          "type": "String",
+          "description": "Primary street address line.",
+          "required": false,
+          "maxLength": 250
+        },
+        {
+          "schemaName": "ccsb_AddressLine2",
+          "logicalName": "ccsb_addressline2",
+          "displayName": "Address Line 2",
+          "type": "String",
+          "description": "Secondary address line.",
+          "required": false,
+          "maxLength": 250
+        },
+        {
+          "schemaName": "ccsb_Suburb",
+          "logicalName": "ccsb_suburb",
+          "displayName": "Suburb / City",
+          "type": "String",
+          "description": "Suburb, city, or locality.",
+          "required": false,
+          "maxLength": 120
+        },
+        {
+          "schemaName": "ccsb_StateProvince",
+          "logicalName": "ccsb_stateprovince",
+          "displayName": "State / Province",
+          "type": "String",
+          "description": "State, province, or territory.",
+          "required": false,
+          "maxLength": 120
+        },
+        {
+          "schemaName": "ccsb_PostCode",
+          "logicalName": "ccsb_postcode",
+          "displayName": "Postcode",
+          "type": "String",
+          "description": "Postal or ZIP code.",
+          "required": false,
+          "maxLength": 30
+        },
+        {
+          "schemaName": "ccsb_CountryCode",
+          "logicalName": "ccsb_countrycode",
+          "displayName": "Country Code",
+          "type": "String",
+          "description": "ISO country code.",
+          "required": false,
+          "maxLength": 10
+        },
+        {
+          "schemaName": "ccsb_Latitude",
+          "logicalName": "ccsb_latitude",
+          "displayName": "Latitude",
+          "type": "Decimal",
+          "description": "Latitude for travel, proximity, or mapping calculations.",
+          "required": false,
+          "precision": 6,
+          "minValue": -90,
+          "maxValue": 90
+        },
+        {
+          "schemaName": "ccsb_Longitude",
+          "logicalName": "ccsb_longitude",
+          "displayName": "Longitude",
+          "type": "Decimal",
+          "description": "Longitude for travel, proximity, or mapping calculations.",
+          "required": false,
+          "precision": 6,
+          "minValue": -180,
+          "maxValue": 180
+        },
+        {
+          "schemaName": "ccsb_DefaultCapacity",
+          "logicalName": "ccsb_defaultcapacity",
+          "displayName": "Default Capacity",
+          "type": "Decimal",
+          "description": "Default capacity available at this location when a service does not define an override.",
+          "required": false,
+          "precision": 2,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_EffectiveFrom",
+          "logicalName": "ccsb_effectivefrom",
+          "displayName": "Effective From",
+          "type": "DateOnly",
+          "description": "Date from which the location may be used.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_EffectiveTo",
+          "logicalName": "ccsb_effectiveto",
+          "displayName": "Effective To",
+          "type": "DateOnly",
+          "description": "Date after which the location may not be used.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_SortOrder",
+          "logicalName": "ccsb_sortorder",
+          "displayName": "Sort Order",
+          "type": "Integer",
+          "description": "Display order within board navigation and grouping.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_IsSchedulingEnabled",
+          "logicalName": "ccsb_isschedulingenabled",
+          "displayName": "Scheduling Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether new scheduling activity may be allocated to this location.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_Notes",
+          "logicalName": "ccsb_notes",
+          "displayName": "Notes",
+          "type": "Memo",
+          "description": "Operational notes about the location.",
+          "required": false,
+          "maxLength": 100000
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_Location_LocationCode_Key",
+          "displayName": "Location Code Key",
+          "fields": [
+            "ccsb_locationcode"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_BoardRegistry",
+      "logicalName": "ccsb_boardregistry",
+      "displayName": "Board Registry",
+      "collectionName": "Board Registries",
+      "ownership": "UserOwned",
+      "description": "Stable product-level board registry identity. A board registry owns its configuration lifecycle and points to one active immutable Board Version.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Board Registry Name",
+        "description": "Human-readable board registry name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_BoardCode",
+          "logicalName": "ccsb_boardcode",
+          "displayName": "Board Code",
+          "type": "String",
+          "description": "Stable unique code used in integrations, URLs, and configuration references.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Description",
+          "logicalName": "ccsb_description",
+          "displayName": "Description",
+          "type": "Memo",
+          "description": "Business purpose and operating scope of the board.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_BoardType",
+          "logicalName": "ccsb_boardtype",
+          "displayName": "Board Type",
+          "type": "Choice",
+          "description": "Primary operational use of the board.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Operational Scheduling"
+            },
+            {
+              "value": 831020001,
+              "label": "Dispatch"
+            },
+            {
+              "value": 831020002,
+              "label": "Capacity Planning"
+            },
+            {
+              "value": 831020003,
+              "label": "Roster Planning"
+            },
+            {
+              "value": 831020004,
+              "label": "Read Only"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_LifecycleState",
+          "logicalName": "ccsb_lifecyclestate",
+          "displayName": "Lifecycle State",
+          "type": "Choice",
+          "description": "Business lifecycle of the board identity.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Draft"
+            },
+            {
+              "value": 831020001,
+              "label": "Active"
+            },
+            {
+              "value": 831020002,
+              "label": "Suspended"
+            },
+            {
+              "value": 831020003,
+              "label": "Retired"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_DefaultTimeZoneId",
+          "logicalName": "ccsb_defaulttimezoneid",
+          "displayName": "Default Time Zone ID",
+          "type": "String",
+          "description": "Default IANA or Windows time-zone identifier for board rendering.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_DefaultPlanningHorizonDays",
+          "logicalName": "ccsb_defaultplanninghorizondays",
+          "displayName": "Default Planning Horizon (Days)",
+          "type": "Integer",
+          "description": "Default number of days loaded when the board opens.",
+          "required": false,
+          "minValue": 1,
+          "maxValue": 730
+        },
+        {
+          "schemaName": "ccsb_MaxHierarchyDepth",
+          "logicalName": "ccsb_maxhierarchydepth",
+          "displayName": "Maximum Hierarchy Depth",
+          "type": "Integer",
+          "description": "Maximum configured group hierarchy depth for this board.",
+          "required": false,
+          "minValue": 1,
+          "maxValue": 5
+        },
+        {
+          "schemaName": "ccsb_AllowAdHocChanges",
+          "logicalName": "ccsb_allowadhocchanges",
+          "displayName": "Allow Ad Hoc Changes",
+          "type": "Boolean",
+          "description": "Allows authorised planners to create or amend schedule records outside configured templates.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_AllowUnassignedWork",
+          "logicalName": "ccsb_allowunassignedwork",
+          "displayName": "Allow Unassigned Work",
+          "type": "Boolean",
+          "description": "Allows valid schedule items to remain intentionally unassigned.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_ExternalKey",
+          "logicalName": "ccsb_externalkey",
+          "displayName": "External Key",
+          "type": "String",
+          "description": "Stable external identifier for the board.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_EffectiveFrom",
+          "logicalName": "ccsb_effectivefrom",
+          "displayName": "Effective From",
+          "type": "DateOnly",
+          "description": "Date from which the board may be used.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_EffectiveTo",
+          "logicalName": "ccsb_effectiveto",
+          "displayName": "Effective To",
+          "type": "DateOnly",
+          "description": "Date after which the board may not be used.",
+          "required": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_BoardRegistry_BoardCode_Key",
+          "displayName": "Board Code Key",
+          "fields": [
+            "ccsb_boardcode"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_BoardVersion",
+      "logicalName": "ccsb_boardversion",
+      "displayName": "Board Version",
+      "collectionName": "Board Versions",
+      "ownership": "UserOwned",
+      "description": "Immutable, versioned configuration baseline governing mappings, views, rules, groups, status models, role definitions, and permission policies for a Board.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Board Version Name",
+        "description": "Human-readable version name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_VersionNumber",
+          "logicalName": "ccsb_versionnumber",
+          "displayName": "Version Number",
+          "type": "Integer",
+          "description": "Monotonically increasing version number within the Board.",
+          "required": true,
+          "minValue": 1,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_VersionLabel",
+          "logicalName": "ccsb_versionlabel",
+          "displayName": "Version Label",
+          "type": "String",
+          "description": "Readable release label, for example 2026.1 or Winter Release.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_ProductVersion",
+          "logicalName": "ccsb_productversion",
+          "displayName": "Product Version",
+          "type": "String",
+          "description": "CCSB product semantic version that last validated or activated this board version.",
+          "required": false,
+          "maxLength": 50
+        },
+        {
+          "schemaName": "ccsb_ConfigurationSchemaVersion",
+          "logicalName": "ccsb_configurationschemaversion",
+          "displayName": "Configuration Schema Version",
+          "type": "String",
+          "description": "Configuration schema version used by this normalized board version.",
+          "required": false,
+          "maxLength": 50
+        },
+        {
+          "schemaName": "ccsb_MigrationState",
+          "logicalName": "ccsb_migrationstate",
+          "displayName": "Migration State",
+          "type": "Choice",
+          "description": "Compatibility migration state for this board version.",
+          "required": false,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "None"
+            },
+            {
+              "value": 831020001,
+              "label": "Pending"
+            },
+            {
+              "value": 831020002,
+              "label": "Running"
+            },
+            {
+              "value": 831020003,
+              "label": "Completed"
+            },
+            {
+              "value": 831020004,
+              "label": "Failed"
+            },
+            {
+              "value": 831020005,
+              "label": "Blocked"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_CompatibilityStatus",
+          "logicalName": "ccsb_compatibilitystatus",
+          "displayName": "Compatibility Status",
+          "type": "Choice",
+          "description": "Latest product and schema compatibility status used by validation and activation gates.",
+          "required": false,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Not Evaluated"
+            },
+            {
+              "value": 831020001,
+              "label": "Compatible"
+            },
+            {
+              "value": 831020002,
+              "label": "Compatible With Warnings"
+            },
+            {
+              "value": 831020003,
+              "label": "Incompatible"
+            },
+            {
+              "value": 831020004,
+              "label": "Migration Required"
+            },
+            {
+              "value": 831020005,
+              "label": "Blocked"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_LifecycleState",
+          "logicalName": "ccsb_lifecyclestate",
+          "displayName": "Lifecycle State",
+          "type": "Choice",
+          "description": "Lifecycle of the immutable board configuration version.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Draft"
+            },
+            {
+              "value": 831020001,
+              "label": "Validating"
+            },
+            {
+              "value": 831020002,
+              "label": "Ready"
+            },
+            {
+              "value": 831020003,
+              "label": "Active"
+            },
+            {
+              "value": 831020004,
+              "label": "Superseded"
+            },
+            {
+              "value": 831020005,
+              "label": "Retired"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ValidationStatus",
+          "logicalName": "ccsb_validationstatus",
+          "displayName": "Validation Status",
+          "type": "Choice",
+          "description": "Latest validation outcome for the version.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Not Run"
+            },
+            {
+              "value": 831020001,
+              "label": "Passed"
+            },
+            {
+              "value": 831020002,
+              "label": "Passed With Warnings"
+            },
+            {
+              "value": 831020003,
+              "label": "Failed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_EffectiveFrom",
+          "logicalName": "ccsb_effectivefrom",
+          "displayName": "Effective From",
+          "type": "DateAndTime",
+          "description": "Timestamp from which the version is permitted to be active.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_EffectiveTo",
+          "logicalName": "ccsb_effectiveto",
+          "displayName": "Effective To",
+          "type": "DateAndTime",
+          "description": "Timestamp after which the version must not be active.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ActivatedOn",
+          "logicalName": "ccsb_activatedon",
+          "displayName": "Activated On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which the version became active.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ConfigurationHash",
+          "logicalName": "ccsb_configurationhash",
+          "displayName": "Configuration Hash",
+          "type": "String",
+          "description": "Deterministic hash of normalized configuration content used to identify drift.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_IsImmutable",
+          "logicalName": "ccsb_isimmutable",
+          "displayName": "Is Immutable",
+          "type": "Boolean",
+          "description": "Marks the version as immutable after activation or publication.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_ChangeComment",
+          "logicalName": "ccsb_changecomment",
+          "displayName": "Change Comment",
+          "type": "Memo",
+          "description": "Reason and summary for this version.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_ValidationRunOn",
+          "logicalName": "ccsb_validationrunon",
+          "displayName": "Validation Run On",
+          "type": "DateAndTime",
+          "description": "Timestamp of the most recent validation run.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ExternalKey",
+          "logicalName": "ccsb_externalkey",
+          "displayName": "External Key",
+          "type": "String",
+          "description": "Stable external identifier for the board version.",
+          "required": false,
+          "maxLength": 200
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_EntityDefinition",
+      "logicalName": "ccsb_entitydefinition",
+      "displayName": "Entity Definition",
+      "collectionName": "Entity Definitions",
+      "ownership": "UserOwned",
+      "description": "Approved definition of a native or customer-owned Dataverse table that participates in a Board Version.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Entity Definition Name",
+        "description": "Readable definition name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_EntityLogicalName",
+          "logicalName": "ccsb_entitylogicalname",
+          "displayName": "Entity Logical Name",
+          "type": "String",
+          "description": "Dataverse logical name of the mapped source table.",
+          "required": true,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_EntitySetName",
+          "logicalName": "ccsb_entitysetname",
+          "displayName": "Entity Set Name",
+          "type": "String",
+          "description": "Dataverse Web API entity-set name.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_EntityRole",
+          "logicalName": "ccsb_entityrole",
+          "displayName": "Entity Role",
+          "type": "Choice",
+          "description": "Semantic scheduling role fulfilled by the source table.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Booking"
+            },
+            {
+              "value": 831020001,
+              "label": "Activity"
+            },
+            {
+              "value": 831020002,
+              "label": "Assignment"
+            },
+            {
+              "value": 831020003,
+              "label": "Resource"
+            },
+            {
+              "value": 831020004,
+              "label": "Service"
+            },
+            {
+              "value": 831020005,
+              "label": "Customer"
+            },
+            {
+              "value": 831020006,
+              "label": "Availability"
+            },
+            {
+              "value": 831020007,
+              "label": "Shift"
+            },
+            {
+              "value": 831020008,
+              "label": "Leave"
+            },
+            {
+              "value": 831020009,
+              "label": "Location"
+            },
+            {
+              "value": 831020010,
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_SourceType",
+          "logicalName": "ccsb_sourcetype",
+          "displayName": "Source Type",
+          "type": "Choice",
+          "description": "Whether the table is native CCSB or customer-owned.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Native CCSB"
+            },
+            {
+              "value": 831020001,
+              "label": "Customer Owned"
+            },
+            {
+              "value": 831020002,
+              "label": "External Virtual"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_PrimaryIdField",
+          "logicalName": "ccsb_primaryidfield",
+          "displayName": "Primary ID Field",
+          "type": "String",
+          "description": "Logical name of the source primary ID field.",
+          "required": true,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_PrimaryNameField",
+          "logicalName": "ccsb_primarynamefield",
+          "displayName": "Primary Name Field",
+          "type": "String",
+          "description": "Logical name of the primary display name field.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_DefaultSort",
+          "logicalName": "ccsb_defaultsort",
+          "displayName": "Default Sort",
+          "type": "String",
+          "description": "Safe default sort expression for runtime retrieval.",
+          "required": false,
+          "maxLength": 500
+        },
+        {
+          "schemaName": "ccsb_FilterOData",
+          "logicalName": "ccsb_filterodata",
+          "displayName": "OData Filter",
+          "type": "Memo",
+          "description": "Approved OData filter applied when this entity is queried by the board.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_FilterFetchXml",
+          "logicalName": "ccsb_filterfetchxml",
+          "displayName": "FetchXML Filter",
+          "type": "Memo",
+          "description": "Approved FetchXML filter applied where OData is not sufficient.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_AllowRead",
+          "logicalName": "ccsb_allowread",
+          "displayName": "Allow Read",
+          "type": "Boolean",
+          "description": "Permits the runtime to read records from the mapped source.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_AllowCreate",
+          "logicalName": "ccsb_allowcreate",
+          "displayName": "Allow Create",
+          "type": "Boolean",
+          "description": "Permits the runtime to create records in the mapped source.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_AllowUpdate",
+          "logicalName": "ccsb_allowupdate",
+          "displayName": "Allow Update",
+          "type": "Boolean",
+          "description": "Permits the runtime to update approved mapped fields.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_AllowDelete",
+          "logicalName": "ccsb_allowdelete",
+          "displayName": "Allow Delete",
+          "type": "Boolean",
+          "description": "Permits the runtime to delete records in the mapped source.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_AllowDirectFormOpen",
+          "logicalName": "ccsb_allowdirectformopen",
+          "displayName": "Allow Direct Form Open",
+          "type": "Boolean",
+          "description": "Allows the runtime to open the mapped Dataverse form for a record.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_MetadataETag",
+          "logicalName": "ccsb_metadataetag",
+          "displayName": "Metadata ETag",
+          "type": "String",
+          "description": "Metadata fingerprint used to detect source schema drift.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_LastValidatedOn",
+          "logicalName": "ccsb_lastvalidatedon",
+          "displayName": "Last Validated On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which source metadata was last validated.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ValidationStatus",
+          "logicalName": "ccsb_validationstatus",
+          "displayName": "Validation Status",
+          "type": "Choice",
+          "description": "Current metadata validation outcome.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Unknown"
+            },
+            {
+              "value": 831020001,
+              "label": "Valid"
+            },
+            {
+              "value": 831020002,
+              "label": "Warning"
+            },
+            {
+              "value": 831020003,
+              "label": "Invalid"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether this entity definition is active for its Board Version.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_FieldMapping",
+      "logicalName": "ccsb_fieldmapping",
+      "displayName": "Field Mapping",
+      "collectionName": "Field Mappings",
+      "ownership": "UserOwned",
+      "description": "Maps an approved source field to a CCSB scheduling semantic and defines controlled transformation and write behavior.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Field Mapping Name",
+        "description": "Readable mapping name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_SemanticName",
+          "logicalName": "ccsb_semanticname",
+          "displayName": "Semantic Name",
+          "type": "String",
+          "description": "Stable CCSB semantic, for example activity.start or assignment.resource.",
+          "required": true,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_SourceFieldLogicalName",
+          "logicalName": "ccsb_sourcefieldlogicalname",
+          "displayName": "Source Field Logical Name",
+          "type": "String",
+          "description": "Logical name of the mapped source field.",
+          "required": true,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_SourceFieldType",
+          "logicalName": "ccsb_sourcefieldtype",
+          "displayName": "Source Field Type",
+          "type": "String",
+          "description": "Dataverse metadata type of the mapped source field.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_TargetDataType",
+          "logicalName": "ccsb_targetdatatype",
+          "displayName": "Target Data Type",
+          "type": "Choice",
+          "description": "Expected semantic data type after transformation.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "String"
+            },
+            {
+              "value": 831020001,
+              "label": "Integer"
+            },
+            {
+              "value": 831020002,
+              "label": "Decimal"
+            },
+            {
+              "value": 831020003,
+              "label": "Boolean"
+            },
+            {
+              "value": 831020004,
+              "label": "Date Only"
+            },
+            {
+              "value": 831020005,
+              "label": "Date and Time"
+            },
+            {
+              "value": 831020006,
+              "label": "Lookup"
+            },
+            {
+              "value": 831020007,
+              "label": "Choice"
+            },
+            {
+              "value": 831020008,
+              "label": "JSON"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_TransformationType",
+          "logicalName": "ccsb_transformationtype",
+          "displayName": "Transformation Type",
+          "type": "Choice",
+          "description": "Transformation applied before a value is consumed or written.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Direct"
+            },
+            {
+              "value": 831020001,
+              "label": "Lookup ID"
+            },
+            {
+              "value": 831020002,
+              "label": "Option Mapping"
+            },
+            {
+              "value": 831020003,
+              "label": "Date Time Conversion"
+            },
+            {
+              "value": 831020004,
+              "label": "Expression"
+            },
+            {
+              "value": 831020005,
+              "label": "Constant"
+            },
+            {
+              "value": 831020006,
+              "label": "Concatenate"
+            },
+            {
+              "value": 831020007,
+              "label": "JSON Path"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_TransformationDefinition",
+          "logicalName": "ccsb_transformationdefinition",
+          "displayName": "Transformation Definition",
+          "type": "Memo",
+          "description": "Controlled expression or JSON definition of the transformation.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_OptionMapJson",
+          "logicalName": "ccsb_optionmapjson",
+          "displayName": "Option Map JSON",
+          "type": "Memo",
+          "description": "Explicit mapping of source choice values to CCSB semantic values.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_FallbackValue",
+          "logicalName": "ccsb_fallbackvalue",
+          "displayName": "Fallback Value",
+          "type": "String",
+          "description": "Value used when the source value is blank or unavailable.",
+          "required": false,
+          "maxLength": 1000
+        },
+        {
+          "schemaName": "ccsb_LookupTargetLogicalName",
+          "logicalName": "ccsb_lookuptargetlogicalname",
+          "displayName": "Lookup Target Logical Name",
+          "type": "String",
+          "description": "Expected target table when the source field is a lookup.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_LookupPrimaryNameField",
+          "logicalName": "ccsb_lookupprimarynamefield",
+          "displayName": "Lookup Primary Name Field",
+          "type": "String",
+          "description": "Display field used when resolving a lookup.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_IsRequired",
+          "logicalName": "ccsb_isrequired",
+          "displayName": "Required",
+          "type": "Boolean",
+          "description": "Requires the mapping to resolve successfully before activation.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_IsNullable",
+          "logicalName": "ccsb_isnullable",
+          "displayName": "Nullable",
+          "type": "Boolean",
+          "description": "Allows the semantic value to be null.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_ReadEnabled",
+          "logicalName": "ccsb_readenabled",
+          "displayName": "Read Enabled",
+          "type": "Boolean",
+          "description": "Allows this mapping to be used in runtime reads.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_WriteBehavior",
+          "logicalName": "ccsb_writebehavior",
+          "displayName": "Write Behavior",
+          "type": "Choice",
+          "description": "Permitted runtime write behavior for this mapping.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Never"
+            },
+            {
+              "value": 831020001,
+              "label": "Create Only"
+            },
+            {
+              "value": 831020002,
+              "label": "Update Allowed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ValidationExpression",
+          "logicalName": "ccsb_validationexpression",
+          "displayName": "Validation Expression",
+          "type": "String",
+          "description": "Optional validation expression or regular expression.",
+          "required": false,
+          "maxLength": 2000
+        },
+        {
+          "schemaName": "ccsb_SortOrder",
+          "logicalName": "ccsb_sortorder",
+          "displayName": "Sort Order",
+          "type": "Integer",
+          "description": "Evaluation order where fields depend on other mappings.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether the field mapping is active.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_RelationshipMapping",
+      "logicalName": "ccsb_relationshipmapping",
+      "displayName": "Relationship Mapping",
+      "collectionName": "Relationship Mappings",
+      "ownership": "UserOwned",
+      "description": "Maps approved Dataverse relationships to CCSB scheduling graph semantics.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Relationship Mapping Name",
+        "description": "Readable relationship mapping name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_RelationshipRole",
+          "logicalName": "ccsb_relationshiprole",
+          "displayName": "Relationship Role",
+          "type": "String",
+          "description": "Stable semantic such as booking.activity or activity.assignment.",
+          "required": true,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_RelationshipLogicalName",
+          "logicalName": "ccsb_relationshiplogicalname",
+          "displayName": "Relationship Logical Name",
+          "type": "String",
+          "description": "Dataverse relationship schema/logical name.",
+          "required": true,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_RelationshipType",
+          "logicalName": "ccsb_relationshiptype",
+          "displayName": "Relationship Type",
+          "type": "Choice",
+          "description": "Cardinality of the source relationship.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Many-to-One"
+            },
+            {
+              "value": 831020001,
+              "label": "One-to-Many"
+            },
+            {
+              "value": 831020002,
+              "label": "Many-to-Many"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_SourceLookupField",
+          "logicalName": "ccsb_sourcelookupfield",
+          "displayName": "Source Lookup Field",
+          "type": "String",
+          "description": "Source lookup field used to resolve the relationship.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_SourceNavigationProperty",
+          "logicalName": "ccsb_sourcenavigationproperty",
+          "displayName": "Source Navigation Property",
+          "type": "String",
+          "description": "Web API navigation property from the source record.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_TargetNavigationProperty",
+          "logicalName": "ccsb_targetnavigationproperty",
+          "displayName": "Target Navigation Property",
+          "type": "String",
+          "description": "Web API navigation or collection property from the target record.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_RelatedPrimaryIdField",
+          "logicalName": "ccsb_relatedprimaryidfield",
+          "displayName": "Related Primary ID Field",
+          "type": "String",
+          "description": "Primary identifier field of the related source table.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_IsRequired",
+          "logicalName": "ccsb_isrequired",
+          "displayName": "Required",
+          "type": "Boolean",
+          "description": "Requires the relationship to resolve before activation.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_WriteBehavior",
+          "logicalName": "ccsb_writebehavior",
+          "displayName": "Write Behavior",
+          "type": "Choice",
+          "description": "Permitted runtime write behavior for this relationship.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Never"
+            },
+            {
+              "value": 831020001,
+              "label": "Create Only"
+            },
+            {
+              "value": 831020002,
+              "label": "Update Allowed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_DeleteBehavior",
+          "logicalName": "ccsb_deletebehavior",
+          "displayName": "Delete Behavior",
+          "type": "Choice",
+          "description": "Intended business delete policy. Physical lookup relationships are created as Restrict.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Restrict"
+            },
+            {
+              "value": 831020001,
+              "label": "Retain Historical Reference"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_FilterDefinition",
+          "logicalName": "ccsb_filterdefinition",
+          "displayName": "Filter Definition",
+          "type": "Memo",
+          "description": "Optional condition limiting related records used by the runtime.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_SortOrder",
+          "logicalName": "ccsb_sortorder",
+          "displayName": "Sort Order",
+          "type": "Integer",
+          "description": "Evaluation order.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether the relationship mapping is active.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_StatusModel",
+      "logicalName": "ccsb_statusmodel",
+      "displayName": "Status Model",
+      "collectionName": "Status Models",
+      "ownership": "UserOwned",
+      "description": "Reusable lifecycle model governing allowed status states, transitions, display colors, and runtime status-write policy.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Status Model Name",
+        "description": "Readable status model name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_StatusModelCode",
+          "logicalName": "ccsb_statusmodelcode",
+          "displayName": "Status Model Code",
+          "type": "String",
+          "description": "Stable code for the status model.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_AppliesToRole",
+          "logicalName": "ccsb_appliestorole",
+          "displayName": "Applies To Role",
+          "type": "Choice",
+          "description": "Scheduling semantic governed by this status model.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Booking"
+            },
+            {
+              "value": 831020001,
+              "label": "Activity"
+            },
+            {
+              "value": 831020002,
+              "label": "Assignment"
+            },
+            {
+              "value": 831020003,
+              "label": "Schedule Item"
+            },
+            {
+              "value": 831020004,
+              "label": "Service"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_SystemOfRecord",
+          "logicalName": "ccsb_systemofrecord",
+          "displayName": "System of Record",
+          "type": "Choice",
+          "description": "System permitted to own the lifecycle status.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Customer Source"
+            },
+            {
+              "value": 831020001,
+              "label": "Native CCSB"
+            },
+            {
+              "value": 831020002,
+              "label": "External Integration"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_InitialStatusCode",
+          "logicalName": "ccsb_initialstatuscode",
+          "displayName": "Initial Status Code",
+          "type": "String",
+          "description": "Initial status key used when a record is created.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_TerminalStatusCodesJson",
+          "logicalName": "ccsb_terminalstatuscodesjson",
+          "displayName": "Terminal Status Codes JSON",
+          "type": "Memo",
+          "description": "JSON array of terminal status keys.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_StatusPaletteJson",
+          "logicalName": "ccsb_statuspalettejson",
+          "displayName": "Status Palette JSON",
+          "type": "Memo",
+          "description": "JSON color and display configuration for statuses.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_AllowExternalStatusUpdate",
+          "logicalName": "ccsb_allowexternalstatusupdate",
+          "displayName": "Allow External Status Update",
+          "type": "Boolean",
+          "description": "Allows mapped external records to update status through approved mappings.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_AllowManualOverride",
+          "logicalName": "ccsb_allowmanualoverride",
+          "displayName": "Allow Manual Override",
+          "type": "Boolean",
+          "description": "Allows authorised users to override transition validation.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_ValidationMode",
+          "logicalName": "ccsb_validationmode",
+          "displayName": "Validation Mode",
+          "type": "Choice",
+          "description": "How invalid transitions are handled.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Block"
+            },
+            {
+              "value": 831020001,
+              "label": "Warn"
+            },
+            {
+              "value": 831020002,
+              "label": "Allow"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether the status model is active.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_SortOrder",
+          "logicalName": "ccsb_sortorder",
+          "displayName": "Sort Order",
+          "type": "Integer",
+          "description": "Display and evaluation order.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 1000000
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_StatusModel_Code_Key",
+          "displayName": "Status Model Code Key",
+          "fields": [
+            "ccsb_statusmodelcode"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_ResourceRole",
+      "logicalName": "ccsb_resourcerole",
+      "displayName": "Resource Role",
+      "collectionName": "Resource Roles",
+      "ownership": "UserOwned",
+      "description": "Configuration-driven named resource role used by activity requirements and assignments, including quantity and capacity rules for group bookings.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Resource Role Name",
+        "description": "Readable resource role name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_RoleCode",
+          "logicalName": "ccsb_rolecode",
+          "displayName": "Role Code",
+          "type": "String",
+          "description": "Stable resource role code.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Description",
+          "logicalName": "ccsb_description",
+          "displayName": "Description",
+          "type": "Memo",
+          "description": "Business definition and usage notes.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_RoleCategory",
+          "logicalName": "ccsb_rolecategory",
+          "displayName": "Role Category",
+          "type": "Choice",
+          "description": "High-level category of resource role.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Person"
+            },
+            {
+              "value": 831020001,
+              "label": "Vehicle"
+            },
+            {
+              "value": 831020002,
+              "label": "Equipment"
+            },
+            {
+              "value": 831020003,
+              "label": "Facility"
+            },
+            {
+              "value": 831020004,
+              "label": "Seat / Capacity"
+            },
+            {
+              "value": 831020005,
+              "label": "Other"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_DefaultQuantity",
+          "logicalName": "ccsb_defaultquantity",
+          "displayName": "Default Quantity",
+          "type": "Integer",
+          "description": "Default number of equivalent resources required.",
+          "required": true,
+          "minValue": 1,
+          "maxValue": 100000
+        },
+        {
+          "schemaName": "ccsb_MinimumQuantity",
+          "logicalName": "ccsb_minimumquantity",
+          "displayName": "Minimum Quantity",
+          "type": "Integer",
+          "description": "Minimum number of resources required to satisfy the role.",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100000
+        },
+        {
+          "schemaName": "ccsb_MaximumQuantity",
+          "logicalName": "ccsb_maximumquantity",
+          "displayName": "Maximum Quantity",
+          "type": "Integer",
+          "description": "Maximum number of resources permitted for the role.",
+          "required": false,
+          "minValue": 1,
+          "maxValue": 100000
+        },
+        {
+          "schemaName": "ccsb_DefaultCapacityRequired",
+          "logicalName": "ccsb_defaultcapacityrequired",
+          "displayName": "Default Capacity Required",
+          "type": "Decimal",
+          "description": "Default required capacity contribution for this role.",
+          "required": false,
+          "precision": 2,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_CapacityUnit",
+          "logicalName": "ccsb_capacityunit",
+          "displayName": "Capacity Unit",
+          "type": "String",
+          "description": "Unit for capacity values, for example seats, hours, or kilograms.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_CompatibleResourceFilterJson",
+          "logicalName": "ccsb_compatibleresourcefilterjson",
+          "displayName": "Compatible Resource Filter JSON",
+          "type": "Memo",
+          "description": "Approved configuration filter identifying compatible resources.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_RequiredSkillCriteriaJson",
+          "logicalName": "ccsb_requiredskillcriteriajson",
+          "displayName": "Required Skill Criteria JSON",
+          "type": "Memo",
+          "description": "Configured skill, qualification, or certification requirements.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_AllowMultipleResources",
+          "logicalName": "ccsb_allowmultipleresources",
+          "displayName": "Allow Multiple Resources",
+          "type": "Boolean",
+          "description": "Allows multiple equivalent resources to satisfy the role.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_AllowSubstitution",
+          "logicalName": "ccsb_allowsubstitution",
+          "displayName": "Allow Substitution",
+          "type": "Boolean",
+          "description": "Allows a compatible resource to substitute for a preferred type.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_AllowConcurrentAssignment",
+          "logicalName": "ccsb_allowconcurrentassignment",
+          "displayName": "Allow Concurrent Assignment",
+          "type": "Boolean",
+          "description": "Allows this role to be assigned concurrently where other rules permit it.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_DisplayColor",
+          "logicalName": "ccsb_displaycolor",
+          "displayName": "Display Color",
+          "type": "String",
+          "description": "Hex color used for role display where configured.",
+          "required": false,
+          "maxLength": 20
+        },
+        {
+          "schemaName": "ccsb_SortOrder",
+          "logicalName": "ccsb_sortorder",
+          "displayName": "Sort Order",
+          "type": "Integer",
+          "description": "Display order.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether the resource role is active.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_ResourceRole_Code_Key",
+          "displayName": "Resource Role Code Key",
+          "fields": [
+            "ccsb_rolecode"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_PermissionProfile",
+      "logicalName": "ccsb_permissionprofile",
+      "displayName": "Permission Profile",
+      "collectionName": "Permission Profiles",
+      "ownership": "UserOwned",
+      "description": "Product-level schedule board permission policy. Dataverse security roles remain the enforcement mechanism; this profile expresses authorised board actions and scoped access.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Permission Profile Name",
+        "description": "Readable permission profile name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_ProfileCode",
+          "logicalName": "ccsb_profilecode",
+          "displayName": "Profile Code",
+          "type": "String",
+          "description": "Stable permission-profile code.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_Description",
+          "logicalName": "ccsb_description",
+          "displayName": "Description",
+          "type": "Memo",
+          "description": "Purpose and authorised operational scope.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_ProfileType",
+          "logicalName": "ccsb_profiletype",
+          "displayName": "Profile Type",
+          "type": "Choice",
+          "description": "Intended operational persona.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Planner"
+            },
+            {
+              "value": 831020001,
+              "label": "Dispatcher"
+            },
+            {
+              "value": 831020002,
+              "label": "Resource Manager"
+            },
+            {
+              "value": 831020003,
+              "label": "Release Manager"
+            },
+            {
+              "value": 831020004,
+              "label": "Configuration Administrator"
+            },
+            {
+              "value": 831020005,
+              "label": "Read Only"
+            },
+            {
+              "value": 831020006,
+              "label": "Support"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ScopeMode",
+          "logicalName": "ccsb_scopemode",
+          "displayName": "Scope Mode",
+          "type": "Choice",
+          "description": "Scope used when evaluating permission assignments.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "All Boards"
+            },
+            {
+              "value": 831020001,
+              "label": "Board"
+            },
+            {
+              "value": 831020002,
+              "label": "Location"
+            },
+            {
+              "value": 831020003,
+              "label": "Group"
+            },
+            {
+              "value": 831020004,
+              "label": "Assigned Work"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_CanViewSchedule",
+          "logicalName": "ccsb_canviewschedule",
+          "displayName": "Can View Schedule",
+          "type": "Boolean",
+          "description": "Allows viewing board data in scope.",
+          "required": true,
+          "defaultValue": true
+        },
+        {
+          "schemaName": "ccsb_CanCreateSchedule",
+          "logicalName": "ccsb_cancreateschedule",
+          "displayName": "Can Create Schedule",
+          "type": "Boolean",
+          "description": "Allows creating schedule records in scope.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanEditSchedule",
+          "logicalName": "ccsb_caneditschedule",
+          "displayName": "Can Edit Schedule",
+          "type": "Boolean",
+          "description": "Allows editing schedule records in scope.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanAssignResources",
+          "logicalName": "ccsb_canassignresources",
+          "displayName": "Can Assign Resources",
+          "type": "Boolean",
+          "description": "Allows assigning or unassigning resources.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanOverrideConflicts",
+          "logicalName": "ccsb_canoverrideconflicts",
+          "displayName": "Can Override Conflicts",
+          "type": "Boolean",
+          "description": "Allows an authorised override of warnings or conflicts.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanPublish",
+          "logicalName": "ccsb_canpublish",
+          "displayName": "Can Publish",
+          "type": "Boolean",
+          "description": "Allows publishing approved schedule versions.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanRollback",
+          "logicalName": "ccsb_canrollback",
+          "displayName": "Can Roll Back",
+          "type": "Boolean",
+          "description": "Allows rollback of a publish operation where lifecycle policy permits it.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanManageConfiguration",
+          "logicalName": "ccsb_canmanageconfiguration",
+          "displayName": "Can Manage Configuration",
+          "type": "Boolean",
+          "description": "Allows draft configuration changes.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanViewAudit",
+          "logicalName": "ccsb_canviewaudit",
+          "displayName": "Can View Audit",
+          "type": "Boolean",
+          "description": "Allows viewing immutable snapshots and operation evidence.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_CanManageIntegrations",
+          "logicalName": "ccsb_canmanageintegrations",
+          "displayName": "Can Manage Integrations",
+          "type": "Boolean",
+          "description": "Allows controlled support actions for integration operations.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_DataverseRoleName",
+          "logicalName": "ccsb_dataverserolename",
+          "displayName": "Dataverse Role Name",
+          "type": "String",
+          "description": "Optional supporting Dataverse security-role name used by deployment validation.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether the permission profile is active.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_PermissionProfile_Code_Key",
+          "displayName": "Permission Profile Code Key",
+          "fields": [
+            "ccsb_profilecode"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_PermissionAssignment",
+      "logicalName": "ccsb_permissionassignment",
+      "displayName": "Permission Assignment",
+      "collectionName": "Permission Assignments",
+      "ownership": "UserOwned",
+      "description": "Binds a Permission Profile to a Dataverse principal and optional board, location, or group scope.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Permission Assignment Name",
+        "description": "Readable permission assignment name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_PrincipalType",
+          "logicalName": "ccsb_principaltype",
+          "displayName": "Principal Type",
+          "type": "Choice",
+          "description": "Type of Dataverse or directory principal receiving the profile.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "System User"
+            },
+            {
+              "value": 831020001,
+              "label": "Team"
+            },
+            {
+              "value": 831020002,
+              "label": "Business Unit"
+            },
+            {
+              "value": 831020003,
+              "label": "Entra Group"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_PrincipalId",
+          "logicalName": "ccsb_principalid",
+          "displayName": "Principal ID",
+          "type": "String",
+          "description": "Dataverse or directory principal identifier stored as a string for polymorphic portability.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_PrincipalDisplayName",
+          "logicalName": "ccsb_principaldisplayname",
+          "displayName": "Principal Display Name",
+          "type": "String",
+          "description": "Friendly principal name captured for administration and audit.",
+          "required": false,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_AccessEffect",
+          "logicalName": "ccsb_accesseffect",
+          "displayName": "Access Effect",
+          "type": "Choice",
+          "description": "Whether the assignment grants or explicitly denies the profile.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Grant"
+            },
+            {
+              "value": 831020001,
+              "label": "Deny"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ScopeType",
+          "logicalName": "ccsb_scopetype",
+          "displayName": "Scope Type",
+          "type": "Choice",
+          "description": "Scope to which the permission assignment applies.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "All Boards"
+            },
+            {
+              "value": 831020001,
+              "label": "Board"
+            },
+            {
+              "value": 831020002,
+              "label": "Location"
+            },
+            {
+              "value": 831020003,
+              "label": "Group Node"
+            },
+            {
+              "value": 831020004,
+              "label": "Assigned Work"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ScopeReferenceId",
+          "logicalName": "ccsb_scopereferenceid",
+          "displayName": "Scope Reference ID",
+          "type": "String",
+          "description": "Polymorphic scope record identifier stored as text.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_ScopeDisplayName",
+          "logicalName": "ccsb_scopedisplayname",
+          "displayName": "Scope Display Name",
+          "type": "String",
+          "description": "Friendly scope name retained for administration and audit.",
+          "required": false,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_EffectiveFrom",
+          "logicalName": "ccsb_effectivefrom",
+          "displayName": "Effective From",
+          "type": "DateAndTime",
+          "description": "Timestamp from which the assignment is effective.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_EffectiveTo",
+          "logicalName": "ccsb_effectiveto",
+          "displayName": "Effective To",
+          "type": "DateAndTime",
+          "description": "Timestamp after which the assignment is no longer effective.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ApprovalReference",
+          "logicalName": "ccsb_approvalreference",
+          "displayName": "Approval Reference",
+          "type": "String",
+          "description": "Optional approval ticket or change reference.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_IsEnabled",
+          "logicalName": "ccsb_isenabled",
+          "displayName": "Enabled",
+          "type": "Boolean",
+          "description": "Indicates whether the assignment is active.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_RuntimeProjection",
+      "logicalName": "ccsb_runtimeprojection",
+      "displayName": "Runtime Projection",
+      "collectionName": "Runtime Projections",
+      "ownership": "UserOwned",
+      "description": "Read-only materialized runtime projection of approved normalized CCSB configuration. It is never the configuration source of truth.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Runtime Projection Name",
+        "description": "Readable projection name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_ProjectionType",
+          "logicalName": "ccsb_projectiontype",
+          "displayName": "Projection Type",
+          "type": "Choice",
+          "description": "Kind of runtime projection.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Board Configuration"
+            },
+            {
+              "value": 831020001,
+              "label": "Mapping Manifest"
+            },
+            {
+              "value": 831020002,
+              "label": "Resource Hierarchy"
+            },
+            {
+              "value": 831020003,
+              "label": "Runtime Payload"
+            },
+            {
+              "value": 831020004,
+              "label": "Permission Scope"
+            },
+            {
+              "value": 831020005,
+              "label": "Validation Summary"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ScopeType",
+          "logicalName": "ccsb_scopetype",
+          "displayName": "Scope Type",
+          "type": "Choice",
+          "description": "Scope represented by the projection.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Board"
+            },
+            {
+              "value": 831020001,
+              "label": "Location"
+            },
+            {
+              "value": 831020002,
+              "label": "Group"
+            },
+            {
+              "value": 831020003,
+              "label": "User"
+            },
+            {
+              "value": 831020004,
+              "label": "Global"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ScopeKey",
+          "logicalName": "ccsb_scopekey",
+          "displayName": "Scope Key",
+          "type": "String",
+          "description": "Stable scope key used to retrieve the projection.",
+          "required": true,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_PayloadJson",
+          "logicalName": "ccsb_payloadjson",
+          "displayName": "Payload JSON",
+          "type": "Memo",
+          "description": "Read-only serialized projection payload.",
+          "required": true,
+          "maxLength": 1000000
+        },
+        {
+          "schemaName": "ccsb_IsCompressed",
+          "logicalName": "ccsb_iscompressed",
+          "displayName": "Is Compressed",
+          "type": "Boolean",
+          "description": "Indicates whether the payload is compressed or encoded.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_ContentHash",
+          "logicalName": "ccsb_contenthash",
+          "displayName": "Content Hash",
+          "type": "String",
+          "description": "Hash of the projection payload.",
+          "required": true,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_ProjectionSchemaVersion",
+          "logicalName": "ccsb_projectionschemaversion",
+          "displayName": "Projection Schema Version",
+          "type": "String",
+          "description": "Version of the runtime projection contract.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_ProductVersion",
+          "logicalName": "ccsb_productversion",
+          "displayName": "Product Version",
+          "type": "String",
+          "description": "CCSB product semantic version used to generate this projection.",
+          "required": false,
+          "maxLength": 50
+        },
+        {
+          "schemaName": "ccsb_ConfigurationSchemaVersion",
+          "logicalName": "ccsb_configurationschemaversion",
+          "displayName": "Configuration Schema Version",
+          "type": "String",
+          "description": "Configuration schema version of the normalized source used for this projection.",
+          "required": false,
+          "maxLength": 50
+        },
+        {
+          "schemaName": "ccsb_SourceChangeToken",
+          "logicalName": "ccsb_sourcechangetoken",
+          "displayName": "Source Change Token",
+          "type": "String",
+          "description": "Source configuration change token used for staleness detection.",
+          "required": false,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_GeneratedOn",
+          "logicalName": "ccsb_generatedon",
+          "displayName": "Generated On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which the projection was generated.",
+          "required": true
+        },
+        {
+          "schemaName": "ccsb_ExpiresOn",
+          "logicalName": "ccsb_expireson",
+          "displayName": "Expires On",
+          "type": "DateAndTime",
+          "description": "Optional projection expiry timestamp.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ProjectionStatus",
+          "logicalName": "ccsb_projectionstatus",
+          "displayName": "Projection Status",
+          "type": "Choice",
+          "description": "Current usability of the projection.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Valid"
+            },
+            {
+              "value": 831020001,
+              "label": "Stale"
+            },
+            {
+              "value": 831020002,
+              "label": "Generating"
+            },
+            {
+              "value": 831020003,
+              "label": "Failed"
+            },
+            {
+              "value": 831020004,
+              "label": "Expired"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ErrorDetail",
+          "logicalName": "ccsb_errordetail",
+          "displayName": "Error Detail",
+          "type": "Memo",
+          "description": "Technical error detail when projection creation fails.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_RecordCount",
+          "logicalName": "ccsb_recordcount",
+          "displayName": "Record Count",
+          "type": "Integer",
+          "description": "Number of logical records represented by the projection.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_PayloadSizeBytes",
+          "logicalName": "ccsb_payloadsizebytes",
+          "displayName": "Payload Size (Bytes)",
+          "type": "Integer",
+          "description": "Size of the serialized payload.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_IsCurrent",
+          "logicalName": "ccsb_iscurrent",
+          "displayName": "Is Current",
+          "type": "Boolean",
+          "description": "Indicates whether this is the current projection for its type and scope.",
+          "required": true,
+          "defaultValue": true
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_ConfigurationValidationResult",
+      "logicalName": "ccsb_configurationvalidationresult",
+      "displayName": "Configuration Validation Result",
+      "collectionName": "Configuration Validation Results",
+      "ownership": "UserOwned",
+      "description": "Evidence record produced by validation of a Board Version, mapping, policy, or runtime projection.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Validation Result Name",
+        "description": "Readable validation result name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_ValidationRunId",
+          "logicalName": "ccsb_validationrunid",
+          "displayName": "Validation Run ID",
+          "type": "String",
+          "description": "Correlation identifier shared by validation results produced in one run.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_ValidationCode",
+          "logicalName": "ccsb_validationcode",
+          "displayName": "Validation Code",
+          "type": "String",
+          "description": "Stable validation rule code.",
+          "required": true,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_ValidationCategory",
+          "logicalName": "ccsb_validationcategory",
+          "displayName": "Validation Category",
+          "type": "Choice",
+          "description": "Category of validation performed.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Schema"
+            },
+            {
+              "value": 831020001,
+              "label": "Mapping"
+            },
+            {
+              "value": 831020002,
+              "label": "Relationship"
+            },
+            {
+              "value": 831020003,
+              "label": "Status"
+            },
+            {
+              "value": 831020004,
+              "label": "Permission"
+            },
+            {
+              "value": 831020005,
+              "label": "Runtime Projection"
+            },
+            {
+              "value": 831020006,
+              "label": "Lifecycle"
+            },
+            {
+              "value": 831020007,
+              "label": "Data Quality"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_Severity",
+          "logicalName": "ccsb_severity",
+          "displayName": "Severity",
+          "type": "Choice",
+          "description": "Severity of the validation outcome.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Information"
+            },
+            {
+              "value": 831020001,
+              "label": "Warning"
+            },
+            {
+              "value": 831020002,
+              "label": "Error"
+            },
+            {
+              "value": 831020003,
+              "label": "Blocking"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ResultStatus",
+          "logicalName": "ccsb_resultstatus",
+          "displayName": "Result Status",
+          "type": "Choice",
+          "description": "Current handling state of the validation result.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Open"
+            },
+            {
+              "value": 831020001,
+              "label": "Accepted"
+            },
+            {
+              "value": 831020002,
+              "label": "Resolved"
+            },
+            {
+              "value": 831020003,
+              "label": "Suppressed"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_AffectedEntityLogicalName",
+          "logicalName": "ccsb_affectedentitylogicalname",
+          "displayName": "Affected Entity Logical Name",
+          "type": "String",
+          "description": "Logical name of the affected entity.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_AffectedRecordId",
+          "logicalName": "ccsb_affectedrecordid",
+          "displayName": "Affected Record ID",
+          "type": "String",
+          "description": "Affected record identifier stored as text.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_AffectedFieldLogicalName",
+          "logicalName": "ccsb_affectedfieldlogicalname",
+          "displayName": "Affected Field Logical Name",
+          "type": "String",
+          "description": "Logical name of the affected field.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_Message",
+          "logicalName": "ccsb_message",
+          "displayName": "Message",
+          "type": "String",
+          "description": "Short validation message for end users and administrators.",
+          "required": true,
+          "maxLength": 4000
+        },
+        {
+          "schemaName": "ccsb_DetailJson",
+          "logicalName": "ccsb_detailjson",
+          "displayName": "Detail JSON",
+          "type": "Memo",
+          "description": "Machine-readable evidence and detailed diagnostic content.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_RecommendedAction",
+          "logicalName": "ccsb_recommendedaction",
+          "displayName": "Recommended Action",
+          "type": "Memo",
+          "description": "Suggested corrective action.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_DetectedOn",
+          "logicalName": "ccsb_detectedon",
+          "displayName": "Detected On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which the issue was detected.",
+          "required": true
+        },
+        {
+          "schemaName": "ccsb_ResolvedOn",
+          "logicalName": "ccsb_resolvedon",
+          "displayName": "Resolved On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which the issue was resolved or accepted.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_ResolutionNote",
+          "logicalName": "ccsb_resolutionnote",
+          "displayName": "Resolution Note",
+          "type": "Memo",
+          "description": "Reason for resolution, acceptance, or suppression.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_ExternalErrorCode",
+          "logicalName": "ccsb_externalerrorcode",
+          "displayName": "External Error Code",
+          "type": "String",
+          "description": "Source-system or technical error code where applicable.",
+          "required": false,
+          "maxLength": 300
+        }
+      ],
+      "alternateKeys": []
+    },
+    {
+      "schemaName": "ccsb_Operation",
+      "logicalName": "ccsb_operation",
+      "displayName": "Operation",
+      "collectionName": "Operations",
+      "ownership": "UserOwned",
+      "description": "Auditable asynchronous or synchronous product operation, including validation, projection generation, publish, rollback, import, and controlled lifecycle actions.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Operation Name",
+        "description": "Readable operation name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_OperationType",
+          "logicalName": "ccsb_operationtype",
+          "displayName": "Operation Type",
+          "type": "Choice",
+          "description": "Type of operation executed by the product.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Validate Board Version"
+            },
+            {
+              "value": 831020001,
+              "label": "Generate Projection"
+            },
+            {
+              "value": 831020002,
+              "label": "Publish Schedule"
+            },
+            {
+              "value": 831020003,
+              "label": "Rollback Schedule"
+            },
+            {
+              "value": 831020004,
+              "label": "Lock Scope"
+            },
+            {
+              "value": 831020005,
+              "label": "Unlock Scope"
+            },
+            {
+              "value": 831020006,
+              "label": "Import Configuration"
+            },
+            {
+              "value": 831020007,
+              "label": "Clone Board Version"
+            },
+            {
+              "value": 831020008,
+              "label": "Rebuild Cache"
+            },
+            {
+              "value": 831020009,
+              "label": "Reconcile Integration"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_OperationStatus",
+          "logicalName": "ccsb_operationstatus",
+          "displayName": "Operation Status",
+          "type": "Choice",
+          "description": "Current execution status.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Queued"
+            },
+            {
+              "value": 831020001,
+              "label": "In Progress"
+            },
+            {
+              "value": 831020002,
+              "label": "Succeeded"
+            },
+            {
+              "value": 831020003,
+              "label": "Succeeded With Warnings"
+            },
+            {
+              "value": 831020004,
+              "label": "Failed"
+            },
+            {
+              "value": 831020005,
+              "label": "Cancelled"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_CorrelationId",
+          "logicalName": "ccsb_correlationid",
+          "displayName": "Correlation ID",
+          "type": "String",
+          "description": "End-to-end correlation identifier for telemetry and support.",
+          "required": true,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_IdempotencyKey",
+          "logicalName": "ccsb_idempotencykey",
+          "displayName": "Idempotency Key",
+          "type": "String",
+          "description": "Stable request key preventing duplicate operation processing.",
+          "required": false,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_TargetScopeType",
+          "logicalName": "ccsb_targetscopetype",
+          "displayName": "Target Scope Type",
+          "type": "Choice",
+          "description": "Scope acted on by the operation.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Board"
+            },
+            {
+              "value": 831020001,
+              "label": "Board Version"
+            },
+            {
+              "value": 831020002,
+              "label": "Schedule Board"
+            },
+            {
+              "value": 831020003,
+              "label": "Schedule Version"
+            },
+            {
+              "value": 831020004,
+              "label": "Location"
+            },
+            {
+              "value": 831020005,
+              "label": "Group"
+            },
+            {
+              "value": 831020006,
+              "label": "Configuration Package"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_TargetScopeReferenceId",
+          "logicalName": "ccsb_targetscopereferenceid",
+          "displayName": "Target Scope Reference ID",
+          "type": "String",
+          "description": "Polymorphic target identifier stored as text.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_RequestedOn",
+          "logicalName": "ccsb_requestedon",
+          "displayName": "Requested On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which the operation was requested.",
+          "required": true
+        },
+        {
+          "schemaName": "ccsb_StartedOn",
+          "logicalName": "ccsb_startedon",
+          "displayName": "Started On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which processing began.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_CompletedOn",
+          "logicalName": "ccsb_completedon",
+          "displayName": "Completed On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which processing ended.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_RequestedPayloadJson",
+          "logicalName": "ccsb_requestedpayloadjson",
+          "displayName": "Requested Payload JSON",
+          "type": "Memo",
+          "description": "Validated input payload supplied to the operation.",
+          "required": false,
+          "maxLength": 1000000
+        },
+        {
+          "schemaName": "ccsb_ResultJson",
+          "logicalName": "ccsb_resultjson",
+          "displayName": "Result JSON",
+          "type": "Memo",
+          "description": "Result or summary payload produced by the operation.",
+          "required": false,
+          "maxLength": 1000000
+        },
+        {
+          "schemaName": "ccsb_ErrorSummary",
+          "logicalName": "ccsb_errorsummary",
+          "displayName": "Error Summary",
+          "type": "String",
+          "description": "Short error summary for user-facing operation diagnostics.",
+          "required": false,
+          "maxLength": 4000
+        },
+        {
+          "schemaName": "ccsb_ErrorDetail",
+          "logicalName": "ccsb_errordetail",
+          "displayName": "Error Detail",
+          "type": "Memo",
+          "description": "Detailed technical error evidence.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_AttemptCount",
+          "logicalName": "ccsb_attemptcount",
+          "displayName": "Attempt Count",
+          "type": "Integer",
+          "description": "Number of processing attempts.",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_RetryAfter",
+          "logicalName": "ccsb_retryafter",
+          "displayName": "Retry After",
+          "type": "DateAndTime",
+          "description": "Earliest timestamp at which a retry may be attempted.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_TotalItemCount",
+          "logicalName": "ccsb_totalitemcount",
+          "displayName": "Total Item Count",
+          "type": "Integer",
+          "description": "Total operation items expected.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_SucceededItemCount",
+          "logicalName": "ccsb_succeededitemcount",
+          "displayName": "Succeeded Item Count",
+          "type": "Integer",
+          "description": "Operation items successfully processed.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_FailedItemCount",
+          "logicalName": "ccsb_faileditemcount",
+          "displayName": "Failed Item Count",
+          "type": "Integer",
+          "description": "Operation items that failed.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_ProgressPercentage",
+          "logicalName": "ccsb_progresspercentage",
+          "displayName": "Progress Percentage",
+          "type": "Integer",
+          "description": "Reported progress from 0 to 100.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 100
+        },
+        {
+          "schemaName": "ccsb_IsCancellable",
+          "logicalName": "ccsb_iscancellable",
+          "displayName": "Is Cancellable",
+          "type": "Boolean",
+          "description": "Indicates whether the operation may be cancelled safely.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_RetentionUntil",
+          "logicalName": "ccsb_retentionuntil",
+          "displayName": "Retention Until",
+          "type": "DateAndTime",
+          "description": "Date after which operational evidence may be archived according to policy.",
+          "required": false
+        }
+      ],
+      "alternateKeys": [
+        {
+          "schemaName": "ccsb_Operation_CorrelationId_Key",
+          "displayName": "Operation Correlation ID Key",
+          "fields": [
+            "ccsb_correlationid"
+          ]
+        }
+      ]
+    },
+    {
+      "schemaName": "ccsb_OperationItem",
+      "logicalName": "ccsb_operationitem",
+      "displayName": "Operation Item",
+      "collectionName": "Operation Items",
+      "ownership": "UserOwned",
+      "description": "Child-level processing and audit evidence for one item handled by a CCSB Operation.",
+      "primaryName": {
+        "schemaName": "ccsb_Name",
+        "logicalName": "ccsb_name",
+        "displayName": "Operation Item Name",
+        "description": "Readable operation item name.",
+        "maxLength": 200
+      },
+      "fields": [
+        {
+          "schemaName": "ccsb_SequenceNumber",
+          "logicalName": "ccsb_sequencenumber",
+          "displayName": "Sequence Number",
+          "type": "Integer",
+          "description": "Deterministic sequence within the parent operation.",
+          "required": true,
+          "minValue": 1,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_ItemKey",
+          "logicalName": "ccsb_itemkey",
+          "displayName": "Item Key",
+          "type": "String",
+          "description": "Stable per-operation item key.",
+          "required": true,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_ItemType",
+          "logicalName": "ccsb_itemtype",
+          "displayName": "Item Type",
+          "type": "Choice",
+          "description": "Type of item processed.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Configuration"
+            },
+            {
+              "value": 831020001,
+              "label": "Schedule Item"
+            },
+            {
+              "value": 831020002,
+              "label": "Schedule Assignment"
+            },
+            {
+              "value": 831020003,
+              "label": "Schedule Requirement"
+            },
+            {
+              "value": 831020004,
+              "label": "Publish Snapshot"
+            },
+            {
+              "value": 831020005,
+              "label": "Runtime Projection"
+            },
+            {
+              "value": 831020006,
+              "label": "Integration Message"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ActionType",
+          "logicalName": "ccsb_actiontype",
+          "displayName": "Action Type",
+          "type": "Choice",
+          "description": "Action attempted for the operation item.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Validate"
+            },
+            {
+              "value": 831020001,
+              "label": "Create"
+            },
+            {
+              "value": 831020002,
+              "label": "Update"
+            },
+            {
+              "value": 831020003,
+              "label": "Delete"
+            },
+            {
+              "value": 831020004,
+              "label": "Publish"
+            },
+            {
+              "value": 831020005,
+              "label": "Rollback"
+            },
+            {
+              "value": 831020006,
+              "label": "Project"
+            },
+            {
+              "value": 831020007,
+              "label": "Reconcile"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_ItemStatus",
+          "logicalName": "ccsb_itemstatus",
+          "displayName": "Item Status",
+          "type": "Choice",
+          "description": "Current result for the operation item.",
+          "required": true,
+          "choiceOptions": [
+            {
+              "value": 831020000,
+              "label": "Queued"
+            },
+            {
+              "value": 831020001,
+              "label": "In Progress"
+            },
+            {
+              "value": 831020002,
+              "label": "Succeeded"
+            },
+            {
+              "value": 831020003,
+              "label": "Warning"
+            },
+            {
+              "value": 831020004,
+              "label": "Failed"
+            },
+            {
+              "value": 831020005,
+              "label": "Skipped"
+            },
+            {
+              "value": 831020006,
+              "label": "Cancelled"
+            }
+          ]
+        },
+        {
+          "schemaName": "ccsb_SourceEntityLogicalName",
+          "logicalName": "ccsb_sourceentitylogicalname",
+          "displayName": "Source Entity Logical Name",
+          "type": "String",
+          "description": "Logical name of the source record.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_SourceRecordId",
+          "logicalName": "ccsb_sourcerecordid",
+          "displayName": "Source Record ID",
+          "type": "String",
+          "description": "Source record identifier stored as text.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_TargetEntityLogicalName",
+          "logicalName": "ccsb_targetentitylogicalname",
+          "displayName": "Target Entity Logical Name",
+          "type": "String",
+          "description": "Logical name of the target record.",
+          "required": false,
+          "maxLength": 128
+        },
+        {
+          "schemaName": "ccsb_TargetRecordId",
+          "logicalName": "ccsb_targetrecordid",
+          "displayName": "Target Record ID",
+          "type": "String",
+          "description": "Target record identifier stored as text.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_RequestPayloadJson",
+          "logicalName": "ccsb_requestpayloadjson",
+          "displayName": "Request Payload JSON",
+          "type": "Memo",
+          "description": "Item-level input payload.",
+          "required": false,
+          "maxLength": 1000000
+        },
+        {
+          "schemaName": "ccsb_ResultPayloadJson",
+          "logicalName": "ccsb_resultpayloadjson",
+          "displayName": "Result Payload JSON",
+          "type": "Memo",
+          "description": "Item-level result payload.",
+          "required": false,
+          "maxLength": 1000000
+        },
+        {
+          "schemaName": "ccsb_ErrorCode",
+          "logicalName": "ccsb_errorcode",
+          "displayName": "Error Code",
+          "type": "String",
+          "description": "Technical or business error code.",
+          "required": false,
+          "maxLength": 300
+        },
+        {
+          "schemaName": "ccsb_ErrorMessage",
+          "logicalName": "ccsb_errormessage",
+          "displayName": "Error Message",
+          "type": "String",
+          "description": "Short item-level error message.",
+          "required": false,
+          "maxLength": 4000
+        },
+        {
+          "schemaName": "ccsb_ErrorDetail",
+          "logicalName": "ccsb_errordetail",
+          "displayName": "Error Detail",
+          "type": "Memo",
+          "description": "Detailed technical error content.",
+          "required": false,
+          "maxLength": 100000
+        },
+        {
+          "schemaName": "ccsb_ProcessedOn",
+          "logicalName": "ccsb_processedon",
+          "displayName": "Processed On",
+          "type": "DateAndTime",
+          "description": "Timestamp at which this item was last processed.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_RetryCount",
+          "logicalName": "ccsb_retrycount",
+          "displayName": "Retry Count",
+          "type": "Integer",
+          "description": "Number of retries attempted for this item.",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "schemaName": "ccsb_IsRetryable",
+          "logicalName": "ccsb_isretryable",
+          "displayName": "Is Retryable",
+          "type": "Boolean",
+          "description": "Indicates whether this item is safe to retry.",
+          "required": true,
+          "defaultValue": false
+        },
+        {
+          "schemaName": "ccsb_DurationMilliseconds",
+          "logicalName": "ccsb_durationmilliseconds",
+          "displayName": "Duration (Milliseconds)",
+          "type": "Integer",
+          "description": "Processing duration for the item.",
+          "required": false,
+          "minValue": 0,
+          "maxValue": 2147483647
+        },
+        {
+          "schemaName": "ccsb_CorrelationId",
+          "logicalName": "ccsb_correlationid",
+          "displayName": "Correlation ID",
+          "type": "String",
+          "description": "End-to-end correlation identifier.",
+          "required": false,
+          "maxLength": 100
+        }
+      ],
+      "alternateKeys": []
+    }
+  ],
+  "relationships": [
+    {
+      "schemaName": "ccsb_location_ccsb_location_parent",
+      "referencedEntity": "ccsb_location",
+      "referencingEntity": "ccsb_location",
+      "lookupSchemaName": "ccsb_ParentLocationId",
+      "lookupLogicalName": "ccsb_parentlocationid",
+      "lookupDisplayName": "Parent Location",
+      "description": "Optional parent location for hierarchy.",
+      "collectionLabel": "Child Locations"
+    },
+    {
+      "schemaName": "ccsb_calendar_ccsb_location_defaultcalendar",
+      "referencedEntity": "ccsb_calendar",
+      "referencingEntity": "ccsb_location",
+      "lookupSchemaName": "ccsb_DefaultCalendarId",
+      "lookupLogicalName": "ccsb_defaultcalendarid",
+      "lookupDisplayName": "Default Calendar",
+      "description": "Default working calendar for the location.",
+      "collectionLabel": "Locations"
+    },
+    {
+      "schemaName": "ccsb_location_ccsb_boardregistry_defaultlocation",
+      "referencedEntity": "ccsb_location",
+      "referencingEntity": "ccsb_boardregistry",
+      "lookupSchemaName": "ccsb_DefaultLocationId",
+      "lookupLogicalName": "ccsb_defaultlocationid",
+      "lookupDisplayName": "Default Location",
+      "description": "Default operational location of the board.",
+      "collectionLabel": "Board Registries"
+    },
+    {
+      "schemaName": "ccsb_calendar_ccsb_boardregistry_defaultcalendar",
+      "referencedEntity": "ccsb_calendar",
+      "referencingEntity": "ccsb_boardregistry",
+      "lookupSchemaName": "ccsb_DefaultCalendarId",
+      "lookupLogicalName": "ccsb_defaultcalendarid",
+      "lookupDisplayName": "Default Calendar",
+      "description": "Default calendar used by the board.",
+      "collectionLabel": "Board Registries"
+    },
+    {
+      "schemaName": "ccsb_viewdefinition_ccsb_boardregistry_defaultview",
+      "referencedEntity": "ccsb_viewdefinition",
+      "referencingEntity": "ccsb_boardregistry",
+      "lookupSchemaName": "ccsb_DefaultViewId",
+      "lookupLogicalName": "ccsb_defaultviewid",
+      "lookupDisplayName": "Default View",
+      "description": "Default board view definition.",
+      "collectionLabel": "Board Registries"
+    },
+    {
+      "schemaName": "ccsb_boardregistry_ccsb_boardversion",
+      "referencedEntity": "ccsb_boardregistry",
+      "referencingEntity": "ccsb_boardversion",
+      "lookupSchemaName": "ccsb_BoardId",
+      "lookupLogicalName": "ccsb_boardid",
+      "lookupDisplayName": "Board Registry",
+      "description": "Board to which this immutable configuration version belongs.",
+      "collectionLabel": "Board Versions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_boardregistry_activeversion",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_boardregistry",
+      "lookupSchemaName": "ccsb_ActiveBoardVersionId",
+      "lookupLogicalName": "ccsb_activeboardversionid",
+      "lookupDisplayName": "Active Board Version",
+      "description": "Current active configuration version of the board.",
+      "collectionLabel": "Active For Boards"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_boardversion_supersedes",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_boardversion",
+      "lookupSchemaName": "ccsb_SupersedesBoardVersionId",
+      "lookupLogicalName": "ccsb_supersedesboardversionid",
+      "lookupDisplayName": "Supersedes Board Version",
+      "description": "Prior version replaced by this version.",
+      "collectionLabel": "Superseded By Versions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_boardversion_clonedfrom",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_boardversion",
+      "lookupSchemaName": "ccsb_ClonedFromBoardVersionId",
+      "lookupLogicalName": "ccsb_clonedfromboardversionid",
+      "lookupDisplayName": "Cloned From Board Version",
+      "description": "Source version used to create this draft version.",
+      "collectionLabel": "Cloned Board Versions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_entitydefinition",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_entitydefinition",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version governing this entity definition.",
+      "collectionLabel": "Entity Definitions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_fieldmapping",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_fieldmapping",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version governing this field mapping.",
+      "collectionLabel": "Field Mappings"
+    },
+    {
+      "schemaName": "ccsb_entitydefinition_ccsb_fieldmapping",
+      "referencedEntity": "ccsb_entitydefinition",
+      "referencingEntity": "ccsb_fieldmapping",
+      "lookupSchemaName": "ccsb_EntityDefinitionId",
+      "lookupLogicalName": "ccsb_entitydefinitionid",
+      "lookupDisplayName": "Entity Definition",
+      "description": "Mapped entity that owns the source field.",
+      "collectionLabel": "Field Mappings"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_relationshipmapping",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_relationshipmapping",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version governing this relationship mapping.",
+      "collectionLabel": "Relationship Mappings"
+    },
+    {
+      "schemaName": "ccsb_entitydefinition_ccsb_relationshipmapping_source",
+      "referencedEntity": "ccsb_entitydefinition",
+      "referencingEntity": "ccsb_relationshipmapping",
+      "lookupSchemaName": "ccsb_SourceEntityDefinitionId",
+      "lookupLogicalName": "ccsb_sourceentitydefinitionid",
+      "lookupDisplayName": "Source Entity Definition",
+      "description": "Source entity definition for the relationship.",
+      "collectionLabel": "Source Relationship Mappings"
+    },
+    {
+      "schemaName": "ccsb_entitydefinition_ccsb_relationshipmapping_related",
+      "referencedEntity": "ccsb_entitydefinition",
+      "referencingEntity": "ccsb_relationshipmapping",
+      "lookupSchemaName": "ccsb_RelatedEntityDefinitionId",
+      "lookupLogicalName": "ccsb_relatedentitydefinitionid",
+      "lookupDisplayName": "Related Entity Definition",
+      "description": "Related entity definition for the relationship.",
+      "collectionLabel": "Related Relationship Mappings"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_statusmodel",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_statusmodel",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version governing this status model.",
+      "collectionLabel": "Status Models"
+    },
+    {
+      "schemaName": "ccsb_entitydefinition_ccsb_statusmodel_source",
+      "referencedEntity": "ccsb_entitydefinition",
+      "referencingEntity": "ccsb_statusmodel",
+      "lookupSchemaName": "ccsb_SourceEntityDefinitionId",
+      "lookupLogicalName": "ccsb_sourceentitydefinitionid",
+      "lookupDisplayName": "Source Entity Definition",
+      "description": "Mapped entity whose status is governed by the status model.",
+      "collectionLabel": "Status Models"
+    },
+    {
+      "schemaName": "ccsb_fieldmapping_ccsb_statusmodel_statusfield",
+      "referencedEntity": "ccsb_fieldmapping",
+      "referencingEntity": "ccsb_statusmodel",
+      "lookupSchemaName": "ccsb_StatusFieldMappingId",
+      "lookupLogicalName": "ccsb_statusfieldmappingid",
+      "lookupDisplayName": "Status Field Mapping",
+      "description": "Field mapping that resolves the status field.",
+      "collectionLabel": "Status Models"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_resourcerole",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_resourcerole",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version governing this resource role.",
+      "collectionLabel": "Resource Roles"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_permissionprofile",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_permissionprofile",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version governing this permission profile.",
+      "collectionLabel": "Permission Profiles"
+    },
+    {
+      "schemaName": "ccsb_permissionprofile_ccsb_permissionassignment",
+      "referencedEntity": "ccsb_permissionprofile",
+      "referencingEntity": "ccsb_permissionassignment",
+      "lookupSchemaName": "ccsb_PermissionProfileId",
+      "lookupLogicalName": "ccsb_permissionprofileid",
+      "lookupDisplayName": "Permission Profile",
+      "description": "Profile granted or denied by this assignment.",
+      "collectionLabel": "Permission Assignments"
+    },
+    {
+      "schemaName": "ccsb_boardregistry_ccsb_permissionassignment",
+      "referencedEntity": "ccsb_boardregistry",
+      "referencingEntity": "ccsb_permissionassignment",
+      "lookupSchemaName": "ccsb_BoardId",
+      "lookupLogicalName": "ccsb_boardid",
+      "lookupDisplayName": "Board Registry",
+      "description": "Optional board-specific permission scope.",
+      "collectionLabel": "Permission Assignments"
+    },
+    {
+      "schemaName": "ccsb_location_ccsb_permissionassignment",
+      "referencedEntity": "ccsb_location",
+      "referencingEntity": "ccsb_permissionassignment",
+      "lookupSchemaName": "ccsb_LocationId",
+      "lookupLogicalName": "ccsb_locationid",
+      "lookupDisplayName": "Location",
+      "description": "Optional location-specific permission scope.",
+      "collectionLabel": "Permission Assignments"
+    },
+    {
+      "schemaName": "ccsb_groupnode_ccsb_permissionassignment",
+      "referencedEntity": "ccsb_groupnode",
+      "referencingEntity": "ccsb_permissionassignment",
+      "lookupSchemaName": "ccsb_GroupNodeId",
+      "lookupLogicalName": "ccsb_groupnodeid",
+      "lookupDisplayName": "Group Node",
+      "description": "Optional group-node permission scope.",
+      "collectionLabel": "Permission Assignments"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_runtimeprojection",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_runtimeprojection",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Configuration version used to build the projection.",
+      "collectionLabel": "Runtime Projections"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_configurationvalidationresult",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_configurationvalidationresult",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version validated by this result.",
+      "collectionLabel": "Validation Results"
+    },
+    {
+      "schemaName": "ccsb_operation_ccsb_configurationvalidationresult",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_configurationvalidationresult",
+      "lookupSchemaName": "ccsb_OperationId",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "description": "Operation that produced this validation evidence.",
+      "collectionLabel": "Validation Results"
+    },
+    {
+      "schemaName": "ccsb_boardregistry_ccsb_operation",
+      "referencedEntity": "ccsb_boardregistry",
+      "referencingEntity": "ccsb_operation",
+      "lookupSchemaName": "ccsb_BoardId",
+      "lookupLogicalName": "ccsb_boardid",
+      "lookupDisplayName": "Board Registry",
+      "description": "Board acted on by this operation.",
+      "collectionLabel": "Operations"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_operation",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_operation",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board version acted on by this operation.",
+      "collectionLabel": "Operations"
+    },
+    {
+      "schemaName": "ccsb_operation_ccsb_operationitem",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_operationitem",
+      "lookupSchemaName": "ccsb_OperationId",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "description": "Parent operation.",
+      "collectionLabel": "Operation Items"
+    },
+    {
+      "schemaName": "ccsb_configurationvalidationresult_ccsb_operationitem",
+      "referencedEntity": "ccsb_configurationvalidationresult",
+      "referencingEntity": "ccsb_operationitem",
+      "lookupSchemaName": "ccsb_ConfigurationValidationResultId",
+      "lookupLogicalName": "ccsb_configurationvalidationresultid",
+      "lookupDisplayName": "Configuration Validation Result",
+      "description": "Optional validation evidence associated with this item.",
+      "collectionLabel": "Operation Items"
+    },
+    {
+      "schemaName": "ccsb_location_ccsb_resource_primarylocation",
+      "referencedEntity": "ccsb_location",
+      "referencingEntity": "ccsb_resource",
+      "lookupSchemaName": "ccsb_PrimaryLocationId",
+      "lookupLogicalName": "ccsb_primarylocationid",
+      "lookupDisplayName": "Primary Location",
+      "description": "Primary operating location of this resource.",
+      "collectionLabel": "Resources"
+    },
+    {
+      "schemaName": "ccsb_resourcerole_ccsb_resource_defaultrole",
+      "referencedEntity": "ccsb_resourcerole",
+      "referencingEntity": "ccsb_resource",
+      "lookupSchemaName": "ccsb_DefaultResourceRoleId",
+      "lookupLogicalName": "ccsb_defaultresourceroleid",
+      "lookupDisplayName": "Default Resource Role",
+      "description": "Default role used when allocating this resource.",
+      "collectionLabel": "Resources"
+    },
+    {
+      "schemaName": "ccsb_location_ccsb_service_defaultlocation",
+      "referencedEntity": "ccsb_location",
+      "referencingEntity": "ccsb_service",
+      "lookupSchemaName": "ccsb_DefaultLocationId",
+      "lookupLogicalName": "ccsb_defaultlocationid",
+      "lookupDisplayName": "Default Location",
+      "description": "Default operational location for the service.",
+      "collectionLabel": "Services"
+    },
+    {
+      "schemaName": "ccsb_boardregistry_ccsb_scheduleboard",
+      "referencedEntity": "ccsb_boardregistry",
+      "referencingEntity": "ccsb_scheduleboard",
+      "lookupSchemaName": "ccsb_BoardRegistryId",
+      "lookupLogicalName": "ccsb_boardregistryid",
+      "lookupDisplayName": "Board Registry",
+      "description": "Stable product board registry identity governing this operational schedule board.",
+      "collectionLabel": "Schedule Boards"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_scheduleboard_activeversion",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_scheduleboard",
+      "lookupSchemaName": "ccsb_ActiveBoardVersionId",
+      "lookupLogicalName": "ccsb_activeboardversionid",
+      "lookupDisplayName": "Active Board Version",
+      "description": "Configuration version active on the operational schedule board.",
+      "collectionLabel": "Schedule Boards"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_scheduleversion",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_scheduleversion",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Configuration version governing this published schedule version.",
+      "collectionLabel": "Schedule Versions"
+    },
+    {
+      "schemaName": "ccsb_operation_ccsb_scheduleversion_publishoperation",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_scheduleversion",
+      "lookupSchemaName": "ccsb_PublishOperationId",
+      "lookupLogicalName": "ccsb_publishoperationid",
+      "lookupDisplayName": "Publish Operation",
+      "description": "Operation that produced or changed this schedule version.",
+      "collectionLabel": "Published Schedule Versions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_boardconfiguration",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_boardconfiguration",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Versioned board configuration baseline.",
+      "collectionLabel": "Board Configurations"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_eventtypedefinition",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_eventtypedefinition",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Version governing the event type definition.",
+      "collectionLabel": "Event Type Definitions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_resourcedefinition",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_resourcedefinition",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Version governing the resource definition.",
+      "collectionLabel": "Resource Definitions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_groupdefinition",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_groupdefinition",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Version governing the group definition.",
+      "collectionLabel": "Group Definitions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_viewdefinition",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_viewdefinition",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Version governing the view definition.",
+      "collectionLabel": "View Definitions"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_ruledefinition",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_ruledefinition",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Version governing the rule definition.",
+      "collectionLabel": "Rule Definitions"
+    },
+    {
+      "schemaName": "ccsb_statusmodel_ccsb_statusdefinition",
+      "referencedEntity": "ccsb_statusmodel",
+      "referencingEntity": "ccsb_statusdefinition",
+      "lookupSchemaName": "ccsb_StatusModelId",
+      "lookupLogicalName": "ccsb_statusmodelid",
+      "lookupDisplayName": "Status Model",
+      "description": "Status model containing this status definition.",
+      "collectionLabel": "Status Definitions"
+    },
+    {
+      "schemaName": "ccsb_statusmodel_ccsb_statustransition",
+      "referencedEntity": "ccsb_statusmodel",
+      "referencingEntity": "ccsb_statustransition",
+      "lookupSchemaName": "ccsb_StatusModelId",
+      "lookupLogicalName": "ccsb_statusmodelid",
+      "lookupDisplayName": "Status Model",
+      "description": "Status model containing this transition.",
+      "collectionLabel": "Status Transitions"
+    },
+    {
+      "schemaName": "ccsb_resourcerole_ccsb_schedulerequirement",
+      "referencedEntity": "ccsb_resourcerole",
+      "referencingEntity": "ccsb_schedulerequirement",
+      "lookupSchemaName": "ccsb_ResourceRoleId",
+      "lookupLogicalName": "ccsb_resourceroleid",
+      "lookupDisplayName": "Resource Role",
+      "description": "Named role required by the schedule requirement.",
+      "collectionLabel": "Schedule Requirements"
+    },
+    {
+      "schemaName": "ccsb_resourcerole_ccsb_scheduleassignment",
+      "referencedEntity": "ccsb_resourcerole",
+      "referencingEntity": "ccsb_scheduleassignment",
+      "lookupSchemaName": "ccsb_ResourceRoleId",
+      "lookupLogicalName": "ccsb_resourceroleid",
+      "lookupDisplayName": "Resource Role",
+      "description": "Named role satisfied by the schedule assignment.",
+      "collectionLabel": "Schedule Assignments"
+    },
+    {
+      "schemaName": "ccsb_location_ccsb_scheduleitem",
+      "referencedEntity": "ccsb_location",
+      "referencingEntity": "ccsb_scheduleitem",
+      "lookupSchemaName": "ccsb_LocationId",
+      "lookupLogicalName": "ccsb_locationid",
+      "lookupDisplayName": "Location",
+      "description": "Location at which the schedule item occurs.",
+      "collectionLabel": "Schedule Items"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_scheduleitem",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_scheduleitem",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Board configuration version applied to the schedule item.",
+      "collectionLabel": "Schedule Items"
+    },
+    {
+      "schemaName": "ccsb_boardversion_ccsb_publishsnapshot",
+      "referencedEntity": "ccsb_boardversion",
+      "referencingEntity": "ccsb_publishsnapshot",
+      "lookupSchemaName": "ccsb_BoardVersionId",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "lookupDisplayName": "Board Version",
+      "description": "Configuration version recorded in the immutable publish snapshot.",
+      "collectionLabel": "Publish Snapshots"
+    },
+    {
+      "schemaName": "ccsb_operation_ccsb_publishsnapshot",
+      "referencedEntity": "ccsb_operation",
+      "referencingEntity": "ccsb_publishsnapshot",
+      "lookupSchemaName": "ccsb_OperationId",
+      "lookupLogicalName": "ccsb_operationid",
+      "lookupDisplayName": "Operation",
+      "description": "Publish operation producing this snapshot.",
+      "collectionLabel": "Publish Snapshots"
+    }
+  ],
+  "extensions": [
+    {
+      "entityLogicalName": "ccsb_resource",
+      "fields": [
+        {
+          "schemaName": "ccsb_ExternalResourceKey",
+          "logicalName": "ccsb_externalresourcekey",
+          "displayName": "External Resource Key",
+          "type": "String",
+          "description": "Stable external identifier for resource reconciliation.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_EffectiveFrom",
+          "logicalName": "ccsb_effectivefrom",
+          "displayName": "Effective From",
+          "type": "DateOnly",
+          "description": "Date from which the resource is eligible for the board.",
+          "required": false
+        },
+        {
+          "schemaName": "ccsb_EffectiveTo",
+          "logicalName": "ccsb_effectiveto",
+          "displayName": "Effective To",
+          "type": "DateOnly",
+          "description": "Date after which the resource is not eligible for the board.",
+          "required": false
+        }
+      ]
+    },
+    {
+      "entityLogicalName": "ccsb_service",
+      "fields": [
+        {
+          "schemaName": "ccsb_ExternalServiceKey",
+          "logicalName": "ccsb_externalservicekey",
+          "displayName": "External Service Key",
+          "type": "String",
+          "description": "Stable external identifier for service reconciliation.",
+          "required": false,
+          "maxLength": 200
+        },
+        {
+          "schemaName": "ccsb_RequiresLocation",
+          "logicalName": "ccsb_requireslocation",
+          "displayName": "Requires Location",
+          "type": "Boolean",
+          "description": "Indicates whether a location must be resolved before scheduling.",
+          "required": true,
+          "defaultValue": false
+        }
+      ]
+    },
+    {
+      "entityLogicalName": "ccsb_scheduleboard",
+      "fields": [
+        {
+          "schemaName": "ccsb_OperationalTimeZoneId",
+          "logicalName": "ccsb_operationaltimezoneid",
+          "displayName": "Operational Time Zone ID",
+          "type": "String",
+          "description": "Operational time zone used for schedule calculations and display.",
+          "required": false,
+          "maxLength": 100
+        },
+        {
+          "schemaName": "ccsb_IsRuntimeEnabled",
+          "logicalName": "ccsb_isruntimeenabled",
+          "displayName": "Runtime Enabled",
+          "type": "Boolean",
+          "description": "Controls whether this board may load and accept scheduling operations.",
+          "required": true,
+          "defaultValue": true
+        }
+      ]
+    },
+    {
+      "entityLogicalName": "ccsb_scheduleitem",
+      "fields": [
+        {
+          "schemaName": "ccsb_ExternalScheduleItemKey",
+          "logicalName": "ccsb_externalscheduleitemkey",
+          "displayName": "External Schedule Item Key",
+          "type": "String",
+          "description": "Stable external identifier for schedule-item reconciliation.",
+          "required": false,
+          "maxLength": 200
+        }
+      ]
+    }
+  ],
+  "relationshipPolicy": {
+    "delete": "Restrict",
+    "assign": "NoCascade",
+    "share": "NoCascade",
+    "unshare": "NoCascade",
+    "reparent": "NoCascade",
+    "merge": "NoCascade"
+  },
+  "notes": [
+    "ccsb_boardregistry is the stable configuration identity. ccsb_scheduleboard remains the operational schedule-board record and may resolve to ccsb_board in Core environments.",
+    "ccsb_boardversion is the immutable configuration version. ccsb_scheduleversion remains the operational/published schedule version.",
+    "All extension lookup columns are optional at metadata level so existing V1 records can be migrated without import failure. Publish and activation logic must validate the business-required relationships.",
+    "ccsb_runtimeprojection is a read-only materialized projection and must never replace the normalized configuration source of truth.",
+    "ccsb_permissionprofile and ccsb_permissionassignment express product scope. Dataverse security roles, team membership, business-unit access, and Custom API authorization enforce the actual permissions."
+  ],
+  "coreEntityAliases": [
+    {
+      "canonicalLogicalName": "ccsb_scheduleboard",
+      "displayName": "Schedule Board",
+      "description": "Resolves the existing V1 Schedule Board table by exact logical name first, then by its Dataverse display name. This protects the foundation schema from an unverified logical-name assumption in older Core builds."
+    }
+  ]
+}

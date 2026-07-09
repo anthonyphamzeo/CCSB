@@ -15,3 +15,9 @@ Prove one native CCSB board with governed server operations, the Runtime PCF, mu
 
 Detailed task selection is populated from the approved release backlog; no task is considered complete solely because it appears in this list.
 
+## Tracking assets
+
+- `tracking-status.json` is the reviewed current status overlay.
+- `tracking-v1.0.xlsx` and `docs/tracking/status/release-01-mvp-tracking.html` are the original generated tracking views.
+- `implementation-order-v1.0.md` is the authoritative sequence baseline.
+- `tasks/implementation-review-2026-07-09.md` records the evidence-based reconciliation.

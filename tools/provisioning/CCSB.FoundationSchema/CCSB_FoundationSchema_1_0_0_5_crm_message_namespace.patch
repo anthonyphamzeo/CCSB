@@ -1,0 +1,14 @@
+--- a/Program.cs
++++ b/Program.cs
+@@
+ using Microsoft.PowerPlatform.Dataverse.Client;
++using CrmSdkMessages = Microsoft.Crm.Sdk.Messages;
+@@
+-        _service.Execute(new PublishAllXmlRequest());
++        _service.Execute(new CrmSdkMessages.PublishAllXmlRequest());
+@@
+-        var request = new ExportSolutionRequest
++        var request = new CrmSdkMessages.ExportSolutionRequest
+@@
+-        var response = (ExportSolutionResponse)_service.Execute(request);
++        var response = (CrmSdkMessages.ExportSolutionResponse)_service.Execute(request);

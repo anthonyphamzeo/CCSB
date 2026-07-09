@@ -24,6 +24,7 @@ artifacts/
 !.env.example
 **/local.settings.json
 **/authProfiles.json
+**/.dataverse-token-cache
 **/*.publishsettings
 **/*.pfx
 **/*.snk

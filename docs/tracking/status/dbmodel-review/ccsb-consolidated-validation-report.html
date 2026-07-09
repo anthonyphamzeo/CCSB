@@ -1,0 +1,188 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCSB Consolidated Knowledge Review and Validation Report</title>
+<style>
+:root{--ink:#15202b;--muted:#5a6876;--line:#d8e0e7;--paper:#fff;--canvas:#f5f7fa;--nav:#102b3c;--blue:#1c6e9d;--green:#257d55;--amber:#a96d13;--red:#b6424c;--softblue:#eaf4fb;--softgreen:#edf8f1;--softamber:#fff6e6;--softred:#fff0f1}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font:14px/1.55 "Segoe UI",Arial,sans-serif}.layout{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:var(--nav);padding:24px 18px;color:#eef7fb}.brand{border-bottom:1px solid rgba(255,255,255,.16);padding-bottom:18px;margin-bottom:14px}.brand b{display:block;font-size:18px;line-height:1.2}.brand span{display:block;color:#b9cfdb;font-size:12px;margin-top:5px}.sidebar a{display:block;color:#dcecf4;text-decoration:none;padding:8px 9px;border-radius:7px;font-size:13px}.sidebar a:hover,.sidebar a:focus{background:#1b4861;outline:0}.sidebar .label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#92b5c6;margin:18px 8px 7px}.doc{max-width:1240px;margin:0 auto;padding:32px 42px 70px}.hero{background:#fff;border:1px solid var(--line);border-left:8px solid var(--blue);border-radius:10px;padding:26px 28px;margin-bottom:18px;box-shadow:0 8px 26px rgba(24,55,75,.06)}h1{font-size:30px;line-height:1.15;margin:0 0 10px}h2{font-size:22px;margin:0 0 12px;color:#123d5a}h3{font-size:16px;margin:18px 0 8px;color:#174b68}p{margin:8px 0}.lead{font-size:16px;color:#33475b;max-width:960px}.section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:24px 26px;margin:18px 0}.grid{display:grid;gap:12px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.metric{border:1px solid var(--line);background:#fff;border-radius:9px;padding:14px}.metric .num{font-size:27px;font-weight:800;color:var(--blue);line-height:1}.metric .label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin-top:5px}.callout{border-left:5px solid var(--blue);background:var(--softblue);border-radius:0 8px 8px 0;padding:12px 14px;margin:14px 0}.callout.green{border-color:var(--green);background:var(--softgreen)}.callout.amber{border-color:var(--amber);background:var(--softamber)}.callout.red{border-color:var(--red);background:var(--softred)}.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;white-space:nowrap}.ok{background:#dff2e8;color:#176141}.warn{background:#fff0cc;color:#805100}.bad{background:#ffe1e5;color:#8d2e38}.info{background:#e0eef7;color:#155d86}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:9px;margin:12px 0}table{border-collapse:collapse;width:100%;min-width:760px;background:#fff}th,td{padding:9px 10px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{background:#eef5f9;color:#174a65;font-size:12px;text-transform:uppercase;letter-spacing:.03em}tr:last-child td{border-bottom:0}th:last-child,td:last-child{border-right:0}ul,ol{margin:8px 0 8px 20px;padding:0}li{margin:5px 0}code{background:#eef4f7;border:1px solid #d5e1e8;border-radius:4px;padding:1px 4px;font-family:Consolas,"Courier New",monospace;font-size:.92em}.small{font-size:12px;color:var(--muted)}.source-list li{margin-bottom:7px}.priority{font-weight:800}.footer{font-size:12px;color:var(--muted);padding-top:12px}@media(max-width:920px){.layout{display:block}.sidebar{position:static;height:auto}.sidebar nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.doc{padding:22px 16px}.grid.two,.grid.three,.grid.four{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><b>CCSB Validation Report</b><span>Consolidated knowledge review<br>Generated 2026-07-03</span></div>
+  <nav aria-label="Report navigation">
+    <div class="label">Report</div>
+    <a href="#overview">Overview</a>
+    <a href="#sources">Sources Reviewed</a>
+    <a href="#dbmodel">Database Model</a>
+    <a href="#uiux">Model-Driven UI/UX</a>
+    <a href="#progress">Story Progress</a>
+    <a href="#recommendations">Recommendations</a>
+    <a href="#plan">Continuation Plan</a>
+    <a href="#appendix">Evidence Appendix</a>
+  </nav>
+</aside>
+<main class="doc">
+<section class="hero" id="overview">
+  <h1>CCSB Consolidated Knowledge Review and Validation Report</h1>
+  <p class="lead">The current CCSB direction is coherent: a Dataverse-native, configuration-driven schedule board with a custom React PCF runtime, server-authoritative Custom APIs, normalized <code>ccsb_*</code> configuration, optional native scheduling records, and governed publish/rollback. The implementation evidence is not yet release-ready: the physical schema is close but has governance gaps, the model-driven UI is an administration surface rather than the runtime scheduler, and the backlog still records every story and task as <code>Not Started</code>.</p>
+  <div class="grid four" style="margin-top:16px">
+    <div class="metric"><div class="num">39</div><div class="label">Custom Dataverse tables in dbmodel/UI</div></div>
+    <div class="metric"><div class="num">887</div><div class="label">Business fields placed on Main forms</div></div>
+    <div class="metric"><div class="num">0 / 38</div><div class="label">User stories completed in backlog CSV</div></div>
+    <div class="metric"><div class="num">0 / 228</div><div class="label">Tasks completed in backlog CSV</div></div>
+  </div>
+  <div class="callout amber"><strong>Overall assessment:</strong> proceed, but treat the next increment as a foundation hardening pass. Close US-001 and US-004 first, especially audit/correlation/publish-lock/snapshot-item/change-ledger decisions, before building runtime operations on top.</div>
+</section>
+
+<section class="section" id="sources">
+  <h2>Sources Reviewed</h2>
+  <ul class="source-list">
+    <li><code>metadata/dbmodel.xlsx</code> - 41 sheets, including entity index and one sheet per table.</li>
+    <li><code>UI/CCSB_ModelDrivenUX_Design.md</code> plus form, view, related navigation, and data-dictionary CSV catalogs.</li>
+    <li><code>Black_Logs/CCSB_Backlog_Import_Epics.csv</code>, <code>...User_Stories.csv</code>, <code>...Tasks.csv</code>, and <code>CCSB_Task_Level_Design_and_Delivery_Plan_v1_0.md</code>.</li>
+    <li><code>metadata/CCSB_Consolidated_Project_Document_v2_0.html</code> and <code>metadata/CCSB_Deep_Market_Research_Competitive_Analysis_2026.html</code>.</li>
+    <li>Cross-checks: latest local provisioner validation notes in <code>DBScripts</code> and <code>UI</code>.</li>
+  </ul>
+  <p class="small">This is a static source review. It does not prove that the solution has been imported into Dataverse or that runtime Custom APIs/PCF controls have executed, because the available validation notes explicitly state that Dataverse execution requires a target environment and authenticated user.</p>
+</section>
+
+<section class="section" id="dbmodel">
+  <h2>1. Database Model Validation</h2>
+  <div class="grid three">
+    <div class="metric"><div class="num">40</div><div class="label">Entities in workbook, including SystemUser</div></div>
+    <div class="metric"><div class="num">670</div><div class="label">Custom <code>ccsb_*</code> fields extracted</div></div>
+    <div class="metric"><div class="num">0</div><div class="label">Entities with table-level Audit Enabled</div></div>
+  </div>
+  <h3>Alignment Strengths</h3>
+  <ul>
+    <li>The schema covers the main V1 configuration backbone: <code>ccsb_board</code>, <code>ccsb_boardversion</code>, entity/field/relationship mappings, group definitions, status models/transitions, resource roles, rule definitions, permission profiles/assignments, configuration validation results, and runtime projection.</li>
+    <li>The native schedule graph is partially represented through <code>ccsb_scheduleitem</code>, <code>ccsb_scheduleassignment</code>, and <code>ccsb_schedulerequirement</code>. Schedule item includes item type, planned/requested dates, source entity/record references, publish state, parent item, service, location, board, board version, and schedule version.</li>
+    <li>Operation governance is partially modeled: <code>ccsb_operation</code> has correlation ID, idempotency key, type/status, payload/result JSON, timing, retry, retention, and item counts; <code>ccsb_operationitem</code> has item keys, source/target record references, correlation, payloads, result payloads, retry state, and error fields.</li>
+    <li>Publish is partially modeled with <code>ccsb_publishsnapshot</code> containing scope, status, snapshot number, state hash, manifest JSON, payload pointer, operation lookup, predecessor snapshot, retention date, record count, and size.</li>
+    <li>Security intent is visible in <code>ccsb_permissionprofile</code> and <code>ccsb_permissionassignment</code>, and the foundation docs correctly state these permissions must sit below Dataverse security rather than bypass it.</li>
+  </ul>
+
+  <h3>Gaps and Inconsistencies</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Area</th><th>Finding</th><th>Impact</th><th>Recommendation</th></tr>
+    <tr><td>Control/audit tables</td><td>Expected logical entities are absent: <code>ccsb_operationaudit</code> or <code>ccsb_auditlog</code>, <code>ccsb_schedulechange</code>, <code>ccsb_publishsnapshotitem</code>, <code>ccsb_publishlock</code>, and <code>ccsb_outbox</code>/<code>ccsb_outboxevent</code>.</td><td>Publish/rollback, support traceability, pending-change state, and protected scopes cannot be proven from normalized records alone.</td><td>Add the tables or formally document an equivalent design. For V1, do not leave publish locks and snapshot items only as JSON/payload concepts.</td></tr>
+    <tr><td>Native schedule graph</td><td>Docs mention optional <code>ccsb_scheduleactivity</code> and <code>ccsb_resourcecapability</code>; workbook instead appears to fold activity into <code>ccsb_scheduleitem</code> and capability into resource/resource-role JSON fields.</td><td>Ambiguity affects mapping validation, query shape, reporting, and feature promises around independently timed activities and skills/capabilities.</td><td>Choose explicitly: add normalized tables, or document the canonical equivalence and validation rules for <code>ScheduleItem.itemtype=Activity</code> and capability JSON.</td></tr>
+    <tr><td>Auditing</td><td>All 40 workbook entities show table-level audit disabled. Many columns show audit enabled, but entity-level audit must be enabled for Dataverse audit to function.</td><td>Conflicts with requirements for privileged-operation evidence, rollback traceability, and audit/support diagnostics.</td><td>Define an audit strategy: enable Dataverse auditing on critical configuration/control tables or build immutable append-only audit records. Do not rely on column flags alone.</td></tr>
+    <tr><td>Correlation</td><td><code>ccsb_conflict</code> and <code>ccsb_publishsnapshot</code> do not expose a direct <code>ccsb_correlationid</code>. Snapshot has operation lookup; conflict has no operation lookup in the extracted field list.</td><td>Weakens US-072 and NFR-OBS-001, which require correlation across UI, operation, audit, conflict, and publish/rollback records.</td><td>Add correlation ID and operation lookup to conflict/snapshot-related records, and propagate it to future lock/change/outbox records.</td></tr>
+    <tr><td>Field security</td><td>Only 2 fields are marked secured in the workbook, while many JSON, payload, error-detail, resolver, and integration-reference fields are present.</td><td>Administrators may need the fields, but casual users should not see sensitive payloads, rule internals, raw source references, or diagnostic details.</td><td>Expand field security profiles for Advanced-tab fields and pair them with Dataverse roles plus CCSB permission profiles.</td></tr>
+    <tr><td>Tenant/environment boundary</td><td><code>ccsb_board</code> has board code and runtime/timezone fields, but no explicit environment ID field in the workbook.</td><td>The architecture says one Dataverse environment is one isolated tenant; that can be acceptable, but US-003 still needs a testable isolation rule.</td><td>Document that environment is the tenant boundary, enforce board-code uniqueness per environment, and add install/validation checks proving no cross-environment admin path.</td></tr>
+    <tr><td>Naming drift</td><td>Foundation docs still reference <code>ccsb_scheduleboard</code>, while the current workbook and UI use <code>ccsb_board</code> as Schedule Board.</td><td>Migration scripts, UI labels, and API contracts could diverge.</td><td>Publish one canonical glossary and update generated docs/scripts before implementation continues.</td></tr>
+  </table></div>
+
+  <h3>Database Verdict</h3>
+  <p><span class="badge warn">Partially aligned</span> The schema is directionally strong for board configuration, mappings, schedule graph basics, operations, and runtime projection. It should not be treated as complete until US-004 closes the missing audit/publish/lock/change/capability decisions, audits/field-security policy, alternate keys, cascade rules, and Dataverse execution validation.</p>
+</section>
+
+<section class="section" id="uiux">
+  <h2>2. Model-Driven App UI/UX Validation</h2>
+  <div class="grid four">
+    <div class="metric"><div class="num">39</div><div class="label">Main forms</div></div>
+    <div class="metric"><div class="num">25</div><div class="label">Quick Create form tables</div></div>
+    <div class="metric"><div class="num">78</div><div class="label">System views</div></div>
+    <div class="metric"><div class="num">108</div><div class="label">Related navigation entries</div></div>
+  </div>
+  <h3>What Works</h3>
+  <ul>
+    <li>The UI catalogs are internally coherent: every business field in the audited Core schema is placed exactly once on a Main form, all views are intentionally narrow, and related navigation uses restrictive delete behavior.</li>
+    <li>The forms follow sensible governance: General, Advanced, Lifecycle, and Administration tabs separate daily fields from JSON/payload/error details and lifecycle evidence.</li>
+    <li>The design correctly avoids Quick Create for operational/evidence records such as schedule items, assignments, board versions, snapshots, conflicts, projections, and operations.</li>
+    <li>The UI package preserves existing base forms/views by creating Planora-named forms and views rather than overwriting defaults.</li>
+  </ul>
+  <h3>Missing or Weak UI/UX Coverage</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Gap</th><th>Why It Matters</th><th>Recommendation</th></tr>
+    <tr><td>No model-driven app module, sitemap, dashboard, PCF, command surface, security roles, or business process flow in the current UI deliverable.</td><td>The current UI supports administration and inspection; it does not yet deliver the scheduler workspace described in the project docs.</td><td>Create role-specific app modules/sitemaps for Configuration Administrator, Scheduler, Publish Manager, and Support Analyst after the schema/security model is locked.</td></tr>
+    <tr><td>Runtime board interactions are absent from the model-driven UI package.</td><td>Core workflows need board selector, date navigation, paging, filters, timeline, workbench, details panel, validation dialogs, publish preview, rollback, and accessibility alternatives.</td><td>Implement the custom React PCF and command/API client as separate runtime work, then connect it to active board version and runtime projection services.</td></tr>
+    <tr><td>Related navigation is broad, but subgrids/workbench views are deferred.</td><td>Admin users will struggle with parent-child tasks like Board &rarr; Versions, Schedule Item &rarr; Requirements/Assignments, Operation &rarr; Items, and Status Model &rarr; Transitions.</td><td>Add only high-value subgrids and focused support/workbench views after UAT, as the design document already suggests.</td></tr>
+    <tr><td>Security guidance is present, but field-level and role-level enforcement are not proven.</td><td>Advanced payload fields and server-only mutation rules are easy to expose accidentally through generic forms.</td><td>Pair forms with Dataverse security roles, field security, command visibility, and negative role tests under US-070.</td></tr>
+    <tr><td>No accessibility evidence yet for the custom timeline.</td><td>NFR-UX requires keyboard/form alternatives for every scheduling action; model-driven forms alone do not satisfy custom board accessibility.</td><td>Start US-081 interaction specification in Phase 0 and keep it active through PCF design.</td></tr>
+  </table></div>
+  <p><span class="badge warn">Admin UX aligned, runtime UX incomplete</span> The model-driven UI package is valuable and should be kept, but it is not the intended scheduler UX. It is best treated as configuration/admin/support scaffolding until the PCF workspace, app navigation, role security, and command APIs exist.</p>
+</section>
+
+<section class="section" id="progress">
+  <h2>3. User Story Progress</h2>
+  <div class="grid four">
+    <div class="metric"><div class="num">10</div><div class="label">Epics, all Not Started</div></div>
+    <div class="metric"><div class="num">38</div><div class="label">Stories, all Not Started</div></div>
+    <div class="metric"><div class="num">228</div><div class="label">Tasks, all Not Started</div></div>
+    <div class="metric"><div class="num">22</div><div class="label">P0 V1 stories</div></div>
+  </div>
+  <div class="callout red"><strong>Progress finding:</strong> based on the authoritative backlog CSV status fields, zero epics, zero user stories, and zero tasks are completed. Several design/provisioner artifacts exist, but the backlog has not credited any of that work. Either update statuses with evidence or treat the implementation backlog as not started.</div>
+  <div class="table-wrap"><table>
+    <tr><th>Backlog slice</th><th>Count</th><th>Status</th><th>Notes</th></tr>
+    <tr><td>Epics</td><td>10</td><td><span class="badge bad">10 Not Started</span></td><td>E01-E09 are V1; E10 is Later/deferred.</td></tr>
+    <tr><td>User stories</td><td>38</td><td><span class="badge bad">38 Not Started</span></td><td>22 P0, 12 P1, 4 Later.</td></tr>
+    <tr><td>Tasks</td><td>228</td><td><span class="badge bad">228 Not Started</span></td><td>145 P0, 71 P1, 12 Later.</td></tr>
+    <tr><td>Phase 0 foundation stories</td><td>6</td><td><span class="badge bad">Not Started</span></td><td>US-001, US-004, US-002, US-003, US-070, US-071.</td></tr>
+    <tr><td>Deferred stories</td><td>4</td><td><span class="badge info">Keep deferred</span></td><td>US-090 split/merge, US-091 mobile/offline, US-092 connectors, US-093 URS/Field Service/Project Operations adapters.</td></tr>
+  </table></div>
+</section>
+
+<section class="section" id="recommendations">
+  <h2>Improvement Recommendations</h2>
+  <h3>Database and Architecture</h3>
+  <ol>
+    <li><strong>Close the schema-control gap before runtime work:</strong> add or explicitly replace <code>schedulechange</code>, <code>publishsnapshotitem</code>, <code>publishlock</code>, <code>auditlog/operationaudit</code>, and reserved <code>outboxevent</code> designs.</li>
+    <li><strong>Make audit strategy executable:</strong> choose Dataverse table auditing, custom immutable audit records, or both. Capture actor, timestamp, correlation, reason, operation, result, affected records, and retention policy.</li>
+    <li><strong>Normalize or formally govern activity/capability shortcuts:</strong> document whether <code>ccsb_scheduleitem</code> is the canonical activity table and whether resource capability lives in JSON or a normalized child table.</li>
+    <li><strong>Propagate correlation:</strong> add <code>ccsb_correlationid</code> and operation references across conflict, publish, rollback, lock, change, snapshot item, audit, and outbox records.</li>
+    <li><strong>Harden sensitive fields:</strong> field-secure payload JSON, result JSON, error detail, resolver references, integration references, source record identifiers, and advanced configuration fields.</li>
+    <li><strong>Review keys and query shapes:</strong> prove alternate keys for board code, version number/label, semantic mapping keys, role/status keys, projection scope/content hash, operation correlation/idempotency, and conflict deduplication keys.</li>
+  </ol>
+  <h3>UI/UX</h3>
+  <ol>
+    <li><strong>Keep the current forms/views as admin scaffolding:</strong> do not mistake them for the runtime workspace.</li>
+    <li><strong>Create app-level navigation:</strong> build role-specific model-driven app modules/sitemaps once schema and security roles settle.</li>
+    <li><strong>Add high-value subgrids selectively:</strong> Board versions/configurations, Schedule requirements/assignments, Operation items, Status definitions/transitions, Calendar rules/exceptions, and publish evidence.</li>
+    <li><strong>Design the PCF workspace around the documented workflows:</strong> board selector, virtualized resource tree/timeline, details panel, workbenches, validation warning/block states, publish preview, lock/rollback state, and keyboard/form alternatives.</li>
+  </ol>
+  <h3>Backlog Governance</h3>
+  <ol>
+    <li><strong>Update backlog status from evidence:</strong> if the schema and UI deliverables count as completed or partially completed work, mark corresponding tasks with evidence links. Otherwise leave them Not Started and plan implementation accordingly.</li>
+    <li><strong>Split US-004 into hard gates:</strong> physical schema approval, Dataverse import proof, migration strategy, security matrix, data factory, and automated schema validation.</li>
+    <li><strong>Do not pull deferred stories into V1:</strong> mobile/offline, connectors, split/merge, URS adapters, and autonomous AI remain design gates.</li>
+  </ol>
+</section>
+
+<section class="section" id="plan">
+  <h2>Prioritized Continuation Plan</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Priority</th><th>Stories / tasks</th><th>Objective</th><th>Exit gate</th></tr>
+    <tr><td class="priority">1</td><td><code>US-001</code>: T01-T07</td><td>Create managed-solution baseline, dependency/SBOM register, environment variables, install verification, preflight checks, clean-environment tests, install/rollback runbook.</td><td>Clean DEV import and post-import verification pass with roles/settings visible.</td></tr>
+    <tr><td class="priority">2</td><td><code>US-004</code>: T01-T10</td><td>Approve and implement physical schema, including missing control/audit/publish/native graph decisions, keys, relationships, ownership, retention, data factory, validation, and migration policy.</td><td>Schema review signs off every V1 concept or documented equivalent; validation fails closed for bad mappings/schema.</td></tr>
+    <tr><td class="priority">3</td><td><code>US-070</code>: T01-T06</td><td>Define permission matrix, Dataverse roles, CCSB permission profiles, server-side authorization, permission-aware UX, and negative role tests.</td><td>Dataverse access cannot be overgranted by CCSB permissions; advanced fields are protected.</td></tr>
+    <tr><td class="priority">4</td><td><code>US-071</code>: T01-T06</td><td>Define and implement versioned Custom API envelopes for validate, execute, publish, rollback, validate board version, and activate board version.</td><td>No direct client mutation path; API contract, idempotency, concurrency, fault, and security tests pass.</td></tr>
+    <tr><td class="priority">5</td><td><code>US-002</code>: T01-T06</td><td>Define schema/product/projection compatibility, activation diagnostics, migration scripts, release notes, and upgrade/downgrade boundary tests.</td><td>Incompatible configuration cannot activate after upgrade; diagnostics identify action.</td></tr>
+    <tr><td class="priority">6</td><td><code>US-003</code>: T01-T06</td><td>Implement board registry, single active board version rule, board resolution, selection/empty states, and isolation tests.</td><td>Only permitted boards show; no cross-environment or unauthorized board path exists.</td></tr>
+    <tr><td class="priority">7</td><td><code>US-010</code>, <code>US-011</code>, <code>US-012</code>, <code>US-013</code></td><td>Start Phase 1 once foundation gates are clear: board version lifecycle, mapping admin, write/rollback-managed fields, runtime projection.</td><td>One mapped graph and one native graph validate, activate, and generate a current projection.</td></tr>
+    <tr><td class="priority">8</td><td><code>US-020</code>, <code>US-022</code></td><td>Parallel Phase 1 configuration: grouping hierarchy and roles/requirements/capacity.</td><td>Resource resolves to one stable group path; requirements and capacity can be validated and displayed.</td></tr>
+  </table></div>
+  <div class="callout green"><strong>Recommended next sprint shape:</strong> run a foundation sprint with US-001 + US-004 only, while security/API owners draft US-070/US-071 contracts in parallel. That keeps the team from building runtime workflows on top of unresolved audit, lock, and schema semantics.</div>
+</section>
+
+<section class="section" id="appendix">
+  <h2>Evidence Appendix</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Topic</th><th>Evidence observed</th><th>Source</th></tr>
+    <tr><td>Product baseline</td><td>Native Dataverse Online, desktop Model-driven App, custom React PCF, Fluent UI, dnd-kit, TanStack Virtual, Luxon, Custom APIs, normalized configuration, server-authoritative mutations.</td><td><code>CCSB_Consolidated_Project_Document_v2_0.html</code></td></tr>
+    <tr><td>Market boundary</td><td>Viable wedge is governed custom Dataverse operational scheduling, not broad workforce/payroll/mobile/routing/Field Service replacement.</td><td><code>CCSB_Deep_Market_Research_Competitive_Analysis_2026.html</code></td></tr>
+    <tr><td>Schema counts</td><td>41 workbook sheets; 39 custom <code>ccsb_*</code> tables plus <code>systemuser</code>; 1414 extracted fields including 670 custom fields; all entity audit flags disabled.</td><td><code>metadata/dbmodel.xlsx</code></td></tr>
+    <tr><td>UI package counts</td><td>39 Main forms, 25 Quick Create form tables, 78 system views, 108 related navigation entries, 887 business fields on Main forms.</td><td><code>UI/CCSB_ModelDrivenUX_Design.md</code> and UI CSV catalogs</td></tr>
+    <tr><td>Provisioner status</td><td>Static validation passes exist, but Dataverse execution/export was not performed in this workspace due missing target environment/authentication.</td><td><code>DBScripts/.../PROVISIONER_VALIDATION.md</code>, <code>UI/PROVISIONER_VALIDATION (2).md</code></td></tr>
+    <tr><td>Backlog status</td><td>10 epics, 38 stories, 228 tasks. CSV status fields show every item as <code>Not Started</code>.</td><td><code>Black_Logs</code> CSV files</td></tr>
+  </table></div>
+  <p class="footer">Prepared as a local static validation artifact. All findings are based on repository files available in <code>D:\Projects\AI_Agent\ScheduleBoardCoreImplmentation</code> on 2026-07-03.</p>
+</section>
+</main>
+</div>
+</body>
+</html>
