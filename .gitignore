@@ -1,0 +1,41 @@
+# Visual Studio / .NET
+.vs/
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Node / PCF
+**/node_modules/
+**/out/
+**/dist/
+**/coverage/
+*.tsbuildinfo
+
+# Power Platform generated packages
+artifacts/
+**/*.zip
+**/*.cab
+**/SolutionPackager/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/local.settings.json
+**/authProfiles.json
+**/*.publishsettings
+**/*.pfx
+**/*.snk
+
+# Test and tooling output
+TestResults/
+**/.nyc_output/
+**/.pytest_cache/
+**/__pycache__/
+*.log
+
+# Operating system
+.DS_Store
+Thumbs.db
+

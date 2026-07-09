@@ -1,0 +1,10 @@
+# Replace placeholder teams with repository-specific GitHub teams.
+* @anthonyphamzeo
+
+/src/Dataverse/ @anthonyphamzeo
+/src/Plugins/ @anthonyphamzeo
+/src/CustomApis/ @anthonyphamzeo
+/src/PCF/ @anthonyphamzeo
+/docs/design/security/ @anthonyphamzeo
+/deploy/ @anthonyphamzeo
+
