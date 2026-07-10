@@ -1,11 +1,20 @@
 # Shared Libraries
 
-- `CCSB.Domain`: entities, value objects, policies, and domain errors; no Dataverse SDK dependency.
-- `CCSB.Application`: use cases, ports, validation, authorization, idempotency, and transaction orchestration.
-- `CCSB.Dataverse`: repositories, queries, execution-context adapters, and SDK extensions.
-- `CCSB.Infrastructure`: configuration, messaging, persistence, clocks, IDs, and external adapters.
-- `CCSB.Observability`: structured logging, metrics, traces, correlation, and redaction.
-- `CCSB.Contracts`: stable cross-process event and API contract models.
+Shared libraries contain reusable code that is safe to reference from plug-ins, Custom APIs, integration workers, tests, and provisioning tools.
 
-Shared does not mean miscellaneous. A library needs a clear owner, dependency boundary, and independent tests.
+| Project | Purpose |
+|---|---|
+| `CCSB.Domain` | Pure domain entities, value objects, and policies |
+| `CCSB.Contracts` | Versioned DTOs, Custom API contracts, and event contracts |
+| `CCSB.Application` | Use-case orchestration and application services |
+| `CCSB.Dataverse` | Dataverse repositories, queries, and mappings |
+| `CCSB.Infrastructure` | Sandbox-safe infrastructure adapters |
+| `CCSB.Observability` | Tracing, telemetry, and correlation helpers |
 
+Dependencies must point inward:
+
+`Presentation/Plugin adapters -> Application -> Domain`
+
+`Application -> Contracts/Abstractions`
+
+Do not create direct dependencies from domain logic to Dataverse SDKs, PCF, Azure SDKs, or generated UI contracts.

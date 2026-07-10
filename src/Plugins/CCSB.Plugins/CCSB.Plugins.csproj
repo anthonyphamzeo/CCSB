@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>CCSB.Plugins</AssemblyName>
+    <RootNamespace>CCSB.Plugins</RootNamespace>
+    <Description>Thin Dataverse plug-in entry points for CCSB scheduling events.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.60" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\CCSB.Application\CCSB.Application.csproj" />
+    <ProjectReference Include="..\..\Shared\CCSB.Contracts\CCSB.Contracts.csproj" />
+    <ProjectReference Include="..\..\Shared\CCSB.Dataverse\CCSB.Dataverse.csproj" />
+    <ProjectReference Include="..\..\Shared\CCSB.Domain\CCSB.Domain.csproj" />
+    <ProjectReference Include="..\..\Shared\CCSB.Infrastructure\CCSB.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\CCSB.Observability\CCSB.Observability.csproj" />
+  </ItemGroup>
+</Project>

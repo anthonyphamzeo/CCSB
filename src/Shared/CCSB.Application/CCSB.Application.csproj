@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>CCSB.Application</AssemblyName>
+    <RootNamespace>CCSB.Application</RootNamespace>
+    <Description>Application services and use-case orchestration for server-authoritative scheduling behavior.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CCSB.Contracts\CCSB.Contracts.csproj" />
+    <ProjectReference Include="..\CCSB.Domain\CCSB.Domain.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>CCSB.Contracts</AssemblyName>
+    <RootNamespace>CCSB.Contracts</RootNamespace>
+    <Description>Versioned DTOs and event contracts shared across plug-ins, Custom APIs, integrations, and PCF clients.</Description>
+  </PropertyGroup>
+</Project>
