@@ -1,0 +1,517 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-002-T04",
+  "name": "CCSB administrator compatibility diagnostics UX contract",
+  "generatedForDate": "2026-07-13",
+  "diagnosticsDocument": "docs/design/ux/compatibility/US-002-T04-administrator-diagnostics.md",
+  "sourceCompatibilityContract": "docs/design/api-contracts/compatibility/US-002-T01-compatibility-contract.json",
+  "sourceMetadataContract": "docs/design/data-model/compatibility/US-002-T02-compatibility-metadata.json",
+  "sourcePreActivationContract": "docs/design/api-contracts/compatibility/US-002-T03-preactivation-compatibility-validation.json",
+  "sourceSchema": "tools/provisioning/CCSB.FoundationSchema/schema/ccsb.foundation.schema.json",
+  "adminAudiences": [
+    "Configuration Administrator",
+    "Support Reader"
+  ],
+  "diagnosticPrinciples": {
+    "serverLogsRequired": false,
+    "showHumanReadableActionForEveryDiagnostic": true,
+    "showAffectedRecordAndFieldWhenAvailable": true,
+    "separateValidationFromActivation": true,
+    "colorIsSupplementaryOnly": true,
+    "rawJsonIsSupplementaryOnly": true
+  },
+  "fieldBindings": {
+    "ccsb_boardversion": [
+      "ccsb_name",
+      "ccsb_lifecyclestate",
+      "ccsb_validationstatus",
+      "ccsb_validationrunon",
+      "ccsb_compatibilitystatus",
+      "ccsb_productversion",
+      "ccsb_configurationschemaversion",
+      "ccsb_migrationstate",
+      "ccsb_configurationhash"
+    ],
+    "ccsb_configurationvalidationresult": [
+      "ccsb_name",
+      "ccsb_validationrunid",
+      "ccsb_validationcode",
+      "ccsb_validationcategory",
+      "ccsb_severity",
+      "ccsb_resultstatus",
+      "ccsb_affectedentitylogicalname",
+      "ccsb_affectedrecordid",
+      "ccsb_affectedfieldlogicalname",
+      "ccsb_message",
+      "ccsb_detailjson",
+      "ccsb_recommendedaction",
+      "ccsb_detectedon",
+      "ccsb_resolvedon",
+      "ccsb_resolutionnote",
+      "ccsb_externalerrorcode"
+    ],
+    "ccsb_runtimeprojection": [
+      "ccsb_name",
+      "ccsb_projectiontype",
+      "ccsb_projectionstatus",
+      "ccsb_productversion",
+      "ccsb_configurationschemaversion",
+      "ccsb_projectionschemaversion",
+      "ccsb_sourcechangetoken",
+      "ccsb_contenthash",
+      "ccsb_generatedon",
+      "ccsb_iscurrent",
+      "ccsb_errordetail"
+    ],
+    "ccsb_operation": [
+      "ccsb_name",
+      "ccsb_operationtype",
+      "ccsb_operationstatus",
+      "ccsb_correlationid",
+      "ccsb_idempotencykey",
+      "ccsb_requestedon",
+      "ccsb_startedon",
+      "ccsb_completedon",
+      "ccsb_resultjson",
+      "ccsb_errorsummary",
+      "ccsb_errordetail"
+    ]
+  },
+  "lookupBindings": [
+    {
+      "entity": "ccsb_configurationvalidationresult",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "relationship": "ccsb_boardversion_ccsb_configurationvalidationresult"
+    },
+    {
+      "entity": "ccsb_configurationvalidationresult",
+      "lookupLogicalName": "ccsb_operationid",
+      "relationship": "ccsb_operation_ccsb_configurationvalidationresult"
+    },
+    {
+      "entity": "ccsb_runtimeprojection",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "relationship": "ccsb_boardversion_ccsb_runtimeprojection"
+    },
+    {
+      "entity": "ccsb_operation",
+      "lookupLogicalName": "ccsb_boardversionid",
+      "relationship": "ccsb_boardversion_ccsb_operation"
+    }
+  ],
+  "workspaceSurfaces": [
+    {
+      "id": "T04-SURFACE-001",
+      "name": "Board version compatibility summary",
+      "host": "ccsb_boardversion main form",
+      "requiredFields": [
+        "ccsb_compatibilitystatus",
+        "ccsb_migrationstate",
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion",
+        "ccsb_validationstatus",
+        "ccsb_validationrunon",
+        "ccsb_configurationhash",
+        "ccsb_lifecyclestate"
+      ],
+      "adminOutcome": "Administrator can see the current compatibility state and whether activation is blocked."
+    },
+    {
+      "id": "T04-SURFACE-002",
+      "name": "Blocking diagnostics grid",
+      "host": "ccsb_configurationvalidationresult grid scoped by ccsb_boardversionid",
+      "requiredColumns": [
+        "ccsb_validationcode",
+        "ccsb_severity",
+        "ccsb_resultstatus",
+        "ccsb_validationcategory",
+        "ccsb_affectedentitylogicalname",
+        "ccsb_affectedrecordid",
+        "ccsb_affectedfieldlogicalname",
+        "ccsb_message",
+        "ccsb_recommendedaction",
+        "ccsb_detectedon",
+        "ccsb_operationid"
+      ],
+      "defaultFilter": {
+        "boardVersionScoped": true,
+        "resultStatus": [
+          "Open"
+        ],
+        "severity": [
+          "Blocking",
+          "Error"
+        ]
+      },
+      "adminOutcome": "Administrator can identify each failed component without server logs."
+    },
+    {
+      "id": "T04-SURFACE-003",
+      "name": "Remediation action panel",
+      "host": "configuration administration diagnostics workspace",
+      "requiredInputs": [
+        "diagnosticActionMap",
+        "ccsb_recommendedaction",
+        "ccsb_affectedrecordid",
+        "ccsb_affectedfieldlogicalname"
+      ],
+      "adminOutcome": "Administrator can see the required remediation and follow the appropriate migration, backfill, mapping, schema, or projection action."
+    },
+    {
+      "id": "T04-SURFACE-004",
+      "name": "Runtime projection health",
+      "host": "ccsb_runtimeprojection grid scoped by ccsb_boardversionid",
+      "requiredColumns": [
+        "ccsb_projectionstatus",
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion",
+        "ccsb_projectionschemaversion",
+        "ccsb_sourcechangetoken",
+        "ccsb_contenthash",
+        "ccsb_generatedon",
+        "ccsb_iscurrent",
+        "ccsb_errordetail"
+      ],
+      "adminOutcome": "Administrator can confirm whether stale or failed runtime projection evidence is blocking activation."
+    },
+    {
+      "id": "T04-SURFACE-005",
+      "name": "Validation operation evidence",
+      "host": "ccsb_operation grid scoped by ccsb_boardversionid",
+      "requiredColumns": [
+        "ccsb_operationtype",
+        "ccsb_operationstatus",
+        "ccsb_correlationid",
+        "ccsb_idempotencykey",
+        "ccsb_requestedon",
+        "ccsb_startedon",
+        "ccsb_completedon",
+        "ccsb_resultjson",
+        "ccsb_errorsummary"
+      ],
+      "adminOutcome": "Administrator can copy operation and correlation evidence for support."
+    },
+    {
+      "id": "T04-SURFACE-006",
+      "name": "Safe re-validation command",
+      "host": "Board Version diagnostics command bar",
+      "command": "T04-CMD-VALIDATE-COMPATIBILITY",
+      "adminOutcome": "Administrator can re-run compatibility validation safely after remediation."
+    }
+  ],
+  "diagnosticViews": [
+    {
+      "id": "T04-VIEW-001",
+      "name": "Planora - Compatibility Blocking Diagnostics",
+      "entity": "ccsb_configurationvalidationresult",
+      "filter": {
+        "boardVersionScoped": true,
+        "resultStatus": [
+          "Open"
+        ],
+        "severity": [
+          "Blocking",
+          "Error"
+        ]
+      },
+      "columns": [
+        "ccsb_validationcode",
+        "ccsb_severity",
+        "ccsb_resultstatus",
+        "ccsb_validationcategory",
+        "ccsb_affectedentitylogicalname",
+        "ccsb_affectedrecordid",
+        "ccsb_affectedfieldlogicalname",
+        "ccsb_message",
+        "ccsb_recommendedaction",
+        "ccsb_detectedon",
+        "ccsb_operationid"
+      ],
+      "sort": [
+        "ccsb_severity",
+        "ccsb_validationcategory",
+        "ccsb_detectedon"
+      ]
+    },
+    {
+      "id": "T04-VIEW-002",
+      "name": "Planora - Current Runtime Projection Health",
+      "entity": "ccsb_runtimeprojection",
+      "filter": {
+        "boardVersionScoped": true,
+        "isCurrent": true
+      },
+      "columns": [
+        "ccsb_projectionstatus",
+        "ccsb_productversion",
+        "ccsb_configurationschemaversion",
+        "ccsb_projectionschemaversion",
+        "ccsb_sourcechangetoken",
+        "ccsb_contenthash",
+        "ccsb_generatedon",
+        "ccsb_errordetail"
+      ],
+      "sort": [
+        "ccsb_projectionstatus",
+        "ccsb_generatedon"
+      ]
+    },
+    {
+      "id": "T04-VIEW-003",
+      "name": "Planora - Validation Operation Evidence",
+      "entity": "ccsb_operation",
+      "filter": {
+        "boardVersionScoped": true,
+        "operationType": [
+          "Validate Board Version"
+        ]
+      },
+      "columns": [
+        "ccsb_operationtype",
+        "ccsb_operationstatus",
+        "ccsb_correlationid",
+        "ccsb_idempotencykey",
+        "ccsb_requestedon",
+        "ccsb_startedon",
+        "ccsb_completedon",
+        "ccsb_errorsummary"
+      ],
+      "sort": [
+        "ccsb_requestedon"
+      ]
+    }
+  ],
+  "migrationActionPanel": {
+    "visibleWhenAnyDiagnosticCode": [
+      "CCSB-COMPAT-METADATA-MISSING",
+      "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+      "CCSB-COMPAT-MIGRATION-REQUIRED",
+      "CCSB-COMPAT-MIGRATED-DATA-INVALID"
+    ],
+    "states": [
+      "Pending",
+      "Running",
+      "Failed",
+      "Blocked"
+    ],
+    "actions": [
+      {
+        "id": "T04-ACTION-METADATA-BACKFILL",
+        "label": "Run compatibility metadata backfill",
+        "actionType": "controlled-operation-or-runbook",
+        "diagnosticCodes": [
+          "CCSB-COMPAT-METADATA-MISSING"
+        ],
+        "requiresSeparateValidationAfterCompletion": true
+      },
+      {
+        "id": "T04-ACTION-SCHEMA-MIGRATION",
+        "label": "Run supported configuration schema migration",
+        "actionType": "controlled-operation-or-runbook",
+        "diagnosticCodes": [
+          "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+          "CCSB-COMPAT-MIGRATION-REQUIRED",
+          "CCSB-COMPAT-MIGRATED-DATA-INVALID"
+        ],
+        "requiresSeparateValidationAfterCompletion": true
+      }
+    ],
+    "doesNotAutoActivate": true
+  },
+  "safeRevalidationCommand": {
+    "id": "T04-CMD-VALIDATE-COMPATIBILITY",
+    "label": "Validate Compatibility",
+    "customApi": "ccsb_ValidateBoardVersion",
+    "forbiddenCustomApis": [
+      "ccsb_ActivateBoardVersion"
+    ],
+    "availableOnEntity": "ccsb_boardversion",
+    "availableLifecycleStates": [
+      "Draft",
+      "Validating",
+      "Ready",
+      "Active"
+    ],
+    "requiresConfirmation": true,
+    "requiresIdempotencyKey": true,
+    "idempotencyKeyPattern": "ccsb.validateBoardVersion:{boardVersionId}:{configurationHash}:{targetVersions}:{requestingUserId}:{yyyyMMddHHmm}",
+    "requestFields": [
+      "boardVersionId",
+      "targetVersions",
+      "configurationHash",
+      "rowVersion",
+      "evidenceFingerprint",
+      "idempotencyKey",
+      "requestedBy"
+    ],
+    "resultFields": [
+      "validationRunId",
+      "operationId",
+      "correlationId",
+      "allowed",
+      "outcome",
+      "compatibilityStatus",
+      "diagnostics"
+    ],
+    "createsOperationType": "Validate Board Version",
+    "writesValidationResults": true,
+    "mutatesActivePointer": false,
+    "mutatesBoardLifecycle": false,
+    "mutatesPublishState": false,
+    "mutatesScheduleRecords": false,
+    "duplicatePolicy": "Return existing operation and validation evidence when the same idempotency key is submitted.",
+    "staleTokenPolicy": "Reject or rerun when boardVersionId, rowVersion, configurationHash, targetVersions, evidenceFingerprint, or current projection token changed.",
+    "postRunRefreshTargets": [
+      "T04-SURFACE-001",
+      "T04-SURFACE-002",
+      "T04-SURFACE-004",
+      "T04-SURFACE-005"
+    ]
+  },
+  "diagnosticActionMap": [
+    {
+      "code": "CCSB-COMPAT-ACTIVATION-BLOCKED",
+      "actionType": "inspect-blocking-diagnostics",
+      "primaryAction": "Resolve every open blocking diagnostic, then run Validate Compatibility.",
+      "targetSurface": "T04-SURFACE-002"
+    },
+    {
+      "code": "CCSB-COMPAT-EVIDENCE-MISSING",
+      "actionType": "generate-evidence",
+      "primaryAction": "Generate the missing evidence for the unchanged Board Version, then revalidate.",
+      "targetSurface": "T04-SURFACE-005"
+    },
+    {
+      "code": "CCSB-COMPAT-CONFIGURATION-INVALID",
+      "actionType": "repair-configuration",
+      "primaryAction": "Correct the affected configuration record or lifecycle state, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-VALIDATION-STALE",
+      "actionType": "rerun-validation",
+      "primaryAction": "Run Validate Compatibility against the current configuration hash and row version.",
+      "targetSurface": "T04-SURFACE-006"
+    },
+    {
+      "code": "CCSB-COMPAT-METADATA-MISSING",
+      "actionType": "run-backfill",
+      "primaryAction": "Run the compatibility metadata backfill, then run Validate Compatibility.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-PRODUCT-UNSUPPORTED",
+      "actionType": "forward-upgrade-required",
+      "primaryAction": "Move through a supported product upgrade path; downgrade or unsupported product activation remains blocked.",
+      "targetSurface": "T04-SURFACE-001"
+    },
+    {
+      "code": "CCSB-COMPAT-SCHEMA-UNSUPPORTED",
+      "actionType": "run-migration",
+      "primaryAction": "Run the supported configuration schema migration or backfill, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-DOWNGRADE-BLOCKED",
+      "actionType": "forward-repair-only",
+      "primaryAction": "Restore the prior active pointer through approved support flow or deploy an additive forward repair.",
+      "targetSurface": "T04-SURFACE-001"
+    },
+    {
+      "code": "CCSB-COMPAT-MIGRATION-REQUIRED",
+      "actionType": "complete-migration",
+      "primaryAction": "Complete or repair the required compatibility migration, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-MIGRATED-DATA-INVALID",
+      "actionType": "repair-migrated-data",
+      "primaryAction": "Repair affected records, rerun the idempotent migration, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-SOURCE-TYPE-UNSUPPORTED",
+      "actionType": "repair-mapping",
+      "primaryAction": "Use a supported Dataverse source type or disable the entity definition, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-MAPPING-METADATA-STALE",
+      "actionType": "refresh-metadata",
+      "primaryAction": "Refresh source metadata, correct mappings, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-MAPPING-REQUIRED-MISSING",
+      "actionType": "create-required-mapping",
+      "primaryAction": "Create or enable the required semantic field mapping and revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-MAPPING-TYPE-MISMATCH",
+      "actionType": "repair-mapping-type",
+      "primaryAction": "Correct the source field, target type, or governed transformation, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-RELATIONSHIP-INCOMPATIBLE",
+      "actionType": "repair-relationship",
+      "primaryAction": "Correct relationship endpoints, cardinality, or navigation metadata, then revalidate.",
+      "targetSurface": "T04-SURFACE-003"
+    },
+    {
+      "code": "CCSB-COMPAT-FEATURE-FLAG-DISABLED",
+      "actionType": "enable-feature-flag-after-gates",
+      "primaryAction": "Enable the required feature flag only after release gates pass, then revalidate.",
+      "targetSurface": "T04-SURFACE-005"
+    },
+    {
+      "code": "CCSB-COMPAT-LIVE-SCHEMA-BLOCKED",
+      "actionType": "run-live-schema-gate",
+      "primaryAction": "Run the foundation live schema compatibility gate and resolve blockers, then revalidate.",
+      "targetSurface": "T04-SURFACE-005"
+    },
+    {
+      "code": "CCSB-COMPAT-PROJECTION-STALE",
+      "actionType": "regenerate-projection",
+      "primaryAction": "Regenerate the runtime projection from the validated configuration.",
+      "targetSurface": "T04-SURFACE-004"
+    },
+    {
+      "code": "CCSB-COMPAT-PROJECTION-METADATA-MISMATCH",
+      "actionType": "regenerate-projection",
+      "primaryAction": "Regenerate the projection from the same validated Board Version.",
+      "targetSurface": "T04-SURFACE-004"
+    }
+  ],
+  "securityModel": {
+    "canReadDiagnostics": [
+      "Configuration Administrator",
+      "Support Reader"
+    ],
+    "canRunSafeValidation": [
+      "Configuration Administrator"
+    ],
+    "canSuppressOrAcceptDiagnostics": [
+      "Configuration Administrator"
+    ],
+    "suppressionRequiresResolutionNote": true,
+    "activationRemainsSeparatePermission": true,
+    "detailJsonRestrictedToAdminOrSupport": true
+  },
+  "acceptanceGates": [
+    "admin-can-see-compatibility-state",
+    "blocking-record-grid-scoped-to-board-version",
+    "every-diagnostic-has-readable-action",
+    "migration-action-visible-without-server-logs",
+    "safe-revalidation-command-defined",
+    "revalidation-does-not-call-activation",
+    "revalidation-has-idempotency-key",
+    "operation-evidence-visible",
+    "runtime-projection-health-visible",
+    "schema-bindings-validated",
+    "relationship-bindings-validated",
+    "t03-diagnostic-catalog-covered",
+    "static-validator-pass"
+  ]
+}
