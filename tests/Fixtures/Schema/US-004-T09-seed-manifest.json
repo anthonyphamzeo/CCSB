@@ -17,6 +17,7 @@
     "ccsb_statusmodel",
     "ccsb_resourcerole",
     "ccsb_permissionprofile",
+    "ccsb_permissionassignment",
     "ccsb_runtimeprojection",
     "ccsb_board",
     "ccsb_scheduleversion",
