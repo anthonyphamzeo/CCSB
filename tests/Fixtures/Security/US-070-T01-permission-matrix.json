@@ -1,0 +1,92 @@
+{
+  "manifestVersion": "1.0.0",
+  "task": "US-070-T01",
+  "name": "CCSB permission model and role matrix",
+  "policyVersion": "1.0.0",
+  "designDocument": "docs/design/security/US-070-T01-permission-model-and-matrix.md",
+  "sourceEvidence": [
+    "tasks/backlog/CCSB_Task_Level_Design_and_Delivery_Plan_v1_1_PCF_Controls.md",
+    "tasks/completed/US-070-T02-permission-profiles-assignments.md",
+    "tests/Fixtures/Schema/US-004-T09-seed-manifest.json"
+  ],
+  "evaluationOrder": [
+    "resolve-platform-caller",
+    "dataverse-table-row-privilege",
+    "dataverse-field-security",
+    "ccsb-profile-flag",
+    "ccsb-assignment-scope",
+    "command-policy",
+    "redacted-decision"
+  ],
+  "permissionPrinciples": [
+    "dataverse-security-first",
+    "ccsb-permissions-only-restrict",
+    "server-resolved-identity-and-scope",
+    "custom-api-only-mutations",
+    "fail-closed-on-missing-or-stale-security-input",
+    "least-disclosure-denials"
+  ],
+  "personas": [
+    {"id":"admin","displayName":"Admin","defaultProfileFlags":{"ccsb_canviewschedule":false,"ccsb_cancreateschedule":false,"ccsb_caneditschedule":false,"ccsb_canassignresources":false,"ccsb_canoverrideconflicts":false,"ccsb_canpublish":false,"ccsb_canrollback":false,"ccsb_canmanageconfiguration":true,"ccsb_canviewaudit":true,"ccsb_canmanageintegrations":true}},
+    {"id":"scheduler","displayName":"Scheduler","defaultProfileFlags":{"ccsb_canviewschedule":true,"ccsb_cancreateschedule":true,"ccsb_caneditschedule":true,"ccsb_canassignresources":true,"ccsb_canoverrideconflicts":true,"ccsb_canpublish":false,"ccsb_canrollback":false,"ccsb_canmanageconfiguration":false,"ccsb_canviewaudit":false,"ccsb_canmanageintegrations":false}},
+    {"id":"publisher","displayName":"Publisher","defaultProfileFlags":{"ccsb_canviewschedule":true,"ccsb_cancreateschedule":false,"ccsb_caneditschedule":false,"ccsb_canassignresources":false,"ccsb_canoverrideconflicts":false,"ccsb_canpublish":true,"ccsb_canrollback":true,"ccsb_canmanageconfiguration":false,"ccsb_canviewaudit":true,"ccsb_canmanageintegrations":false}},
+    {"id":"support","displayName":"Support","defaultProfileFlags":{"ccsb_canviewschedule":false,"ccsb_cancreateschedule":false,"ccsb_caneditschedule":false,"ccsb_canassignresources":false,"ccsb_canoverrideconflicts":false,"ccsb_canpublish":false,"ccsb_canrollback":false,"ccsb_canmanageconfiguration":false,"ccsb_canviewaudit":true,"ccsb_canmanageintegrations":false}},
+    {"id":"unauthorised","displayName":"Unauthorised","defaultProfileFlags":{"ccsb_canviewschedule":false,"ccsb_cancreateschedule":false,"ccsb_caneditschedule":false,"ccsb_canassignresources":false,"ccsb_canoverrideconflicts":false,"ccsb_canpublish":false,"ccsb_canrollback":false,"ccsb_canmanageconfiguration":false,"ccsb_canviewaudit":false,"ccsb_canmanageintegrations":false}}
+  ],
+  "scopeDimensions": [
+    {"id":"board","source":"ccsb_permissionassignment.ccsb_boardid"},
+    {"id":"boardVersion","source":"ccsb_permissionprofile.ccsb_boardversionid"},
+    {"id":"location","source":"assignment location scope or resolved record location"},
+    {"id":"group","source":"assignment group/team scope or resolved configuration group"},
+    {"id":"resource","source":"resolved resource or command candidate resource"},
+    {"id":"timeWindow","source":"command date range, publish scope, or lock scope"},
+    {"id":"fieldPolicy","source":"ccsb_fieldmapping plus Dataverse field security"}
+  ],
+  "actions": [
+    {"id":"viewSchedule","displayName":"View schedule","profileFlag":"ccsb_canviewschedule","allowedPersonas":["scheduler","publisher"],"deniedPersonas":["admin","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":false,"dataversePrerequisites":[{"table":"ccsb_runtimeprojection","privileges":["Read"]},{"table":"mapped schedule source tables","privileges":["Read"]}],"sensitiveHandling":"Redact field-secured mapped fields and protected payload details."},
+    {"id":"createSchedule","displayName":"Create schedule","profileFlag":"ccsb_cancreateschedule","allowedPersonas":["scheduler"],"deniedPersonas":["admin","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_schedulechange","privileges":["Create","Read"]},{"table":"mapped schedule target tables","privileges":["Create","Write"]}],"sensitiveHandling":"Do not return protected target-row content on create denial."},
+    {"id":"editSchedule","displayName":"Edit schedule","profileFlag":"ccsb_caneditschedule","allowedPersonas":["scheduler"],"deniedPersonas":["admin","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","resource","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_schedulechange","privileges":["Create","Read","Write"]},{"table":"mapped schedule target tables","privileges":["Read","Write"]}],"sensitiveHandling":"Do not disclose current values for inaccessible fields."},
+    {"id":"assignResources","displayName":"Assign resources","profileFlag":"ccsb_canassignresources","allowedPersonas":["scheduler"],"deniedPersonas":["admin","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","resource","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_resource","privileges":["Read"]},{"table":"ccsb_scheduleassignment","privileges":["Create","Read","Write"]}],"sensitiveHandling":"Do not disclose hidden candidate resources or requirements."},
+    {"id":"overrideConflicts","displayName":"Override conflicts","profileFlag":"ccsb_canoverrideconflicts","allowedPersonas":["scheduler"],"deniedPersonas":["admin","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","resource","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_conflict","privileges":["Read","Write"]},{"table":"ccsb_operationaudit","privileges":["Create"]}],"sensitiveHandling":"Store protected reasons when policy marks them sensitive."},
+    {"id":"manageConfiguration","displayName":"Manage configuration","profileFlag":"ccsb_canmanageconfiguration","allowedPersonas":["admin"],"deniedPersonas":["scheduler","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_boardversion","privileges":["Create","Read","Write"]},{"table":"ccsb_permissionprofile","privileges":["Create","Read","Write"]}],"sensitiveHandling":"Do not expose protected mapping, reason, diagnostic, or payload fields without field-security access."},
+    {"id":"validateBoardVersion","displayName":"Validate board version","profileFlag":"ccsb_canmanageconfiguration","allowedPersonas":["admin"],"deniedPersonas":["scheduler","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_boardversion","privileges":["Read"]},{"table":"ccsb_configurationvalidationresult","privileges":["Create","Read"]}],"sensitiveHandling":"Return stable diagnostics, not raw protected payload dumps."},
+    {"id":"publishSchedule","displayName":"Publish schedule","profileFlag":"ccsb_canpublish","allowedPersonas":["publisher"],"deniedPersonas":["admin","scheduler","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_publishsnapshot","privileges":["Create","Read"]},{"table":"ccsb_publishlock","privileges":["Create","Read","Write"]},{"table":"mapped schedule target tables","privileges":["Read","Write"]}],"sensitiveHandling":"Preview and result counts must not disclose inaccessible rows."},
+    {"id":"rollbackSchedule","displayName":"Rollback schedule","profileFlag":"ccsb_canrollback","allowedPersonas":["publisher"],"deniedPersonas":["admin","scheduler","support","unauthorised"],"scopeRequired":["board","boardVersion","location","group","timeWindow","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_publishsnapshotitem","privileges":["Read"]},{"table":"mapped schedule target tables","privileges":["Read","Write"]},{"table":"ccsb_operationaudit","privileges":["Create"]}],"sensitiveHandling":"Rollback preview redacts field values the caller cannot read."},
+    {"id":"viewAudit","displayName":"View audit","profileFlag":"ccsb_canviewaudit","allowedPersonas":["admin","publisher","support"],"deniedPersonas":["scheduler","unauthorised"],"scopeRequired":["board","boardVersion","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":false,"dataversePrerequisites":[{"table":"ccsb_operationaudit","privileges":["Read"]},{"table":"linked evidence rows","privileges":["Read"]}],"sensitiveHandling":"Return redacted evidence when linked rows or protected payload fields are inaccessible."},
+    {"id":"supportDiagnostics","displayName":"Support diagnostics","profileFlag":"ccsb_canviewaudit","allowedPersonas":["admin","publisher","support"],"deniedPersonas":["scheduler","unauthorised"],"scopeRequired":["board","boardVersion","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":false,"dataversePrerequisites":[{"table":"ccsb_operationaudit","privileges":["Read"]},{"table":"ccsb_operation","privileges":["Read"]}],"sensitiveHandling":"Never return raw payload JSON, protected field values, credentials, tokens, or inaccessible record names."},
+    {"id":"manageIntegrations","displayName":"Manage integrations","profileFlag":"ccsb_canmanageintegrations","allowedPersonas":["admin"],"deniedPersonas":["scheduler","publisher","support","unauthorised"],"scopeRequired":["board","boardVersion","fieldPolicy"],"directClientMutationAllowed":false,"writesThroughCustomApi":true,"dataversePrerequisites":[{"table":"ccsb_outboxevent","privileges":["Read","Write"]},{"table":"integration configuration tables","privileges":["Create","Read","Write"]}],"sensitiveHandling":"Never expose raw endpoint secrets, tokens, SAS URLs, connection strings, or credentials."}
+  ],
+  "negativeCases": [
+    {"id":"NEG-DATAVERSE-READ-DENIED","category":"no-dataverse-privilege","persona":"scheduler","action":"viewSchedule","setup":"Caller has CCSB view flag but lacks Dataverse read access to mapped source row.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-DATAVERSE-DENIED","discloseRecordContent":false}},
+    {"id":"NEG-FIELD-SECURITY-DENIED","category":"field-security-denied","persona":"publisher","action":"rollbackSchedule","setup":"Snapshot contains field-secured rollback image values the caller cannot read.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-FIELD-REDACTED","discloseRecordContent":false}},
+    {"id":"NEG-PROFILE-MISSING","category":"missing-ccsb-profile","persona":"unauthorised","action":"viewSchedule","setup":"Caller has Dataverse read access but no enabled CCSB profile assignment.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-PROFILE-MISSING","discloseRecordContent":false}},
+    {"id":"NEG-ASSIGNMENT-DISABLED","category":"disabled-or-expired-assignment","persona":"scheduler","action":"editSchedule","setup":"Matching assignment is disabled or outside its effective range.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-ASSIGNMENT-INACTIVE","discloseRecordContent":false}},
+    {"id":"NEG-BOARD-SCOPE","category":"out-of-scope-board","persona":"scheduler","action":"assignResources","setup":"Caller submits a board not covered by an enabled assignment.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-SCOPE-DENIED","discloseRecordContent":false}},
+    {"id":"NEG-FORGED-PAYLOAD-SCOPE","category":"forged-payload-scope","persona":"scheduler","action":"editSchedule","setup":"Payload claims an allowed group but target record resolves to a different group server-side.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-FORGED-SCOPE","discloseRecordContent":false}},
+    {"id":"NEG-PUBLISH-FLAG","category":"publish-denied","persona":"scheduler","action":"publishSchedule","setup":"Scheduler has row write access but no CCSB publish flag.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-ACTION-DENIED","discloseRecordContent":false}},
+    {"id":"NEG-ROLLBACK-FLAG","category":"rollback-denied","persona":"admin","action":"rollbackSchedule","setup":"Admin can manage configuration but lacks rollback flag.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-ACTION-DENIED","discloseRecordContent":false}},
+    {"id":"NEG-SUPPORT-RAW-PAYLOAD","category":"support-raw-payload-request","persona":"support","action":"supportDiagnostics","setup":"Support asks for raw operation payload JSON linked to inaccessible rows.","expectedDecision":{"allowed":true,"diagnostic":"CCSB-SEC-FIELD-REDACTED","discloseRecordContent":false}},
+    {"id":"NEG-DIRECT-CLIENT-MUTATION","category":"direct-client-mutation","persona":"scheduler","action":"createSchedule","setup":"PCF attempts direct Dataverse create/update instead of the governed Custom API.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-DIRECT-MUTATION-DENIED","discloseRecordContent":false}},
+    {"id":"NEG-UNAUTHORISED-EVERYTHING","category":"unauthorised-persona-denied","persona":"unauthorised","action":"manageConfiguration","setup":"Caller has no effective assignment and requests configuration mutation.","expectedDecision":{"allowed":false,"diagnostic":"CCSB-SEC-PROFILE-MISSING","discloseRecordContent":false}}
+  ],
+  "diagnosticCatalog": [
+    {"code":"CCSB-SEC-DATAVERSE-DENIED","severity":"blocking","message":"Dataverse denied required table, row, or field access."},
+    {"code":"CCSB-SEC-FIELD-REDACTED","severity":"warning","message":"Protected field or payload content was denied or redacted."},
+    {"code":"CCSB-SEC-PROFILE-MISSING","severity":"blocking","message":"No enabled CCSB permission profile assignment applies."},
+    {"code":"CCSB-SEC-ASSIGNMENT-INACTIVE","severity":"blocking","message":"The matching CCSB permission assignment is disabled, expired, or not yet effective."},
+    {"code":"CCSB-SEC-SCOPE-DENIED","severity":"blocking","message":"Requested board, group, location, resource, time, or field scope is not permitted."},
+    {"code":"CCSB-SEC-FORGED-SCOPE","severity":"blocking","message":"Server-resolved scope does not match client-submitted scope."},
+    {"code":"CCSB-SEC-ACTION-DENIED","severity":"blocking","message":"Caller lacks the required CCSB action flag."},
+    {"code":"CCSB-SEC-DIRECT-MUTATION-DENIED","severity":"blocking","message":"Direct client mutation is not allowed for CCSB governed actions."}
+  ],
+  "acceptanceGates": [
+    "admin-scheduler-publisher-support-unauthorised-personas-defined",
+    "all-profile-flags-mapped-to-actions",
+    "dataverse-prerequisites-defined-for-every-action",
+    "ccsb-permissions-only-restrict-dataverse-access",
+    "direct-client-mutation-denied-for-mutating-actions",
+    "negative-cases-cover-dataverse-field-scope-forgery-publish-rollback-support-and-direct-mutation",
+    "least-disclosure-denials-required",
+    "matrix-feeds-us-070-t03-and-us-070-t05"
+  ]
+}

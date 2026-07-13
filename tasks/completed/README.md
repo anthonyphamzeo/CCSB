@@ -11,6 +11,7 @@ Completed means implemented, reviewed, validated against acceptance criteria, an
 | US-021-T03 | Safe path-identity persistence/cache shape |
 | US-044-T01 | Status models and transitions |
 | US-050-T01 | Completion and allocation measures |
+| US-070-T01 | Permission model and matrix |
 | US-070-T02 | Permission profiles and assignments |
 
 The task-specific files record the accepted boundary and any downstream work that remains separate.
