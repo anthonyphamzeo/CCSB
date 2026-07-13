@@ -1,0 +1,22 @@
+{
+  "$schema": "./plugin-steps.schema.json",
+  "assembly": "CCSB.Plugins",
+  "isolationMode": "Sandbox",
+  "sourceType": "Database",
+  "steps": [
+    {
+      "name": "CCSB sample placeholder - replace when task defines behavior",
+      "pluginType": "CCSB.Plugins.Steps.PlaceholderPlugin",
+      "message": "Update",
+      "primaryEntity": "ccsb_boardversion",
+      "stage": "PreOperation",
+      "mode": "Synchronous",
+      "executionOrder": 20,
+      "filteringAttributes": [],
+      "preImages": [],
+      "postImages": [],
+      "secureConfigurationRequired": false,
+      "unsecureConfiguration": {}
+    }
+  ]
+}

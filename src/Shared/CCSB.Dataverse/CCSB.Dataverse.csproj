@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>CCSB.Dataverse</AssemblyName>
+    <RootNamespace>CCSB.Dataverse</RootNamespace>
+    <Description>Dataverse query, repository, mapping, and Organization Service adapter layer.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.60" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CCSB.Contracts\CCSB.Contracts.csproj" />
+    <ProjectReference Include="..\CCSB.Domain\CCSB.Domain.csproj" />
+    <ProjectReference Include="..\..\Dataverse\EarlyBound\CCSB.Dataverse.EarlyBound\CCSB.Dataverse.EarlyBound.csproj" />
+  </ItemGroup>
+</Project>

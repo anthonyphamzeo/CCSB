@@ -9,5 +9,6 @@
 
 Only presentation concerns belong in `Shared/`: Fluent UI primitives, typed API clients/contracts, telemetry adapters, accessibility helpers, and test utilities. Server business rules must not be reimplemented in TypeScript.
 
-Each control should contain its manifest, generated PCF project files, `components`, `hooks`, `services`, `state`, `types`, and colocated unit tests.
+Each control root should contain its generated PCF project files from `pac pcf init`. Hand-written implementation code belongs under `src/components`, `src/hooks`, `src/services`, `src/state`, `src/telemetry`, and `src/types`. Colocated PCF unit tests stay in the control `tests` folder, while cross-control UI suites live under `tests/UI/PCF`.
 
+`Solutions/Planora.PCFControls` is reserved for the solution project that packages PCF controls for Dataverse import.

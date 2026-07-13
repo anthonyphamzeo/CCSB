@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>CCSB.Observability</AssemblyName>
+    <RootNamespace>CCSB.Observability</RootNamespace>
+    <Description>Tracing, telemetry contracts, and correlation helpers for Dataverse server-side execution.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CCSB.Domain\CCSB.Domain.csproj" />
+  </ItemGroup>
+</Project>

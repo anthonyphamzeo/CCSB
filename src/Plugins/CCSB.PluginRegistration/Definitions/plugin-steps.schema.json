@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CCSB Dataverse Plug-in Step Definition",
+  "type": "object",
+  "required": [
+    "assembly",
+    "isolationMode",
+    "sourceType",
+    "steps"
+  ],
+  "properties": {
+    "assembly": {
+      "type": "string"
+    },
+    "isolationMode": {
+      "type": "string",
+      "enum": [
+        "Sandbox"
+      ]
+    },
+    "sourceType": {
+      "type": "string",
+      "enum": [
+        "Database"
+      ]
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "pluginType",
+          "message",
+          "primaryEntity",
+          "stage",
+          "mode",
+          "executionOrder"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "pluginType": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "primaryEntity": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "PreValidation",
+              "PreOperation",
+              "PostOperation"
+            ]
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "Synchronous",
+              "Asynchronous"
+            ]
+          },
+          "executionOrder": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "filteringAttributes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preImages": {
+            "type": "array"
+          },
+          "postImages": {
+            "type": "array"
+          },
+          "secureConfigurationRequired": {
+            "type": "boolean"
+          },
+          "unsecureConfiguration": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

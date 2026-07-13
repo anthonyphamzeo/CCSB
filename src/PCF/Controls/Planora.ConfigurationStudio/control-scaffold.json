@@ -1,0 +1,19 @@
+{
+  "namespace": "Planora",
+  "name": "ConfigurationStudio",
+  "template": "dataset",
+  "purpose": "Governed board configuration authoring and compatibility validation.",
+  "authoritativeApis": [
+    "ccsb_ValidateConfigurationCompatibility",
+    "ccsb_ActivateBoardVersion"
+  ],
+  "sourceFolders": [
+    "src/components",
+    "src/hooks",
+    "src/services",
+    "src/state",
+    "src/telemetry",
+    "src/types",
+    "tests"
+  ]
+}

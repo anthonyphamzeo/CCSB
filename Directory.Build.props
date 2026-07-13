@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <Company>CCSB</Company>
+    <Product>Planora Schedule Board</Product>
+    <Authors>CCSB</Authors>
+    <Copyright>Copyright © CCSB</Copyright>
+    <RepositoryUrl>https://github.com/anthonyphamzeo/CCSB</RepositoryUrl>
+    <Deterministic>true</Deterministic>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <LangVersion>latestMajor</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+</Project>

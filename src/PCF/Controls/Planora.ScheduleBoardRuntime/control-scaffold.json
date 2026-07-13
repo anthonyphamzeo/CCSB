@@ -1,0 +1,20 @@
+{
+  "namespace": "Planora",
+  "name": "ScheduleBoardRuntime",
+  "template": "dataset",
+  "purpose": "Operational schedule board runtime backed by active runtime projections.",
+  "authoritativeApis": [
+    "ccsb_SearchAvailability",
+    "ccsb_CommitScheduleChange",
+    "ccsb_PublishScheduleSnapshot"
+  ],
+  "sourceFolders": [
+    "src/components",
+    "src/hooks",
+    "src/services",
+    "src/state",
+    "src/telemetry",
+    "src/types",
+    "tests"
+  ]
+}

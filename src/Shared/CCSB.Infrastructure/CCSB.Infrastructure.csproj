@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>CCSB.Infrastructure</AssemblyName>
+    <RootNamespace>CCSB.Infrastructure</RootNamespace>
+    <Description>Infrastructure adapters that are safe for Dataverse sandbox execution.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CCSB.Application\CCSB.Application.csproj" />
+    <ProjectReference Include="..\CCSB.Contracts\CCSB.Contracts.csproj" />
+  </ItemGroup>
+</Project>
